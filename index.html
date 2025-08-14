@@ -1,638 +1,493 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soumik Sahoo - Quantum Explorer & AI Researcher</title>
-    <style>
-        /* Enhanced Fluid Cursor Effects */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            cursor: none;
-            overflow-x: hidden;
-        }
-
-        /* Custom Fluid Cursor */
-        .cursor {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.8);
-            pointer-events: none;
-            z-index: 9999;
-            transition: all 0.1s ease;
-            transform: translate(-50%, -50%);
-            mix-blend-mode: difference;
-        }
-
-        .cursor-follower {
-            position: fixed;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            pointer-events: none;
-            z-index: 9998;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform: translate(-50%, -50%);
-        }
-
-        .cursor.hover {
-            transform: translate(-50%, -50%) scale(1.5);
-            background: rgba(255, 255, 255, 1);
-        }
-
-        .cursor-follower.hover {
-            transform: translate(-50%, -50%) scale(1.2);
-            border-color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Ripple Effect */
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(0);
-            animation: rippleEffect 0.6s ease-out;
-            pointer-events: none;
-        }
-
-        @keyframes rippleEffect {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-
-        /* Enhanced Hover Effects */
-        .hover-glow {
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .hover-glow:hover {
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
-            transform: translateY(-5px);
-        }
-
-        /* Container and Layout */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Header */
-        header {
-            text-align: center;
-            padding: 2rem 0;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        /* About Section */
-        .about {
-            padding: 3rem 0;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        .about h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #333;
-        }
-
-        .about h3 {
-            font-size: 1.8rem;
-            color: #667eea;
-            margin-bottom: 1.5rem;
-        }
-
-        .about p {
-            margin-bottom: 1.5rem;
-            color: #555;
-            font-size: 1.1rem;
-        }
-
-        .specializations {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .specialization {
-            padding: 1.5rem;
-            background: linear-gradient(135deg, #f8f9ff, #e8f0ff);
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .specialization:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.1);
-        }
-
-        .specialization h4 {
-            color: #667eea;
-            margin-bottom: 0.5rem;
-            font-size: 1.3rem;
-        }
-
-        /* Achievements Section */
-        .achievements {
-            padding: 3rem 0;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        .achievements h2 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            color: #333;
-        }
-
-        .achievement-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .achievement-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            text-align: center;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-            border: 2px solid transparent;
-        }
-
-        .achievement-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-            border-color: #667eea;
-        }
-
-        .achievement-card h3 {
-            color: #667eea;
-            margin-bottom: 0.5rem;
-            font-size: 1.4rem;
-        }
-
-        .achievement-card h4 {
-            color: #764ba2;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .achievement-card p {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        /* Research Projects Section */
-        .research {
-            padding: 3rem 0;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        .research h2 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            color: #333;
-        }
-
-        /* Interactive Physics Lab */
-        .physics-lab {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 15px;
-            padding: 3rem;
-            margin: 2rem 0;
-            color: white;
-            text-align: center;
-        }
-
-        .physics-lab h3 {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .lab-sections {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .lab-section {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .lab-section:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.05);
-        }
-
-        .lab-section h4 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Skills Section */
-        .skills {
-            padding: 3rem 0;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        .skills h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            text-align: center;
-            color: #333;
-        }
-
-        .skills-universe {
-            background: linear-gradient(135deg, #f8f9ff, #e8f0ff);
-            border-radius: 15px;
-            padding: 3rem;
-            margin: 2rem 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skills-universe h3 {
-            font-size: 2rem;
-            color: #667eea;
-            margin-bottom: 1rem;
-        }
-
-        .skills-universe p {
-            color: #666;
-            font-size: 1.1rem;
-        }
-
-        /* Academic Journey */
-        .academic {
-            padding: 3rem 0;
-        }
-
-        .academic h2 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            color: #333;
-        }
-
-        .journey-timeline {
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .journey-item {
-            margin-bottom: 3rem;
-            position: relative;
-            padding-left: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .journey-item::before {
-            content: '';
-            position: absolute;
-            left: -1rem;
-            top: 0;
-            width: 15px;
-            height: 15px;
-            background: #667eea;
-            border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: 0 0 0 3px #667eea;
-        }
-
-        .journey-item::after {
-            content: '';
-            position: absolute;
-            left: -0.6rem;
-            top: 15px;
-            width: 2px;
-            height: calc(100% + 2rem);
-            background: linear-gradient(to bottom, #667eea, transparent);
-        }
-
-        .journey-item:last-child::after {
-            display: none;
-        }
-
-        .journey-item:hover {
-            transform: translateX(10px);
-        }
-
-        .journey-item h3 {
-            color: #667eea;
-            font-size: 1.6rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .journey-item h4 {
-            color: #764ba2;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .journey-item p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 3rem 0;
-            text-align: center;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border-radius: 15px;
-            margin-top: 2rem;
-        }
-
-        .contact h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .contact p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-                padding: 15px;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-            }
-
-            .about h2, .achievements h2, .research h2, .skills h2, .academic h2 {
-                font-size: 2rem;
-            }
-
-            .specializations, .achievement-grid, .lab-sections {
-                grid-template-columns: 1fr;
-            }
-
-            .physics-lab, .skills-universe {
-                padding: 2rem;
-            }
-        }
-
-        /* File Link Indicators */
-        .file-link-indicator {
-            position: relative;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .file-link-indicator:hover {
-            transform: translateY(-2px);
-        }
-        
-        .file-link-indicator::after {
-            content: '📄';
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            font-size: 0.8em;
-            opacity: 0.7;
-            pointer-events: none;
-            transition: all 0.3s ease;
-        }
-        
-        .file-link-indicator:hover::after {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        /* Scroll Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.8s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Particle Background */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) translateX(0px); }
-            33% { transform: translateY(-20px) translateX(10px); }
-            66% { transform: translateY(10px) translateX(-10px); }
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Soumik Sahoo - Quantum Explorer & AI Researcher</title>
+<style>
+  /* Reset and base styles */
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(120deg, #1f1c2c, #928dab);
+    color: #e0e0e0;
+    overflow-x: hidden;
+    cursor: none; /* Hide default cursor for custom cursor */
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: rgba(31, 28, 44, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 0 40px rgba(0, 198, 255, 0.5);
+  }
+
+  h1, h2, h3, h4 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #fff;
+  }
+
+  h1 {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  h2 {
+    font-size: 2rem;
+    border-bottom: 2px solid #0072ff;
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  h3 {
+    font-size: 1.6rem;
+    color: #a0d8ef;
+    margin-top: 1.8rem;
+  }
+
+  p, ul {
+    line-height: 1.6;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  ul {
+    list-style-type: square;
+    padding-left: 1.8rem;
+  }
+
+  /* Skill item styles */
+  .skills-universe {
+    margin-top: 2rem;
+    border: 2px solid #00c6ff;
+    border-radius: 12px;
+    padding: 1rem;
+    background: rgba(0, 114, 255, 0.1);
+    min-height: 180px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    user-select: none;
+  }
+
+  .skill-item {
+    padding: 0.5rem 1rem;
+    background: #0055ffcc;
+    border-radius: 20px;
+    color: #fff;
+    font-weight: 600;
+    cursor: grab;
+    box-shadow: 0 0 10px #0072ff99;
+    transition: transform 0.3s ease;
+  }
+
+  .skill-item:active {
+    cursor: grabbing;
+    transform: scale(1.1);
+  }
+
+  /* Cursor styles */
+  .cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    background: rgba(0, 114, 255, 0.95);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    mix-blend-mode: difference;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+  }
+
+  .cursor-trail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    background: rgba(0, 198, 255, 0.6);
+    transform: translate(-50%, -50%);
+    opacity: 0.6;
+  }
+
+  /* Particle background canvas styling */
+  #particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    background: transparent;
+  }
+
+  /* Section fade-in anim */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Button styles */
+  .button {
+    display: inline-block;
+    background: #0072ff;
+    color: #fff;
+    padding: 0.6rem 1.4rem;
+    border-radius: 22px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+    user-select: none;
+    margin-top: 1rem;
+    text-decoration: none;
+  }
+
+  .button:hover {
+    background: #00c6ff;
+  }
+
+  /* Links */
+  a {
+    color: #00c6ff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  a:hover {
+    color: #ff67c3;
+    text-decoration: underline;
+  }
+
+  /* Form styles for Contact section */
+  form {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  input, textarea {
+    padding: 0.7rem;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    resize: none;
+  }
+
+  input:focus, textarea:focus {
+    outline: 2px solid #00c6ff;
+    background: #313661;
+    color: #e0e0e0;
+  }
+
+</style>
 </head>
 <body>
-    <!-- Custom Cursor -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
 
-    <!-- Particle Background -->
-    <div class="particles" id="particles"></div>
+<canvas id="particle-canvas"></canvas>
 
-    <div class="container">
-        <!-- Header -->
-        <header class="fade-in">
-            <h1>Soumik Sahoo</h1>
-            <p class="subtitle">Engineering Physics student at IIT Bombay bridging quantum mechanics with artificial intelligence. Exploring the elegant mathematics that govern our universe through computational models and machine learning.</p>
-        </header>
+<div class="container fade-in">
+  <h1>Soumik Sahoo</h1>
+  <p>Engineering Physics student at IIT Bombay bridging quantum mechanics with artificial intelligence. Exploring the elegant mathematics that govern our universe through computational models and machine learning.</p>
 
-        <!-- About Section -->
-        <section class="about fade-in">
-            <h2>About Me</h2>
-            <h3>Quantum Explorer & AI Researcher</h3>
-            <p>I'm pursuing an Honors degree in Physics at IIT Bombay with a Minor in Machine Intelligence and Data Science. My research focuses on the fascinating intersection of quantum mechanics and artificial intelligence, particularly using Non-Equilibrium Green's Function (NEGF) formalism to model electron transport in nanoscale systems.</p>
-            <p>From implementing Physics-Informed Neural Networks that embed the Schrödinger equation directly into machine learning models to analyzing eclipsing binary systems, I bridge theoretical physics with computational intelligence to unlock the secrets of our universe.</p>
-            
-            <div class="specializations">
-                <div class="specialization hover-glow" data-file-link="research.condensed-matter">
-                    <h4>Condensed Matter Physics</h4>
-                    <p>Exploring quantum states, transport phenomena, and many-body systems using advanced computational methods and NEGF formalism.</p>
-                </div>
-                <div class="specialization hover-glow" data-file-link="research.physics-ai">
-                    <h4>Physics-Informed AI</h4>
-                    <p>Developing neural networks that embed fundamental physics laws, achieving unprecedented accuracy in quantum property predictions.</p>
-                </div>
-                <div class="specialization hover-glow" data-file-link="research.astrophysics">
-                    <h4>Computational Astrophysics</h4>
-                    <p>Analyzing stellar dynamics, binary systems, and cosmological phenomena using numerical methods and data analysis.</p>
-                </div>
-            </div>
-        </section>
+  <h2>About Me</h2>
+  <h3>Quantum Explorer & AI Researcher</h3>
+  <p>I'm pursuing an Honors degree in Physics at IIT Bombay with a Minor in Machine Intelligence and Data Science. My research focuses on the fascinating intersection of quantum mechanics and artificial intelligence, particularly using Non-Equilibrium Green's Function (NEGF) formalism to model electron transport in nanoscale systems.</p>
+  <p>From implementing Physics-Informed Neural Networks that embed the Schrödinger equation directly into machine learning models to analyzing eclipsing binary systems, I bridge theoretical physics with computational intelligence to unlock the secrets of our universe.</p>
 
-        <!-- Achievements Section -->
-        <section class="achievements fade-in">
-            <h2>Scholastic Achievements</h2>
-            <div class="achievement-grid">
-                <div class="achievement-card hover-glow" data-file-link="achievements.nest">
-                    <h3>NEST 2022</h3>
-                    <h4>National Entrance Screening Test</h4>
-                    <p>Among 25,000 candidates</p>
-                </div>
-                <div class="achievement-card hover-glow" data-file-link="achievements.jee-advanced">
-                    <h3>JEE Advanced 2023</h3>
-                    <h4>Joint Entrance Examination</h4>
-                    <p>Among 0.18 million candidates</p>
-                </div>
-                <div class="achievement-card hover-glow" data-file-link="achievements.jee-mains">
-                    <h3>JEE Mains 2023</h3>
-                    <h4>National Examination</h4>
-                    <p>Among 1.2 million candidates</p>
-                </div>
-                <div class="achievement-card hover-glow" data-file-link="academic.transcript">
-                    <h3>Current CPI</h3>
-                    <h4>IIT Bombay</h4>
-                    <p>Honors in Physics, Minor in ML & Data Science</p>
-                </div>
-            </div>
-        </section>
+  <h4>Condensed Matter Physics</h4>
+  <p>Exploring quantum states, transport phenomena, and many-body systems using advanced computational methods and NEGF formalism.</p>
+  <h4>Physics-Informed AI</h4>
+  <p>Developing neural networks that embed fundamental physics laws, achieving unprecedented accuracy in quantum property predictions.</p>
+  <h4>Computational Astrophysics</h4>
+  <p>Analyzing stellar dynamics, binary systems, and cosmological phenomena using numerical methods and data analysis.</p>
 
-        <!-- Research Projects Section -->
-        <section class="research fade-in">
-            <h2>Research Projects</h2>
-            
-            <div class="physics-lab">
-                <h3>Interactive Physics Lab</h3>
-                <div class="lab-sections">
-                    <div class="lab-section hover-glow" data-file-link="research.quantum-wave">
-                        <h4>Quantum Wave Function</h4>
-                        <p>Explore quantum mechanics through interactive wave function simulations</p>
-                    </div>
-                    <div class="lab-section hover-glow" data-file-link="research.particle-interaction">
-                        <h4>Particle Interaction</h4>
-                        <p>Click to add particles and watch quantum interactions!</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <h2>Scholastic Achievements</h2>
+  <h3>NEST 2022</h3>
+  <p>National Entrance Screening Test among 25,000 candidates</p>
 
-        <!-- Skills Section -->
-        <section class="skills fade-in">
-            <h2>Skills Universe</h2>
-            <div class="skills-universe hover-glow" data-file-link="portfolio.skills">
-                <h3>Skills Universe</h3>
-                <p>Drag skills around to explore connections • Click for details</p>
-            </div>
-        </section>
+  <h3>JEE Advanced 2023</h3>
+  <p>Among 0.18 million candidates in Joint Entrance Examination</p>
 
-        <!-- Academic Journey -->
-        <section class="academic fade-in">
-            <h2>Academic Journey</h2>
-            <div class="journey-timeline">
-                <div class="journey-item hover-glow" data-file-link="academic.current">
-                    <h3>B.Tech Engineering Physics</h3>
-                    <h4>IIT Bombay • 2023 - 2027</h4>
-                    <p>Honors in Physics, Minor in Machine Intelligence & Data Science. Current CPI: 8.92</p>
-                </div>
-                <div class="journey-item hover-glow" data-file-link="achievements.jee-combined">
-                    <h3>JEE Advanced & Mains</h3>
-                    <h4>National Achievement • 2023</h4>
-                    <p>Top 1% in JEE Advanced (0.18M candidates), 99.87% in JEE Mains (1.2M candidates)</p>
-                </div>
-                <div class="journey-item hover-glow" data-file-link="academic.higher-secondary">
-                    <h3>Higher Secondary (+2)</h3>
-                    <h4>Saraswati Vidya Mandir, Odisha • 2022</h4>
-                    <p>89.66% with focus on Physics and Mathematics</p>
-                </div>
-                <div class="journey-item hover-glow" data-file-link="academic.secondary">
-                    <h3>Secondary (10th)</h3>
-                    <h4>Saraswati Vidya Mandir, Odisha • 2020</h4>
-                    <p>93.5% laying strong foundation for scientific pursuits</p>
-                </div>
-            </div>
-        </section>
+  <h3>JEE Mains 2023</h3>
+  <p>Among 1.2 million candidates in national examination</p>
 
-        <!-- Contact Section -->
-        <section class="contact fade-in">
-            <h2>Let's Connect</h2>
-            <p>Ready to explore the quantum frontier together? Whether you're interested in collaborative research, discussing theoretical physics, or building the next generation of quantum-AI systems, I'd love to connect.</p>
-        </section>
-    </div>
+  <h3>Current CPI</h3>
+  <p>Honors in Physics, Minor in ML & Data Science at IIT Bombay. Current CPI: 8.92</p>
 
-    <script src="links.js"></script>
+  <h2>Research Projects</h2>
+
+  <h2>Interactive Physics Lab</h2>
+  <h3>Quantum Wave Function</h3>
+  <h3>Particle Interaction</h3>
+  <p>Click to add particles and watch quantum interactions!</p>
+  <div id="particle-lab" style="height: 350px; background: rgba(0,114,255,0.1); border-radius: 12px; margin-bottom: 2rem; cursor: pointer;"></div>
+
+  <h2>Skills Universe</h2>
+  <p>Drag skills around to explore connections &#9647; Click for details</p>
+  <div class="skills-universe" id="skills-universe">
+    <span class="skill-item" draggable="true">Quantum Mechanics</span>
+    <span class="skill-item" draggable="true">Machine Learning</span>
+    <span class="skill-item" draggable="true">NEGF Formalism</span>
+    <span class="skill-item" draggable="true">Astrophysics</span>
+    <span class="skill-item" draggable="true">Data Science</span>
+    <span class="skill-item" draggable="true">Physics-Informed AI</span>
+    <span class="skill-item" draggable="true">Particle Physics</span>
+    <span class="skill-item" draggable="true">Computational Methods</span>
+    <span class="skill-item" draggable="true">Numerical Analysis</span>
+    <span class="skill-item" draggable="true">Schrödinger Equation</span>
+  </div>
+
+  <h2>Academic Journey</h2>
+  <h3>B.Tech Engineering Physics</h3>
+  <h4>IIT Bombay 2023 - 2027</h4>
+  <p>Honors in Physics, Minor in Machine Intelligence & Data Science. Current CPI: 8.92</p>
+
+  <h3>JEE Advanced & Mains</h3>
+  <h4>National Achievement 2023</h4>
+  <p>Top 1% in JEE Advanced (0.18M candidates), 99.87% in JEE Mains (1.2M candidates)</p>
+
+  <h3>Higher Secondary (+2)</h3>
+  <h4>Saraswati Vidya Mandir, Odisha 2022</h4>
+  <p>89.66% with focus on Physics and Mathematics</p>
+
+  <h3>Secondary (10th)</h3>
+  <h4>Saraswati Vidya Mandir, Odisha 2020</h4>
+  <p>93.5% laying strong foundation for scientific pursuits</p>
+
+  <h2>Let's Connect</h2>
+  <p>Ready to explore the quantum frontier together? Whether you're interested in collaborative research, discussing theoretical physics, or building the next generation of quantum-AI systems, I'd love to connect.</p>
+
+  <form id="contact-form">
+    <input type="text" id="name" name="name" placeholder="Your Name" required />
+    <input type="email" id="email" name="email" placeholder="Your Email" required />
+    <textarea id="message" name="message" rows="4" placeholder="Your Message" required></textarea>
+    <button type="submit" class="button">Send Message</button>
+  </form>
+</div>
+
+<div class="cursor"></div>
+
+<script>
+  // Cursor and trail effect implementation with performance optimization
+  const cursor = document.querySelector('.cursor');
+  const trailCount = 12;
+  const trails = [];
+
+  for (let i = 0; i < trailCount; i++) {
+    const t = document.createElement('div');
+    t.classList.add('cursor-trail');
+    document.body.appendChild(t);
+    trails.push(t);
+  }
+
+  let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+  let trailPositions = Array(trailCount).fill({x: mouseX, y: mouseY});
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+  });
+
+  function animateTrails() {
+    trailPositions.unshift({x: mouseX, y: mouseY});
+    trailPositions.pop();
+
+    trails.forEach((trail, i) => {
+      const pos = trailPositions[i];
+      trail.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+      trail.style.opacity = (trailCount - i) / trailCount * 0.6;
+      const size = 12 - (i * 0.7);
+      trail.style.width = size + 'px';
+      trail.style.height = size + 'px';
+    });
+
+    requestAnimationFrame(animateTrails);
+  }
+
+  animateTrails();
+
+  // Interactive Particle Physics Lab
+  const lab = document.getElementById('particle-lab');
+  const particles = [];
+
+  lab.addEventListener('click', e => {
+    const rect = lab.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    if (particles.length > 100) {
+      particles.shift(); // Limit particles
+    }
+    particles.push({x, y, vx: (Math.random()-0.5)*2, vy: (Math.random()-0.5)*2, size: 6 + Math.random()*6});
+  });
+
+  function drawLabParticles() {
+    const ctx = lab.getContext('2d');
+    if (!ctx) return;
+    ctx.clearRect(0, 0, lab.width, lab.height);
+
+    particles.forEach(p => {
+      // Draw particle
+      ctx.beginPath();
+      const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
+      gradient.addColorStop(0, 'rgba(0, 198, 255,1)');
+      gradient.addColorStop(1, 'rgba(0, 198, 255, 0)');
+      ctx.fillStyle = gradient;
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Update position
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (p.x < 0 || p.x > lab.width) p.vx *= -1;
+      if (p.y < 0 || p.y > lab.height) p.vy *= -1;
+    });
+  }
+
+  function resizeLab() {
+    lab.width = lab.clientWidth;
+    lab.height = lab.clientHeight;
+  }
+
+  window.addEventListener('resize', () => {
+    resizeLab();
+  });
+
+  resizeLab();
+  setInterval(drawLabParticles, 30);
+
+  // Skills Universe Drag and Drop
+  const skillsUniverse = document.getElementById('skills-universe');
+  let dragged = null;
+
+  document.querySelectorAll('.skill-item').forEach(item => {
+    item.addEventListener('dragstart', e => {
+      dragged = e.target;
+      setTimeout(() => {
+        e.target.style.display = 'none';
+      }, 0);
+    });
+    item.addEventListener('dragend', e => {
+      dragged.style.display = 'inline-block';
+      dragged = null;
+    });
+  });
+
+  skillsUniverse.addEventListener('dragover', e => {
+    e.preventDefault();
+    const afterElement = getDragAfterElement(skillsUniverse, e.clientX);
+    if (afterElement == null) {
+      skillsUniverse.appendChild(dragged);
+    } else {
+      skillsUniverse.insertBefore(dragged, afterElement);
+    }
+  });
+
+  function getDragAfterElement(container, x) {
+    const draggableElements = [...container.querySelectorAll('.skill-item:not([style*="display: none"])')];
+
+    return draggableElements.reduce((closest, child) => {
+      const box = child.getBoundingClientRect();
+      const offset = x - box.left - box.width / 2;
+      if (offset < 0 && offset > closest.offset) {
+        return {offset: offset, element: child};
+      } else {
+        return closest;
+      }
+    }, {offset: Number.NEGATIVE_INFINITY}).element;
+  }
+
+  // Contact form submit handler - demo only
+  const form = document.getElementById('contact-form');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    alert('Thank you for your message, ' + form.name.value + '! I will get back to you soon.');
+    form.reset();
+  });
+
+
+  // Particle canvas background animation
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+
+  const bgParticles = [];
+  const bgCount = 80;
+
+  class BGParticle {
+    constructor(){
+      this.x = Math.random() * width;
+      this.y = Math.random() * height;
+      this.radius = Math.random() * 2 + 1;
+      this.vx = (Math.random() - 0.5) * 0.5;
+      this.vy = (Math.random() - 0.5) * 0.5;
+      this.alpha = Math.random() * 0.5 + 0.2;
+    }
+    move(){
+      this.x += this.vx;
+      this.y += this.vy;
+      if(this.x < 0 || this.x > width) this.vx *= -1;
+      if(this.y < 0 || this.y > height) this.vy *= -1;
+    }
+    draw(ctx){
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(0,198,255,${this.alpha})`;
+      ctx.fill();
+    }
+  }
+
+  for(let i=0; i<bgCount; i++){
+    bgParticles.push(new BGParticle());
+  }
+
+  function animateBGParticles(){
+    ctx.clearRect(0, 0, width, height);
+    bgParticles.forEach(p => {
+      p.move();
+      p.draw(ctx);
+    });
+    requestAnimationFrame(animateBGParticles);
+  }
+
+  animateBGParticles();
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+
+</script>
 </body>
 </html>
-
