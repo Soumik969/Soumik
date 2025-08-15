@@ -1650,68 +1650,126 @@
                 this.initBohrModel();
             }
 
-            initWaveFunction() {
+           initWaveFunction() {
                 const canvas = document.getElementById('wave-canvas');
                 if (!canvas) return;
-
                 const ctx = canvas.getContext('2d');
                 const frequencySlider = document.getElementById('frequency-slider');
                 const amplitudeSlider = document.getElementById('amplitude-slider');
-
                 let time = 0;
 
-                const animate = () => {
-                    if (!CONFIG.animations.enabled) return;
+            const animate = () => {
+                if (!CONFIG.animations.enabled) return;
+                const frequency = parseFloat(frequencySlider.value);
+                const amplitude = parseFloat(amplitudeSlider.value);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                // Draw grid for better visualization
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.lineWidth = 1;
+                // Horizontal center line
+                ctx.beginPath();
+                ctx.moveTo(0, canvas.height / 2);
+                ctx.lineTo(canvas.width, canvas.height / 2);
+                ctx.stroke();
 
-                    const frequency = parseFloat(frequencySlider.value);
-                    const amplitude = parseFloat(amplitudeSlider.value);
-
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                    // Wave function
+                // Grid lines
+                for (let i = 0; i <= canvas.height; i += 40) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, i);
+                    ctx.lineTo(canvas.width, i);
+                    ctx.stroke();
+                }
+                    // Store wave values for superposition
+                    const wave1Points = [];
+                    const wave2Points = [];
+            
+                    // Wave 1 (Primary wave - controlled by sliders)
                     ctx.beginPath();
                     ctx.strokeStyle = '#00d4ff';
                     ctx.lineWidth = 2;
+                    ctx.setLineDash([]);
 
                     for (let x = 0; x < canvas.width; x++) {
-                        const y = canvas.height / 2 + amplitude * 50 * Math.sin(frequency * 0.02 * x + time);
+                        const y1 = amplitude * 40 * Math.sin(frequency * 0.02 * x + time);
+                        wave1Points.push(y1);
+                        const plotY = canvas.height / 2 + y1;
+                        
                         if (x === 0) {
-                            ctx.moveTo(x, y);
+                            ctx.moveTo(x, plotY);
                         } else {
-                            ctx.lineTo(x, y);
+                            ctx.lineTo(x, plotY);
                         }
                     }
-
                     ctx.stroke();
 
-                    // Probability density
+                    // Wave 2 (Secondary wave with different frequency and phase)
                     ctx.beginPath();
-                    ctx.strokeStyle = '#8b5cf6';
-                    ctx.lineWidth = 1;
-
+                    ctx.strokeStyle = '#ff6b6b';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([5, 5]); // Dashed line to distinguish
+            
                     for (let x = 0; x < canvas.width; x++) {
-                        const waveY = amplitude * 50 * Math.sin(frequency * 0.02 * x + time);
-                        const probY = canvas.height / 2 + Math.pow(waveY / 50, 2) * 30;
+                        const y2 = amplitude * 25 * Math.sin((frequency * 1.3) * 0.02 * x + time + Math.PI/3);
+                        wave2Points.push(y2);
+                        const plotY = canvas.height / 2 + y2;
+                        
                         if (x === 0) {
-                            ctx.moveTo(x, probY);
+                            ctx.moveTo(x, plotY);
                         } else {
-                            ctx.lineTo(x, probY);
+                            ctx.lineTo(x, plotY);
                         }
                     }
-
                     ctx.stroke();
 
-                    time += 0.05;
+                    // Resultant wave (Superposition of Wave 1 + Wave 2)
+                    ctx.beginPath();
+                    ctx.strokeStyle = '#f59e0b';
+                    ctx.lineWidth = 3;
+                    ctx.setLineDash([]);
+                    ctx.shadowColor = '#f59e0b';
+                    ctx.shadowBlur = 10;
+            
+                    for (let x = 0; x < canvas.width; x++) {
+                        const resultY = wave1Points[x] + wave2Points[x];
+                        const plotY = canvas.height / 2 + resultY;
+                        
+                        if (x === 0) {
+                            ctx.moveTo(x, plotY);
+                        } else {
+                            ctx.lineTo(x, plotY);
+                        }
+                    }
+                    ctx.stroke();
+                    ctx.shadowBlur = 0;
 
+                    // Wave labels and legend
+                    ctx.font = '12px Inter, sans-serif';
+                    ctx.fillStyle = '#00d4ff';
+                    ctx.fillText('Wave 1 (Primary)', 10, 20);
+                    
+                    ctx.fillStyle = '#ff6b6b';
+                    ctx.fillText('Wave 2 (Secondary)', 10, 35);
+                    
+                    ctx.fillStyle = '#f59e0b';
+                    ctx.fillText('Resultant (Superposition)', 10, 50);
+            
+                    // Mathematical info
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                    ctx.font = '10px Inter, sans-serif';
+                    ctx.fillText(`f₁ = ${frequency.toFixed(1)}, f₂ = ${(frequency * 1.3).toFixed(1)}`, canvas.width - 120, 20);
+                    ctx.fillText(`A = ${amplitude.toFixed(1)}`, canvas.width - 120, 35);
+            
+                    time += 0.03; // Slower for better observation
+            
                     if (CONFIG.animations.useRAF) {
                         requestAnimationFrame(animate);
                     }
                 };
 
-                if (CONFIG.animations.useRAF) {
-                    animate();
+                    if (CONFIG.animations.useRAF) {
+                        animate();
+                    }
                 }
-            }
 
             initParticleSimulation() {
                 const canvas = document.getElementById('particle-canvas');
@@ -2123,5 +2181,6 @@
     </script>
 </body>
 </html>
+
 
 
