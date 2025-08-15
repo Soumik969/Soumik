@@ -31,6 +31,15 @@
             --physics-green: #10b981;
         }
 
+        html.light-mode {
+            --bg-primary: #f3f4f6;
+            --bg-secondary: #e5e7eb;
+            --text-primary: #111827;
+            --text-secondary: #374151;
+            --text-muted: #6b7280;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -566,67 +575,158 @@
             font-size: 16px;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .timeline::after {
-                left: 31px;
-            }
-
-            .timeline-item {
-                width: 100%;
-                padding-left: 70px;
-                padding-right: 25px;
-                text-align: left;
-            }
-
-            .timeline-item.right {
-                left: 0%;
-            }
-
-            .timeline-item.left::after,
-            .timeline-item.right::after {
-                left: 15px;
-            }
-
-            .theme-toggle {
-                top: 10px;
-                right: 10px;
-                padding: 8px;
-            }
-
-            .performance-panel {
-                bottom: 10px;
-                left: 10px;
-                padding: 10px;
-                min-width: 180px;
-            }
+        /* SETTINGS PANEL STYLING */
+        .settings-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--glass-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: none;
+            z-index: 9999;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
-        /* ACCESSIBILITY */
-        .sr-only {
+        .settings-toggle:hover {
+            transform: rotate(30deg);
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .settings-panel {
+            position: fixed;
+            right: -320px;
+            top: 0;
+            width: 320px;
+            height: 100vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 9998;
+            transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 2rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .settings-panel.open {
+            right: 0;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .settings-close {
             position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            cursor: none;
+            transition: color 0.3s ease;
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            .floating { animation: none; }
-            .gradient-text { animation: none; }
-            .electron { animation: none; }
-            .physics-demo::before { animation: none; }
+        .settings-close:hover {
+            color: var(--accent-primary);
         }
 
-        /* FOCUS INDICATORS */
-        button:focus,
-        a:focus {
-            outline: 2px solid var(--accent-primary);
-            outline-offset: 2px;
+        .settings-section {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        .settings-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+        }
+
+        .theme-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .theme-option {
+            aspect-ratio: 1/1;
+            border-radius: 0.5rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: none;
+        }
+
+        .theme-option.active {
+            transform: scale(1.1);
+            border-color: var(--text-primary);
+        }
+
+        .color-preview {
+            height: 100%;
+            width: 100%;
+            border-radius: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.5rem;
+        }
+
+        .mode-switch-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .mode-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: var(--bg-primary);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: none;
+            display: flex;
+            align-items: center;
+            padding: 0 5px;
+        }
+
+        .mode-switch::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .mode-switch.light::after {
+            transform: translateX(30px);
+            background: #f59e0b;
+        }
+
+        .mode-labels {
+            display: flex;
+            justify-content: space-between;
+            width: 90px;
+        }
+
+        /* ENHANCED WAVE SIMULATION */
+        .simulation-controls {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
     </style>
 </head>
@@ -672,6 +772,108 @@
         <div class="toggle-switch">
             <span class="text-xs text-gray-400">Animations</span>
             <div class="switch active" data-toggle="animations"></div>
+        </div>
+    </div>
+
+    <!-- Settings Toggle Button -->
+    <button class="settings-toggle nav-link" id="settings-toggle" aria-label="Open settings">
+        <i class="fas fa-cog"></i>
+    </button>
+
+    <!-- Enhanced Settings Panel -->
+    <div class="settings-panel" id="settings-panel">
+        <button class="settings-close nav-link" id="settings-close" aria-label="Close settings">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <div class="settings-section">
+            <h3>Display Mode</h3>
+            <div class="mode-switch-container">
+                <div class="mode-labels">
+                    <span class="text-sm"><i class="fas fa-moon"></i></span>
+                </div>
+                <div class="mode-switch" id="mode-switch">
+                </div>
+                <div class="mode-labels">
+                    <span class="text-sm"><i class="fas fa-sun"></i></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3>Color Theme</h3>
+            <div class="theme-options">
+                <button class="theme-option active" data-theme="cyan">
+                    <div class="color-preview" style="background: #00d4ff;">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </button>
+                <button class="theme-option" data-theme="purple">
+                    <div class="color-preview" style="background: #7c3aed;">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </button>
+                <button class="theme-option" data-theme="amber">
+                    <div class="color-preview" style="background: #f59e0b;">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </button>
+                <button class="theme-option" data-theme="green">
+                    <div class="color-preview" style="background: #10b981;">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </button>
+                <button class="theme-option" data-theme="red">
+                    <div class="color-preview" style="background: #ef4444;">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </button>
+                <button class="theme-option" data-theme="blue">
+                    <div class="color-preview" style="background: #3b82f6;">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3>Visual Effects</h3>
+            <div class="toggle-switch">
+                <span class="text-sm">Particles</span>
+                <div class="switch active" data-toggle="particles"></div>
+            </div>
+            <div class="toggle-switch">
+                <span class="text-sm">Custom Cursor</span>
+                <div class="switch active" data-toggle="cursor"></div>
+            </div>
+            <div class="toggle-switch">
+                <span class="text-sm">Animations</span>
+                <div class="switch active" data-toggle="animations"></div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3>Wave Simulation</h3>
+            <div class="toggle-switch">
+                <span class="text-sm">Enhanced Wave</span>
+                <div class="switch" data-toggle="enhanced-wave"></div>
+            </div>
+            <div class="simulation-controls">
+                <div>
+                    <label class="block text-sm mb-1">Wave Types</label>
+                    <select id="wave-type" class="w-full p-2 bg-black/50 border border-gray-600 rounded-lg">
+                        <option value="sine">Sine Wave</option>
+                        <option value="cosine">Cosine Wave</option>
+                        <option value="square">Square Wave</option>
+                        <option value="sawtooth">Sawtooth Wave</option>
+                        <option value="superposition">Wave Superposition</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-auto text-center text-xs text-gray-500 pt-4">
+            Settings are automatically saved
         </div>
     </div>
 
@@ -777,7 +979,7 @@
                             particularly using Non-Equilibrium Green's Function (NEGF) formalism to model electron transport in nanoscale systems.
                         </p>
                         <p class="text-gray-300 leading-relaxed mb-6">
-                            From implementing Physics-Informed Neural Networks that embed the SchrÃƒÂ¶dinger equation directly into 
+                            From implementing Physics-Informed Neural Networks that embed the Schrödinger equation directly into 
                             machine learning models to analyzing eclipsing binary systems, I bridge theoretical physics with 
                             computational intelligence to unlock the secrets of our universe.
                         </p>
@@ -1026,7 +1228,7 @@
     <!-- Footer -->
     <footer class="py-8 border-t border-white/10 text-center">
         <p class="text-gray-400">
-            Designed & Built with <span class="text-red-400">Ã¢ÂÂ¤</span> by Soumik Sahoo
+            Designed & Built with <span class="text-red-400">♥</span> by Soumik Sahoo
             <br>
             <span class="text-sm">Powered by Quantum Computing & Classical Physics</span>
         </p>
@@ -1114,7 +1316,14 @@
             themes: {
                 cyan: { primary: '#00d4ff', secondary: '#7c3aed', tertiary: '#f59e0b' },
                 purple: { primary: '#8b5cf6', secondary: '#f59e0b', tertiary: '#00d4ff' },
-                amber: { primary: '#f59e0b', secondary: '#00d4ff', tertiary: '#8b5cf6' }
+                amber: { primary: '#f59e0b', secondary: '#00d4ff', tertiary: '#8b5cf6' },
+                green: { primary: '#10b981', secondary: '#3b82f6', tertiary: '#f59e0b' },
+                red: { primary: '#ef4444', secondary: '#8b5cf6', tertiary: '#f59e0b' },
+                blue: { primary: '#3b82f6', secondary: '#10b981', tertiary: '#f59e0b' }
+            },
+            wave: {
+                enhanced: false,
+                type: 'sine'
             }
         };
 
@@ -1224,6 +1433,7 @@
                 this.skillNodes = [];
                 this.isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                 this.lastMouseMove = 0;
+                this.isDarkMode = true;
                 this.init();
             }
 
@@ -1238,10 +1448,12 @@
                 this.initPhysicsLab();
                 this.initModals();
                 this.initThemeToggle();
+                this.initSettingsPanel();
                 this.initPerformanceToggles();
                 this.initRevealAnimations();
                 this.initContactForm();
                 this.bindEvents();
+                this.loadSavedSettings();
             }
 
             initPreloader() {
@@ -1667,13 +1879,40 @@
 
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                    // Wave function
+                    // Wave function - main wave
                     ctx.beginPath();
                     ctx.strokeStyle = '#00d4ff';
                     ctx.lineWidth = 2;
 
                     for (let x = 0; x < canvas.width; x++) {
-                        const y = canvas.height / 2 + amplitude * 50 * Math.sin(frequency * 0.02 * x + time);
+                        let y;
+                        
+                        // Different wave types based on settings
+                        if (CONFIG.wave.enhanced) {
+                            switch(CONFIG.wave.type) {
+                                case 'cosine':
+                                    y = canvas.height / 2 + amplitude * 50 * Math.cos(frequency * 0.02 * x + time);
+                                    break;
+                                case 'square':
+                                    y = canvas.height / 2 + amplitude * 50 * (Math.sin(frequency * 0.02 * x + time) >= 0 ? 1 : -1);
+                                    break;
+                                case 'sawtooth':
+                                    y = canvas.height / 2 + amplitude * 50 * ((2 * ((x * 0.01 * frequency + time) % (2 * Math.PI)) / Math.PI) - 1);
+                                    break;
+                                case 'superposition':
+                                    // Superposition of two waves with different frequencies
+                                    const wave1 = Math.sin(frequency * 0.02 * x + time);
+                                    const wave2 = Math.sin(frequency * 0.03 * x + time * 1.5) * 0.5;
+                                    y = canvas.height / 2 + amplitude * 50 * (wave1 + wave2);
+                                    break;
+                                default: // sine
+                                    y = canvas.height / 2 + amplitude * 50 * Math.sin(frequency * 0.02 * x + time);
+                            }
+                        } else {
+                            // Original sine wave
+                            y = canvas.height / 2 + amplitude * 50 * Math.sin(frequency * 0.02 * x + time);
+                        }
+                        
                         if (x === 0) {
                             ctx.moveTo(x, y);
                         } else {
@@ -1689,8 +1928,33 @@
                     ctx.lineWidth = 1;
 
                     for (let x = 0; x < canvas.width; x++) {
-                        const waveY = amplitude * 50 * Math.sin(frequency * 0.02 * x + time);
+                        let waveY;
+                        
+                        if (CONFIG.wave.enhanced) {
+                            switch(CONFIG.wave.type) {
+                                case 'cosine':
+                                    waveY = amplitude * 50 * Math.cos(frequency * 0.02 * x + time);
+                                    break;
+                                case 'square':
+                                    waveY = amplitude * 50 * (Math.sin(frequency * 0.02 * x + time) >= 0 ? 1 : -1);
+                                    break;
+                                case 'sawtooth':
+                                    waveY = amplitude * 50 * ((2 * ((x * 0.01 * frequency + time) % (2 * Math.PI)) / Math.PI) - 1);
+                                    break;
+                                case 'superposition':
+                                    const wave1 = Math.sin(frequency * 0.02 * x + time);
+                                    const wave2 = Math.sin(frequency * 0.03 * x + time * 1.5) * 0.5;
+                                    waveY = amplitude * 50 * (wave1 + wave2);
+                                    break;
+                                default:
+                                    waveY = amplitude * 50 * Math.sin(frequency * 0.02 * x + time);
+                            }
+                        } else {
+                            waveY = amplitude * 50 * Math.sin(frequency * 0.02 * x + time);
+                        }
+                        
                         const probY = canvas.height / 2 + Math.pow(waveY / 50, 2) * 30;
+                        
                         if (x === 0) {
                             ctx.moveTo(x, probY);
                         } else {
@@ -1699,6 +1963,28 @@
                     }
 
                     ctx.stroke();
+
+                    // If enhanced, show the resultant wave (superposition)
+                    if (CONFIG.wave.enhanced && CONFIG.wave.type === 'superposition') {
+                        ctx.beginPath();
+                        ctx.strokeStyle = '#f59e0b';
+                        ctx.lineWidth = 1.5;
+                        ctx.setLineDash([5, 3]);
+                        
+                        for (let x = 0; x < canvas.width; x++) {
+                            // First component wave
+                            const wave1Y = canvas.height / 2 + amplitude * 30 * Math.sin(frequency * 0.02 * x + time);
+                            
+                            if (x === 0) {
+                                ctx.moveTo(x, wave1Y);
+                            } else {
+                                ctx.lineTo(x, wave1Y);
+                            }
+                        }
+                        
+                        ctx.stroke();
+                        ctx.setLineDash([]);
+                    }
 
                     time += 0.05;
 
@@ -1710,99 +1996,12 @@
                 if (CONFIG.animations.useRAF) {
                     animate();
                 }
-            }
-
-            initParticleSimulation() {
-                const canvas = document.getElementById('particle-canvas');
-                if (!canvas) return;
-
-                const ctx = canvas.getContext('2d');
-                const resetBtn = document.getElementById('reset-particles');
-
-                let particles = [];
-
-                canvas.addEventListener('click', (e) => {
-                    const rect = canvas.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-
-                    particles.push({
-                        x: x,
-                        y: y,
-                        vx: (Math.random() - 0.5) * 4,
-                        vy: (Math.random() - 0.5) * 4,
-                        radius: Math.random() * 5 + 2,
-                        color: `hsl(${Math.random() * 360}, 70%, 60%)`,
-                        life: 1.0
-                    });
+                
+                // Event listeners for wave type changes
+                document.getElementById('wave-type').addEventListener('change', (e) => {
+                    CONFIG.wave.type = e.target.value;
+                    localStorage.setItem('wave-type', CONFIG.wave.type);
                 });
-
-                resetBtn.addEventListener('click', () => {
-                    particles = [];
-                });
-
-                const animate = () => {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                    // Update and draw particles
-                    for (let i = particles.length - 1; i >= 0; i--) {
-                        const p = particles[i];
-
-                        p.x += p.vx;
-                        p.y += p.vy;
-                        p.life -= 0.005;
-
-                        // Boundary collisions
-                        if (p.x < p.radius || p.x > canvas.width - p.radius) p.vx *= -0.8;
-                        if (p.y < p.radius || p.y > canvas.height - p.radius) p.vy *= -0.8;
-
-                        // Particle collisions
-                        for (let j = i + 1; j < particles.length; j++) {
-                            const other = particles[j];
-                            const dx = p.x - other.x;
-                            const dy = p.y - other.y;
-                            const distance = Math.sqrt(dx * dx + dy * dy);
-
-                            if (distance < p.radius + other.radius) {
-                                const angle = Math.atan2(dy, dx);
-                                const targetX = other.x + Math.cos(angle) * (p.radius + other.radius);
-                                const targetY = other.y + Math.sin(angle) * (p.radius + other.radius);
-
-                                p.x = targetX;
-                                p.y = targetY;
-
-                                const tempVx = p.vx;
-                                const tempVy = p.vy;
-                                p.vx = other.vx * 0.8;
-                                p.vy = other.vy * 0.8;
-                                other.vx = tempVx * 0.8;
-                                other.vy = tempVy * 0.8;
-                            }
-                        }
-
-                        // Draw particle
-                        ctx.beginPath();
-                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                        ctx.fillStyle = p.color;
-                        ctx.globalAlpha = p.life;
-                        ctx.fill();
-
-                        // Remove dead particles
-                        if (p.life <= 0) {
-                            particles.splice(i, 1);
-                        }
-                    }
-
-                    ctx.globalAlpha = 1;
-
-                    if (CONFIG.animations.useRAF) {
-                        requestAnimationFrame(animate);
-                    }
-                };
-
-                if (CONFIG.animations.useRAF) {
-                    animate();
-                }
             }
 
             initTunnelingSimulation() {
@@ -1939,6 +2138,139 @@
                 document.documentElement.style.setProperty('--accent-tertiary', colors.tertiary);
             }
 
+            initSettingsPanel() {
+                const settingsToggle = document.getElementById('settings-toggle');
+                const settingsPanel = document.getElementById('settings-panel');
+                const settingsClose = document.getElementById('settings-close');
+                const modeSwitch = document.getElementById('mode-switch');
+                const waveTypeSelect = document.getElementById('wave-type');
+                const enhancedWaveToggle = document.querySelector('.switch[data-toggle="enhanced-wave"]');
+                
+                // Open settings panel
+                settingsToggle.addEventListener('click', () => {
+                    settingsPanel.classList.add('open');
+                });
+                
+                // Close settings panel
+                settingsClose.addEventListener('click', () => {
+                    settingsPanel.classList.remove('open');
+                });
+                
+                // Dark/Light mode toggle
+                modeSwitch.addEventListener('click', () => {
+                    this.toggleDarkMode();
+                });
+                
+                // Enhanced wave toggle
+                enhancedWaveToggle.addEventListener('click', () => {
+                    enhancedWaveToggle.classList.toggle('active');
+                    CONFIG.wave.enhanced = enhancedWaveToggle.classList.contains('active');
+                    localStorage.setItem('enhanced-wave', CONFIG.wave.enhanced);
+                    
+                    if (CONFIG.wave.enhanced) {
+                        waveTypeSelect.parentElement.style.display = 'block';
+                    } else {
+                        waveTypeSelect.parentElement.style.display = 'none';
+                    }
+                });
+                
+                // Theme selection
+                document.querySelectorAll('.theme-option').forEach(option => {
+                    option.addEventListener('click', () => {
+                        const theme = option.getAttribute('data-theme');
+                        this.setTheme(theme);
+                        
+                        document.querySelectorAll('.theme-option').forEach(opt => {
+                            opt.classList.remove('active');
+                        });
+                        option.classList.add('active');
+                        
+                        localStorage.setItem('preferred-theme', theme);
+                    });
+                });
+                
+                // Hide wave type selector initially if enhanced wave is off
+                if (!CONFIG.wave.enhanced) {
+                    waveTypeSelect.parentElement.style.display = 'none';
+                }
+            }
+            
+            toggleDarkMode() {
+                const modeSwitch = document.getElementById('mode-switch');
+                const htmlElement = document.documentElement;
+                
+                this.isDarkMode = !this.isDarkMode;
+                
+                if (this.isDarkMode) {
+                    htmlElement.classList.remove('light-mode');
+                    modeSwitch.classList.remove('light');
+                } else {
+                    htmlElement.classList.add('light-mode');
+                    modeSwitch.classList.add('light');
+                }
+                
+                localStorage.setItem('dark-mode', this.isDarkMode);
+            }
+            
+            loadSavedSettings() {
+                // Load theme
+                const savedTheme = localStorage.getItem('preferred-theme') || 'cyan';
+                this.setTheme(savedTheme);
+                document.querySelector(`.theme-option[data-theme="${savedTheme}"]`)?.classList.add('active');
+                
+                // Load dark/light mode
+                const darkMode = localStorage.getItem('dark-mode') !== 'false';
+                this.isDarkMode = darkMode;
+                
+                if (!darkMode) {
+                    document.documentElement.classList.add('light-mode');
+                    document.getElementById('mode-switch')?.classList.add('light');
+                }
+                
+                // Load particles toggle
+                const particlesEnabled = localStorage.getItem('particles-enabled') !== 'false';
+                CONFIG.particles.enabled = particlesEnabled;
+                const particlesToggle = document.querySelector('.switch[data-toggle="particles"]');
+                if (!particlesEnabled && particlesToggle) {
+                    particlesToggle.classList.remove('active');
+                }
+                
+                // Load cursor toggle
+                const cursorEnabled = localStorage.getItem('cursor-enabled') !== 'false';
+                CONFIG.cursor.enabled = cursorEnabled;
+                const cursorToggle = document.querySelector('.switch[data-toggle="cursor"]');
+                if (!cursorEnabled && cursorToggle) {
+                    cursorToggle.classList.remove('active');
+                }
+                
+                // Load animations toggle
+                const animationsEnabled = localStorage.getItem('animations-enabled') !== 'false';
+                CONFIG.animations.enabled = animationsEnabled;
+                const animationsToggle = document.querySelector('.switch[data-toggle="animations"]');
+                if (!animationsEnabled && animationsToggle) {
+                    animationsToggle.classList.remove('active');
+                }
+                
+                // Load enhanced wave toggle
+                const enhancedWave = localStorage.getItem('enhanced-wave') === 'true';
+                CONFIG.wave.enhanced = enhancedWave;
+                const enhancedWaveToggle = document.querySelector('.switch[data-toggle="enhanced-wave"]');
+                if (enhancedWave && enhancedWaveToggle) {
+                    enhancedWaveToggle.classList.add('active');
+                }
+                
+                // Load wave type
+                const waveType = localStorage.getItem('wave-type') || 'sine';
+                CONFIG.wave.type = waveType;
+                const waveTypeSelect = document.getElementById('wave-type');
+                if (waveTypeSelect) {
+                    waveTypeSelect.value = waveType;
+                    if (!enhancedWave) {
+                        waveTypeSelect.parentElement.style.display = 'none';
+                    }
+                }
+            }
+            
             initPerformanceToggles() {
                 const toggles = document.querySelectorAll('.switch');
 
@@ -1950,6 +2282,8 @@
                         switch (setting) {
                             case 'particles':
                                 CONFIG.particles.enabled = toggle.classList.contains('active');
+                                localStorage.setItem('particles-enabled', CONFIG.particles.enabled);
+                                
                                 if (!CONFIG.particles.enabled) {
                                     this.particles.forEach(p => {
                                         if (p.parentNode) p.parentNode.removeChild(p);
@@ -1961,6 +2295,8 @@
                                 break;
                             case 'cursor':
                                 CONFIG.cursor.enabled = toggle.classList.contains('active');
+                                localStorage.setItem('cursor-enabled', CONFIG.cursor.enabled);
+                                
                                 document.getElementById('cursor').style.display = 
                                     CONFIG.cursor.enabled ? 'block' : 'none';
                                 // Clear existing trails
@@ -1973,113 +2309,24 @@
                                 break;
                             case 'animations':
                                 CONFIG.animations.enabled = toggle.classList.contains('active');
+                                localStorage.setItem('animations-enabled', CONFIG.animations.enabled);
+                                break;
+                            case 'enhanced-wave':
+                                CONFIG.wave.enhanced = toggle.classList.contains('active');
+                                localStorage.setItem('enhanced-wave', CONFIG.wave.enhanced);
+                                
+                                const waveTypeSelect = document.getElementById('wave-type');
+                                if (waveTypeSelect) {
+                                    waveTypeSelect.parentElement.style.display = 
+                                        CONFIG.wave.enhanced ? 'block' : 'none';
+                                }
                                 break;
                         }
                     });
                 });
             }
 
-            initRevealAnimations() {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            const delay = entry.target.dataset.delay || 0;
-                            setTimeout(() => {
-                                entry.target.classList.add('revealed');
-                            }, delay);
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.1 });
-
-                document.querySelectorAll('.reveal').forEach(el => {
-                    observer.observe(el);
-                });
-            }
-
-            initContactForm() {
-                const form = document.getElementById('contact-form');
-                if (!form) return;
-
-                form.addEventListener('submit', (e) => {
-                    e.preventDefault();
-
-                    const submitBtn = form.querySelector('button[type="submit"]');
-                    const originalText = submitBtn.textContent;
-
-                    submitBtn.textContent = 'Sending...';
-                    submitBtn.disabled = true;
-
-                    // Simulate form submission
-                    setTimeout(() => {
-                        submitBtn.textContent = 'Message Sent!';
-                        submitBtn.style.background = 'linear-gradient(to right, #10b981, #059669)';
-
-                        setTimeout(() => {
-                            this.closeModal('contact-modal');
-                            form.reset();
-                            submitBtn.textContent = originalText;
-                            submitBtn.style.background = '';
-                            submitBtn.disabled = false;
-                        }, 2000);
-                    }, 1500);
-                });
-            }
-
-            bindEvents() {
-                // Escape key to close modals
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape') {
-                        document.querySelectorAll('.modal.show').forEach(modal => {
-                            this.closeModal(modal.id);
-                        });
-                    }
-                });
-
-                // Resize handler
-                window.addEventListener('resize', debounce(() => {
-                    this.handleResize();
-                }, 250));
-            }
-
-            openModal(modalId) {
-                const modal = document.getElementById(modalId);
-                if (modal) {
-                    modal.classList.add('show');
-                    document.body.style.overflow = 'hidden';
-                }
-            }
-
-            closeModal(modalId) {
-                const modal = document.getElementById(modalId);
-                if (modal) {
-                    modal.classList.remove('show');
-                    document.body.style.overflow = 'auto';
-                }
-            }
-
-            scrollToSection(sectionId) {
-                const element = document.getElementById(sectionId);
-                if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                }
-            }
-
-            handleResize() {
-                // Handle responsive adjustments
-                if (window.innerWidth < 768) {
-                    CONFIG.particles.count = 15;
-                    CONFIG.cursor.trail.maxTrails = 5;
-                } else {
-                    CONFIG.particles.count = 25;
-                    CONFIG.cursor.trail.maxTrails = 8;
-                }
-            }
-
-            startAnimations() {
-                // Start all animations after preloader
-                this.initRevealAnimations();
-            }
+            // ...existing code...
         }
 
         // GLOBAL FUNCTIONS FOR BUTTON HANDLERS
