@@ -1706,7 +1706,7 @@
                 modal.className = 'modal show';
                 modal.innerHTML = `
                     <div class="modal-content max-w-4xl">
-                        <button onclick="this.closest('.modal').remove()" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-white nav-link">
+                        <button class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-white nav-link" aria-label="Close modal">
                             <i class="fas fa-times"></i>
                         </button>
 
@@ -1747,14 +1747,26 @@
                     </div>
                 `;
 
+                // Add proper close handler
+                modal.querySelector('button').addEventListener('click', () => {
+                    modal.remove();
+                    document.body.style.overflow = 'auto'; // Restore scrolling
+                });
+
                 document.body.appendChild(modal);
                 document.body.style.overflow = 'hidden';
+
+                // Ensure cursor is visible in modal
+                if (CONFIG.cursor.enabled) {
+                    const cursor = document.getElementById('cursor');
+                    if (cursor) cursor.style.zIndex = '10001';
+                }
 
                 // Close modal when clicking outside
                 modal.addEventListener('click', (e) => {
                     if (e.target === modal) {
                         modal.remove();
-                        document.body.style.overflow = 'auto';
+                        document.body.style.overflow = 'auto'; // Restore scrolling
                     }
                 });
             }
@@ -1766,7 +1778,7 @@
                     'Data Analysis', 'PHOEBE', 'Arduino', '3D Printing', 'LaTeX'
                 ];
 
-                const container = document.getElementById('skills-container');
+                const container = document.getElementByd('skills-container');
 
                 skills.forEach((skill, index) => {
                     const node = this.createSkillNode(skill, index, skills.length);
@@ -1780,7 +1792,7 @@
             createSkillNode(skill, index, total) {
                 const node = document.createElement('div');
                 node.className = 'skill-node';
-                node.textContent = skill;
+                               node.textContent = skill;
 
                 // Position in circle
                 const angle = (index / total) * 2 * Math.PI;
@@ -2088,7 +2100,10 @@
                     }
 
                     modal.addEventListener('click', (e) => {
-                        if (e.target === modal) this.closeModal(modal.id);
+                        if (e.target === modal) {
+                            modal.remove();
+                            document.body.style.overflow = 'auto'; // Restore scrolling
+                        }
                     });
                 });
             }
@@ -2356,7 +2371,16 @@
                 const modal = document.getElementById(modalId);
                 if (modal) {
                     modal.classList.remove('show');
-                    document.body.style.overflow = 'auto';
+                    document.body.style.overflow = 'auto'; // Always restore scrolling
+                    
+                    // Ensure cursor works after modal closes
+                    if (CONFIG.cursor.enabled) {
+                        const cursor = document.getElementById('cursor');
+                        if (cursor) {
+                            cursor.style.zIndex = '9999'; // Reset to original z-index
+                            cursor.style.display = 'block';
+                        }
+                    }
                 }
             }
             
@@ -2506,6 +2530,37 @@
         // INITIALIZE APPLICATION
         document.addEventListener('DOMContentLoaded', () => {
             window.app = new QuantumWebsite();
+            
+            // Fix modal accessibility and scrolling issues
+            document.addEventListener('click', (e) => {
+                // Close modal when clicking outside or on close button
+                if (e.target.classList.contains('modal') || 
+                    e.target.closest('button[onclick*="closest(\'.modal\').remove()"]')) {
+                    const modal = e.target.classList.contains('modal') ? 
+                                 e.target : e.target.closest('.modal');
+                    if (modal) {
+                        modal.remove();
+                        document.body.style.overflow = 'auto'; // Restore scrolling
+                    }
+                }
+            });
+
+            // Fix for cursor visibility in dynamically created modals
+            const originalCreateElement = document.createElement;
+            document.createElement = function() {
+                const element = originalCreateElement.apply(this, arguments);
+                if (arguments[0].toLowerCase() === 'div' && 
+                    (element.className === 'modal' || element.className === 'modal show')) {
+                    element.addEventListener('mousemove', (e) => {
+                        const cursor = document.getElementById('cursor');
+                        if (cursor && window.app && CONFIG.cursor.enabled) {
+                            cursor.style.display = 'block';
+                            cursor.style.zIndex = '10001'; // Ensure cursor is above modal
+                        }
+                    });
+                }
+                return element;
+            };
         });
 
         // Fix to ensure the custom cursor doesn't interfere with clickability
