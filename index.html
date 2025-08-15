@@ -758,23 +758,6 @@
         <button class="theme-btn amber" data-theme="amber" aria-label="Amber theme"></button>
     </div>
 
-    <!-- Performance Panel -->
-    <div class="performance-panel">
-        <h4 class="text-sm font-bold text-gray-300 mb-2">Performance</h4>
-        <div class="toggle-switch">
-            <span class="text-xs text-gray-400">Particles</span>
-            <div class="switch active" data-toggle="particles"></div>
-        </div>
-        <div class="toggle-switch">
-            <span class="text-xs text-gray-400">Cursor</span>
-            <div class="switch active" data-toggle="cursor"></div>
-        </div>
-        <div class="toggle-switch">
-            <span class="text-xs text-gray-400">Animations</span>
-            <div class="switch active" data-toggle="animations"></div>
-        </div>
-    </div>
-
     <!-- Settings Toggle Button -->
     <button class="settings-toggle nav-link" id="settings-toggle" aria-label="Open settings">
         <i class="fas fa-cog"></i>
@@ -1079,7 +1062,7 @@
                         </div>
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-sm text-gray-300 mb-2">Frequency (Ãâ€°)</label>
+                                <label class="block text-sm text-gray-300 mb-2">Frequency (ω)</label>
                                 <input type="range" id="frequency-slider" min="1" max="10" value="3" 
                                        class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
                             </div>
@@ -1113,7 +1096,7 @@
                 <h2 class="text-5xl font-bold gradient-text text-center mb-16 reveal">Skills Universe</h2>
 
                 <div class="glass-card p-8 reveal">
-                    <p class="text-center text-gray-400 mb-8">Drag skills around to explore connections Ã¢â‚¬Â¢ Click for details</p>
+                    <p class="text-center text-gray-400 mb-8 leading-relaxed">Drag skills around to explore connections Ã¢â‚¬Â¢ Click for details</p>
                     <div class="relative" style="height: 500px;" id="skills-container">
                         <!-- Skill nodes will be dynamically placed here -->
                     </div>
@@ -2161,18 +2144,20 @@
                     this.toggleDarkMode();
                 });
                 
-                // Enhanced wave toggle
-                enhancedWaveToggle.addEventListener('click', () => {
-                    enhancedWaveToggle.classList.toggle('active');
-                    CONFIG.wave.enhanced = enhancedWaveToggle.classList.contains('active');
-                    localStorage.setItem('enhanced-wave', CONFIG.wave.enhanced);
-                    
-                    if (CONFIG.wave.enhanced) {
-                        waveTypeSelect.parentElement.style.display = 'block';
-                    } else {
-                        waveTypeSelect.parentElement.style.display = 'none';
-                    }
-                });
+                // Enhanced wave toggle - Fix the event listener to ensure it's clickable
+                if (enhancedWaveToggle) {
+                    enhancedWaveToggle.addEventListener('click', () => {
+                        enhancedWaveToggle.classList.toggle('active');
+                        CONFIG.wave.enhanced = enhancedWaveToggle.classList.contains('active');
+                        localStorage.setItem('enhanced-wave', CONFIG.wave.enhanced);
+                        
+                        if (CONFIG.wave.enhanced) {
+                            waveTypeSelect.parentElement.style.display = 'block';
+                        } else {
+                            waveTypeSelect.parentElement.style.display = 'none';
+                        }
+                    });
+                }
                 
                 // Theme selection
                 document.querySelectorAll('.theme-option').forEach(option => {
@@ -2272,7 +2257,7 @@
             }
             
             initPerformanceToggles() {
-                const toggles = document.querySelectorAll('.switch');
+                const toggles = document.querySelectorAll('.switch[data-toggle]');
 
                 toggles.forEach(toggle => {
                     toggle.addEventListener('click', () => {
