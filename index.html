@@ -2572,6 +2572,170 @@
                 el.style.cursor = 'pointer';
             });
         });
+
+        // Ensure project data is loaded regardless of initialization order
+        document.addEventListener('DOMContentLoaded', function() {
+            // Force initialize project cards if they haven't loaded
+            const projectsGrid = document.getElementById('projects-grid');
+            if (projectsGrid && projectsGrid.children.length === 0) {
+                console.log('Forcing project cards initialization');
+                PROJECT_DATA.forEach((project, index) => {
+                    const card = createProjectCard(project, index);
+                    projectsGrid.appendChild(card);
+                });
+            }
+
+            // Fix settings panel accessibility
+            const settingsToggle = document.getElementById('settings-toggle');
+            const settingsPanel = document.getElementById('settings-panel');
+            const settingsClose = document.getElementById('settings-close');
+
+            if (settingsToggle && settingsPanel) {
+                console.log('Fixing settings panel toggle');
+                
+                // Ensure proper click handling for settings toggle
+                settingsToggle.addEventListener('click', function() {
+                    console.log('Settings toggle clicked');
+                    settingsPanel.classList.toggle('open');
+                });
+                
+                // Make sure close button works
+                if (settingsClose) {
+                    settingsClose.addEventListener('click', function() {
+                        settingsPanel.classList.remove('open');
+                    });
+                }
+            }
+
+            // Simple function to create project cards as a fallback
+            function createProjectCard(project, index) {
+                const card = document.createElement('div');
+                card.className = 'glass-card project-card overflow-hidden reveal group';
+                card.setAttribute('data-delay', (index % 3) * 150);
+
+                card.innerHTML = `
+                    <div class="h-48 bg-gradient-to-br from-blue-600 to-purple-600 relative overflow-hidden">
+                        <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover opacity-80">
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-black/50 backdrop-blur text-cyan-400 px-3 py-1 rounded-full text-sm font-semibold">
+                                ${project.tags[0]}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-cyan-400 mb-3">${project.title}</h3>
+                        <p class="text-gray-300 text-sm mb-4 leading-relaxed">${project.description.substring(0, 120)}...</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            ${project.tags.map(tag => `<span class="bg-blue-500/20 text-blue-400 px-2 py-1 rounded text-xs">${tag}</span>`).join('')}
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs text-gray-500">${project.period}</span>
+                            <div class="flex gap-2 learn-more-btn">
+                                ${project.pdfUrl ? `<a href="${project.pdfUrl}" target="_blank" class="pdf-link" onclick="event.stopPropagation()">
+                                    <i class="fas fa-file-pdf"></i> PDF
+                                </a>` : ''}
+                                <button class="text-cyan-400 hover:text-cyan-300 font-semibold nav-link text-sm">
+                                    Explore <i class="fas fa-arrow-right ml-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Add click handler
+                card.addEventListener('click', function() {
+                    handleProjectClick(project);
+                });
+
+                return card;
+            }
+
+            // Simple function to handle project clicks as a fallback
+            function handleProjectClick(project) {
+                const modal = document.createElement('div');
+                modal.className = 'modal show';
+                modal.innerHTML = `
+                    <div class="modal-content max-w-4xl">
+                        <button class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-white nav-link" aria-label="Close modal">
+                            <i class="fas fa-times"></i>
+                        </button>
+
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <img src="${project.image}" alt="${project.title}" class="w-full h-64 object-cover rounded-lg mb-4">
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    ${project.tags.map(tag => `<span class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-sm">${tag}</span>`).join('')}
+                                </div>
+                            </div>
+
+                            <div>
+                                <h2 class="text-3xl font-bold gradient-text mb-4">${project.title}</h2>
+                                <p class="text-gray-300 mb-6 leading-relaxed">${project.description}</p>
+                                <p class="text-sm text-gray-400 mb-6">Duration: ${project.period}</p>
+
+                                <div class="space-y-4">
+                                    ${project.pdfUrl ? `
+                                        <a href="${project.pdfUrl}" target="_blank" class="block w-full bg-red-600/20 border border-red-600/30 text-red-400 font-bold py-3 px-6 rounded-lg hover:bg-red-600/30 transition-colors text-center">
+                                            <i class="fas fa-file-pdf mr-2"></i> View Research Paper
+                                        </a>
+                                    ` : ''}
+
+                                    ${project.projectUrl ? `
+                                        <a href="${project.projectUrl}" target="_blank" class="block w-full bg-gray-600/20 border border-gray-600/30 text-gray-300 font-bold py-3 px-6 rounded-lg hover:bg-gray-600/30 transition-colors text-center">
+                                            <i class="fab fa-github mr-2"></i> View Source Code
+                                        </a>
+                                    ` : ''}
+
+                                    ${project.liveDemo ? `
+                                        <a href="${project.liveDemo}" target="_blank" class="block w-full bg-gradient-to-r from-cyan-400 to-purple-500 text-white font-bold py-3 px-6 rounded-lg hover:scale-105 transition-all duration-300 text-center">
+                                            <i class="fas fa-external-link-alt mr-2"></i> View Live Demo
+                                        </a>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Add proper close handler
+                modal.querySelector('button').addEventListener('click', function() {
+                    modal.remove();
+                    document.body.style.overflow = 'auto'; // Restore scrolling
+                });
+
+                document.body.appendChild(modal);
+                document.body.style.overflow = 'hidden';
+            }
+            
+            // Fix settings panel toggles
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const theme = this.getAttribute('data-theme');
+                    const colors = CONFIG.themes[theme];
+                    
+                    document.documentElement.style.setProperty('--accent-primary', colors.primary);
+                    document.documentElement.style.setProperty('--accent-secondary', colors.secondary);
+                    document.documentElement.style.setProperty('--accent-tertiary', colors.tertiary);
+                    
+                    document.querySelectorAll('.theme-option').forEach(opt => {
+                        opt.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    localStorage.setItem('preferred-theme', theme);
+                });
+            });
+            
+            // Initialize setting toggles properly
+            document.querySelectorAll('.switch[data-toggle]').forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const setting = this.dataset.toggle;
+                    localStorage.setItem(setting + '-enabled', this.classList.contains('active'));
+                    console.log('Toggle switched:', setting);
+                });
+            });
+        });
     </script>
 </body>
 </html>
