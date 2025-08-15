@@ -1758,6 +1758,66 @@
                 this.isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                 this.lastMouseMove = 0;
                 this.init();
+            }
+                // Settings utility functions
+                resetSettings() {
+                    localStorage.removeItem('quantum-settings');
+                    localStorage.removeItem('preferred-theme');
+                    localStorage.removeItem('theme-mode');
+                    location.reload();
+                }
+                
+                exportSettings() {
+                    const settings = {
+                        theme: this.currentTheme,
+                        mode: this.currentMode,
+                        particles: CONFIG.particles.enabled,
+                        cursor: CONFIG.cursor.enabled,
+                        animations: CONFIG.animations.enabled,
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    const dataStr = JSON.stringify(settings, null, 2);
+                    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+                    
+                    const exportFileDefaultName = 'quantum-settings.json';
+                    
+                    const linkElement = document.createElement('a');
+                    linkElement.setAttribute('href', dataUri);
+                    linkElement.setAttribute('download', exportFileDefaultName);
+                    linkElement.click();
+                }
+                
+                shareSettings() {
+                    if (navigator.share) {
+                        navigator.share({
+                            title: 'My Quantum Portfolio Settings',
+                            text: 'Check out my personalized quantum portfolio settings!',
+                            url: window.location.href + '?theme=' + this.currentTheme + '&mode=' + this.currentMode
+                        });
+                    } else {
+                        // Fallback: copy to clipboard
+                        const settingsUrl = window.location.href + '?theme=' + this.currentTheme + '&mode=' + this.currentMode;
+                        navigator.clipboard.writeText(settingsUrl).then(() => {
+                            alert('Settings URL copied to clipboard!');
+                        });
+                    }
+                }
+                
+                toggleFullscreen() {
+                    if (!document.fullscreenElement) {
+                        document.documentElement.requestFullscreen();
+                    } else {
+                        document.exitFullscreen();
+                    }
+                }
+                
+                takeScreenshot() {
+                    // This would require a library like html2canvas
+                    alert('Screenshot feature coming soon!');
+                }
+
+            }
 
             init() {
                 this.initPreloader();
@@ -2884,6 +2944,7 @@
     </script>
 </body>
 </html>
+
 
 
 
