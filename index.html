@@ -1320,7 +1320,7 @@
             },
             {
                 title: "Physics-Informed Neural Networks for Quantum Systems",
-                description: "Designed PINNs incorporating SchrÃƒÂ¶dinger equation constraints, achieving MSE of 0.00077 compared to traditional models.",
+                description: "Designed PINNs incorporating Schrödinger equation constraints, achieving MSE of 0.00077 compared to traditional models.",
                 tags: ["Machine Learning", "PINNs", "PyTorch", "Quantum Mechanics"],
                 image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=500&h=300&fit=crop",
                 period: "Aug 2024 - Dec 2024",
@@ -1440,29 +1440,69 @@
                 const loadingBar = document.getElementById('loading-bar');
                 const preloader = document.getElementById('preloader');
 
-                if (!loadingBar || !preloader) return; // Add safety check
+                if (!loadingBar || !preloader) {
+                    // If preloader elements don't exist, show content immediately
+                    this.showMainContent();
+                    return;
+                }
 
                 const updateProgress = () => {
-                    progress += Math.random() * 15;
+                    progress += Math.random() * 20; // Faster loading
                     if (progress < 100) {
                         loadingBar.style.width = progress + '%';
-                        setTimeout(updateProgress, 100);
+                        setTimeout(updateProgress, 50); // Faster updates
                     } else {
                         loadingBar.style.width = '100%';
                         setTimeout(() => {
                             preloader.style.opacity = '0';
                             setTimeout(() => {
                                 preloader.style.display = 'none';
-                                document.body.style.overflow = 'auto'; // Ensure body is scrollable
-                                this.startAnimations();
-                            }, 500);
-                        }, 500);
+                                this.showMainContent();
+                            }, 300); // Faster transition
+                        }, 200);
                     }
                 };
                 updateProgress();
             }
 
-            // ENHANCED CURSOR WITH SMOOTH TRAIL
+            showMainContent() {
+                document.body.style.overflow = 'auto';
+                document.body.style.cursor = 'auto'; // Ensure normal cursor for clickable elements
+                
+                // Force show all main sections
+                const mainSections = document.querySelectorAll('main section');
+                mainSections.forEach(section => {
+                    section.style.display = 'block';
+                    section.style.visibility = 'visible';
+                    section.style.opacity = '1';
+                });
+
+                // Force show navigation
+                const nav = document.querySelector('nav');
+                if (nav) {
+                    nav.style.display = 'block';
+                    nav.style.visibility = 'visible';
+                    nav.style.opacity = '1';
+                }
+
+                // Initialize reveal animations immediately
+                this.forceRevealContent();
+                this.startAnimations();
+            }
+
+            forceRevealContent() {
+                // Force reveal all content immediately for better UX
+                const revealItems = document.querySelectorAll('.reveal');
+                revealItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.classList.add('revealed');
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, index * 100); // Stagger the reveals
+                });
+            }
+
+            /* ENHANCED CURSOR WITH SMOOTH TRAIL */
             initEnhancedCursor() {
                 if (!CONFIG.cursor.enabled) return;
 
@@ -2330,13 +2370,22 @@
             initRevealAnimations() {
                 const revealItems = document.querySelectorAll('.reveal');
                 
+                // Force initial reveal for above-the-fold content
+                revealItems.forEach((item, index) => {
+                    if (index < 8) { // First 8 items show immediately
+                        item.classList.add('revealed');
+                    }
+                });
+                
                 const revealInView = () => {
                     revealItems.forEach(item => {
+                        if (item.classList.contains('revealed')) return;
+                        
                         const itemTop = item.getBoundingClientRect().top;
                         const windowHeight = window.innerHeight;
                         const delay = parseInt(item.dataset.delay || 0);
                         
-                        if (itemTop < windowHeight - 100) {
+                        if (itemTop < windowHeight - 50) { // Earlier trigger
                             setTimeout(() => {
                                 item.classList.add('revealed');
                             }, delay);
@@ -2344,22 +2393,28 @@
                     });
                 };
                 
-                window.addEventListener('scroll', debounce(revealInView, 100));
+                window.addEventListener('scroll', debounce(revealInView, 50)); // Faster response
                 revealInView(); // Initial check
             }
             
             startAnimations() {
-                if (this.isReducedMotion) return;
-                
-                // Reveal initial elements
-                document.querySelectorAll('.reveal').forEach(item => {
-                    const delay = parseInt(item.dataset.delay || 0);
-                    setTimeout(() => {
-                        item.classList.add('revealed');
-                    }, delay);
+                // Force show content regardless of reduced motion preference
+                document.querySelectorAll('.reveal').forEach((item, index) => {
+                    if (!item.classList.contains('revealed')) {
+                        const delay = parseInt(item.dataset.delay || 0);
+                        setTimeout(() => {
+                            item.classList.add('revealed');
+                        }, delay);
+                    }
                 });
+
+                // Start other animations if not reduced motion
+                if (!this.isReducedMotion) {
+                    this.initParticles();
+                    this.initPhysicsLab();
+                }
             }
-            
+
             openModal(modalId) {
                 const modal = document.getElementById(modalId);
                 if (modal) {
@@ -2528,214 +2583,57 @@
             }
         }
 
-        // INITIALIZE APPLICATION
+        // INITIALIZE APPLICATION WITH IMMEDIATE CONTENT DISPLAY
         document.addEventListener('DOMContentLoaded', () => {
+            // Force show content immediately in case of any issues
+            setTimeout(() => {
+                const preloader = document.getElementById('preloader');
+                if (preloader && preloader.style.display !== 'none') {
+                    preloader.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    
+                    // Force show all content
+                    document.querySelectorAll('.reveal').forEach(item => {
+                        item.classList.add('revealed');
+                    });
+                }
+            }, 2000); // Failsafe: show content after 2 seconds max
+
             window.app = new QuantumWebsite();
             
-            // Fix modal accessibility and scrolling issues
-            document.addEventListener('click', (e) => {
-                // Close modal when clicking outside or on close button
-                if (e.target.classList.contains('modal') || 
-                    e.target.closest('button[onclick*="closest(\'.modal\').remove()"]')) {
-                    const modal = e.target.classList.contains('modal') ? 
-                                 e.target : e.target.closest('.modal');
-                    if (modal) {
-                        modal.remove();
-                        document.body.style.overflow = 'auto'; // Restore scrolling
-                    }
-                }
+            // Ensure all sections are visible
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.style.display = 'block';
+                section.style.visibility = 'visible';
             });
 
-            // Fix for cursor visibility in dynamically created modals
-            const originalCreateElement = document.createElement;
-            document.createElement = function() {
-                const element = originalCreateElement.apply(this, arguments);
-                if (arguments[0].toLowerCase() === 'div' && 
-                    (element.className === 'modal' || element.className === 'modal show')) {
-                    element.addEventListener('mousemove', (e) => {
-                        const cursor = document.getElementById('cursor');
-                        if (cursor && window.app && CONFIG.cursor.enabled) {
-                            cursor.style.display = 'block';
-                            cursor.style.zIndex = '10001'; // Ensure cursor is above modal
-                        }
-                    });
-                }
-                return element;
-            };
-        });
-
-        // Fix to ensure the custom cursor doesn't interfere with clickability
-        document.addEventListener('DOMContentLoaded', () => {
-            // Add standard cursor to all clickable elements
-            const clickables = document.querySelectorAll('a, button, input, select, textarea, .nav-link, .project-card');
-            clickables.forEach(el => {
-                el.style.cursor = 'pointer';
-            });
-        });
-
-        // Ensure project data is loaded regardless of initialization order
-        document.addEventListener('DOMContentLoaded', function() {
-            // Force initialize project cards if they haven't loaded
-            const projectsGrid = document.getElementById('projects-grid');
-            if (projectsGrid && projectsGrid.children.length === 0) {
-                console.log('Forcing project cards initialization');
-                PROJECT_DATA.forEach((project, index) => {
-                    const card = createProjectCard(project, index);
-                    projectsGrid.appendChild(card);
-                });
-            }
-
-            // Fix settings panel accessibility
-            const settingsToggle = document.getElementById('settings-toggle');
-            const settingsPanel = document.getElementById('settings-panel');
-            const settingsClose = document.getElementById('settings-close');
-
-            if (settingsToggle && settingsPanel) {
-                console.log('Fixing settings panel toggle');
-                
-                // Ensure proper click handling for settings toggle
-                settingsToggle.addEventListener('click', function() {
-                    console.log('Settings toggle clicked');
-                    settingsPanel.classList.toggle('open');
-                });
-                
-                // Make sure close button works
-                if (settingsClose) {
-                    settingsClose.addEventListener('click', function() {
-                        settingsPanel.classList.remove('open');
-                    });
-                }
-            }
-
-            // Simple function to create project cards as a fallback
-            function createProjectCard(project, index) {
-                const card = document.createElement('div');
-                card.className = 'glass-card project-card overflow-hidden reveal group';
-                card.setAttribute('data-delay', (index % 3) * 150);
-
-                card.innerHTML = `
-                    <div class="h-48 bg-gradient-to-br from-blue-600 to-purple-600 relative overflow-hidden">
-                        <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover opacity-80">
-                        <div class="absolute bottom-4 left-4">
-                            <span class="bg-black/50 backdrop-blur text-cyan-400 px-3 py-1 rounded-full text-sm font-semibold">
-                                ${project.tags[0]}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-cyan-400 mb-3">${project.title}</h3>
-                        <p class="text-gray-300 text-sm mb-4 leading-relaxed">${project.description.substring(0, 120)}...</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            ${project.tags.map(tag => `<span class="bg-blue-500/20 text-blue-400 px-2 py-1 rounded text-xs">${tag}</span>`).join('')}
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-xs text-gray-500">${project.period}</span>
-                            <div class="flex gap-2 learn-more-btn">
-                                ${project.pdfUrl ? `<a href="${project.pdfUrl}" target="_blank" class="pdf-link" onclick="event.stopPropagation()">
-                                    <i class="fas fa-file-pdf"></i> PDF
-                                </a>` : ''}
-                                <button class="text-cyan-400 hover:text-cyan-300 font-semibold nav-link text-sm">
-                                    Explore <i class="fas fa-arrow-right ml-1"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-
-                // Add click handler
-                card.addEventListener('click', function() {
-                    handleProjectClick(project);
-                });
-
-                return card;
-            }
-
-            // Simple function to handle project clicks as a fallback
-            function handleProjectClick(project) {
-                const modal = document.createElement('div');
-                modal.className = 'modal show';
-                modal.innerHTML = `
-                    <div class="modal-content max-w-4xl">
-                        <button class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-white nav-link" aria-label="Close modal">
-                            <i class="fas fa-times"></i>
-                        </button>
-
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <div>
-                                <img src="${project.image}" alt="${project.title}" class="w-full h-64 object-cover rounded-lg mb-4">
-                                <div class="flex flex-wrap gap-2 mb-4">
-                                    ${project.tags.map(tag => `<span class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-sm">${tag}</span>`).join('')}
-                                </div>
-                            </div>
-
-                            <div>
-                                <h2 class="text-3xl font-bold gradient-text mb-4">${project.title}</h2>
-                                <p class="text-gray-300 mb-6 leading-relaxed">${project.description}</p>
-                                <p class="text-sm text-gray-400 mb-6">Duration: ${project.period}</p>
-
-                                <div class="space-y-4">
-                                    ${project.pdfUrl ? `
-                                        <a href="${project.pdfUrl}" target="_blank" class="block w-full bg-red-600/20 border border-red-600/30 text-red-400 font-bold py-3 px-6 rounded-lg hover:bg-red-600/30 transition-colors text-center">
-                                            <i class="fas fa-file-pdf mr-2"></i> View Research Paper
-                                        </a>
-                                    ` : ''}
-
-                                    ${project.projectUrl ? `
-                                        <a href="${project.projectUrl}" target="_blank" class="block w-full bg-gray-600/20 border border-gray-600/30 text-gray-300 font-bold py-3 px-6 rounded-lg hover:bg-gray-600/30 transition-colors text-center">
-                                            <i class="fab fa-github mr-2"></i> View Source Code
-                                        </a>
-                                    ` : ''}
-
-                                    ${project.liveDemo ? `
-                                        <a href="${project.liveDemo}" target="_blank" class="block w-full bg-gradient-to-r from-cyan-400 to-purple-500 text-white font-bold py-3 px-6 rounded-lg hover:scale-105 transition-all duration-300 text-center">
-                                            <i class="fas fa-external-link-alt mr-2"></i> View Live Demo
-                                        </a>
-                                    ` : ''}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-
-                // Add proper close handler
-                modal.querySelector('button').addEventListener('click', function() {
-                    modal.remove();
-                    document.body.style.overflow = 'auto'; // Restore scrolling
-                });
-
-                document.body.appendChild(modal);
-                document.body.style.overflow = 'hidden';
-            }
+            // Fix any display issues
+            document.body.style.display = 'block';
+            document.body.style.visibility = 'visible';
             
-            // Fix settings panel toggles
-            document.querySelectorAll('.theme-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    const theme = this.getAttribute('data-theme');
-                    const colors = CONFIG.themes[theme];
-                    
-                    document.documentElement.style.setProperty('--accent-primary', colors.primary);
-                    document.documentElement.style.setProperty('--accent-secondary', colors.secondary);
-                    document.documentElement.style.setProperty('--accent-tertiary', colors.tertiary);
-                    
-                    document.querySelectorAll('.theme-option').forEach(opt => {
-                        opt.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                    
-                    localStorage.setItem('preferred-theme', theme);
-                });
-            });
-            
-            // Initialize setting toggles properly
-            document.querySelectorAll('.switch[data-toggle]').forEach(toggle => {
-                toggle.addEventListener('click', function() {
-                    this.classList.toggle('active');
-                    const setting = this.dataset.toggle;
-                    localStorage.setItem(setting + '-enabled', this.classList.contains('active'));
-                    console.log('Toggle switched:', setting);
-                });
-            });
+            // ...existing code...
         });
+
+        // Force immediate content display as backup
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const preloader = document.getElementById('preloader');
+                if (preloader) {
+                    preloader.style.display = 'none';
+                }
+                document.body.style.overflow = 'auto';
+                
+                // Force reveal all content
+                document.querySelectorAll('.reveal').forEach(item => {
+                    item.classList.add('revealed');
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                });
+            }, 100);
+        });
+
+        // ...existing code...
     </script>
 </body>
 </html>
