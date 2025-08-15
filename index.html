@@ -2326,6 +2326,176 @@
                 });
             }
 
+            initRevealAnimations() {
+                const revealItems = document.querySelectorAll('.reveal');
+                
+                const revealInView = () => {
+                    revealItems.forEach(item => {
+                        const itemTop = item.getBoundingClientRect().top;
+                        const windowHeight = window.innerHeight;
+                        const delay = parseInt(item.dataset.delay || 0);
+                        
+                        if (itemTop < windowHeight - 100) {
+                            setTimeout(() => {
+                                item.classList.add('revealed');
+                            }, delay);
+                        }
+                    });
+                };
+                
+                window.addEventListener('scroll', debounce(revealInView, 100));
+                revealInView(); // Initial check
+            }
+            
+            startAnimations() {
+                if (this.isReducedMotion) return;
+                
+                // Reveal initial elements
+                document.querySelectorAll('.reveal').forEach(item => {
+                    const delay = parseInt(item.dataset.delay || 0);
+                    setTimeout(() => {
+                        item.classList.add('revealed');
+                    }, delay);
+                });
+            }
+            
+            openModal(modalId) {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                }
+            }
+            
+            closeModal(modalId) {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                }
+            }
+            
+            scrollToSection(sectionId) {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+            
+            initParticleSimulation() {
+                const canvas = document.getElementById('particle-canvas');
+                if (!canvas) return;
+                
+                const ctx = canvas.getContext('2d');
+                const particles = [];
+                
+                canvas.addEventListener('click', (e) => {
+                    const rect = canvas.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    // Add new particle
+                    particles.push({
+                        x: x,
+                        y: y,
+                        radius: Math.random() * 5 + 3,
+                        color: `rgba(0, 212, 255, ${Math.random() * 0.5 + 0.5})`,
+                        vx: (Math.random() - 0.5) * 2,
+                        vy: (Math.random() - 0.5) * 2
+                    });
+                });
+                
+                document.getElementById('reset-particles').addEventListener('click', () => {
+                    particles.length = 0;
+                });
+                
+                const animate = () => {
+                    if (!CONFIG.animations.enabled) return;
+                    
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Update and draw particles
+                    for (let i = particles.length - 1; i >= 0; i--) {
+                        const p = particles[i];
+                        
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        
+                        // Bounce off walls
+                        if (p.x < p.radius || p.x > canvas.width - p.radius) p.vx *= -1;
+                        if (p.y < p.radius || p.y > canvas.height - p.radius) p.vy *= -1;
+                        
+                        // Draw particle
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = p.color;
+                        ctx.fill();
+                    }
+                    
+                    if (CONFIG.animations.useRAF) {
+                        requestAnimationFrame(animate);
+                    }
+                };
+                
+                if (CONFIG.animations.useRAF) {
+                    animate();
+                }
+            }
+            
+            initContactForm() {
+                const form = document.getElementById('contact-form');
+                if (!form) return;
+                
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    // Get form values
+                    const name = document.getElementById('contact-name').value;
+                    const email = document.getElementById('contact-email').value;
+                    const message = document.getElementById('contact-message').value;
+                    
+                    // In a real application, you'd send this data to a server
+                    console.log('Form submitted:', { name, email, message });
+                    
+                    // Show success message
+                    alert('Thank you for your message! I will respond soon.');
+                    
+                    // Reset form
+                    form.reset();
+                    
+                    // Close modal
+                    this.closeModal('contact-modal');
+                });
+            }
+            
+            bindEvents() {
+                // Fix cursor interaction with clickable elements
+                const interactiveElements = document.querySelectorAll('a, button, .nav-link, .project-card, input, textarea, select');
+                
+                interactiveElements.forEach(el => {
+                    el.style.cursor = 'pointer';
+                    
+                    el.addEventListener('click', (e) => {
+                        // Ensure the click event propagates normally
+                        if (el.tagName === 'A' && el.getAttribute('href') === '#') {
+                            e.preventDefault();
+                        }
+                    });
+                });
+                
+                // Close settings panel when clicking outside
+                document.addEventListener('click', (e) => {
+                    const settingsPanel = document.getElementById('settings-panel');
+                    const settingsToggle = document.getElementById('settings-toggle');
+                    
+                    if (settingsPanel && settingsPanel.classList.contains('open') && 
+                        !settingsPanel.contains(e.target) && 
+                        !settingsToggle.contains(e.target)) {
+                        settingsPanel.classList.remove('open');
+                    }
+                });
+            }
+
             // ...existing code...
         }
 
@@ -2353,15 +2523,13 @@
             window.app = new QuantumWebsite();
         });
 
-        // ACCESSIBILITY ENHANCEMENTS
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Tab') {
-                document.body.classList.add('keyboard-navigation');
-            }
-        });
-
-        document.addEventListener('mousedown', () => {
-            document.body.classList.remove('keyboard-navigation');
+        // Fix to ensure the custom cursor doesn't interfere with clickability
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add standard cursor to all clickable elements
+            const clickables = document.querySelectorAll('a, button, input, select, textarea, .nav-link, .project-card');
+            clickables.forEach(el => {
+                el.style.cursor = 'pointer';
+            });
         });
     </script>
 </body>
