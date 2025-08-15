@@ -503,19 +503,339 @@
             box-shadow: 0 15px 35px rgba(14, 165, 233, 0.2);
         }
 
-        /* PERFORMANCE TOGGLE */
-        .performance-panel {
+       /* ENHANCED SETTINGS & PERSONALIZATION */
+        .quick-access-bar {
             position: fixed;
-            bottom: 20px;
-            left: 20px;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 15px;
-            z-index: 1000;
-            min-width: 200px;
+            border-radius: 50px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
+        
+        .divider {
+            width: 1px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 0 4px;
+        }
+        
+        .settings-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: none;
+            transition: all 0.3s ease;
+        }
+        
+        .settings-btn:hover {
+            background: var(--accent-primary);
+            transform: rotate(90deg);
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+        
+        /* Settings Modal Styles */
+        .settings-section {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 24px;
+        }
+        
+        .setting-item {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .setting-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .setting-label {
+            display: block;
+            margin-bottom: 16px;
+        }
+        
+        .setting-label span:first-child {
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        /* Theme Mode Selector */
+        .theme-mode-selector {
+            display: flex;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4px;
+            border-radius: 12px;
+        }
+        
+        .mode-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text-muted);
+            cursor: none;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+        }
+        
+        .mode-btn.active {
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
+        }
+        
+        .mode-btn i {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        
+        /* Color Theme Grid */
+        .color-theme-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .color-theme-btn {
+            padding: 16px;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            cursor: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .color-theme-btn.active {
+            border-color: var(--accent-primary);
+            background: rgba(0, 212, 255, 0.1);
+            transform: scale(1.02);
+        }
+        
+        .color-preview {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .color-theme-btn span {
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        /* Effect Intensity Sliders */
+        .effect-intensity {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .intensity-label {
+            min-width: 120px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .intensity-slider {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            outline: none;
+            cursor: none;
+        }
+        
+        .intensity-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            cursor: none;
+            box-shadow: 0 2px 6px rgba(0, 212, 255, 0.4);
+        }
+        
+        .intensity-value {
+            min-width: 40px;
+            text-align: right;
+            font-size: 12px;
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+        
+        /* Performance Toggles */
+        .performance-toggles {
+            space-y: 16px;
+        }
+        
+        .toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+        }
+        
+        .toggle-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .modern-switch {
+            position: relative;
+            width: 48px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: none;
+            transition: all 0.3s ease;
+        }
+        
+        .modern-switch.active {
+            background: var(--accent-primary);
+            box-shadow: 0 0 12px var(--glow-color);
+        }
+        
+        .switch-handle {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modern-switch.active .switch-handle {
+            transform: translateX(24px);
+        }
+        
+        /* Preference Buttons */
+        .preference-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .pref-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .pref-btn.primary {
+            background: var(--accent-primary);
+            color: var(--text-primary);
+        }
+        
+        .pref-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .pref-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Settings Footer */
+        .settings-footer {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .quick-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .quick-action-btn {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-size: 12px;
+            cursor: none;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .color-theme-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .theme-mode-selector {
+                flex-direction: column;
+            }
+            
+            .preference-buttons {
+                flex-direction: column;
+            }
+            
+            .quick-actions {
+                justify-content: center;
+            }
+            
+            .quick-access-bar {
+                top: 10px;
+                right: 10px;
+                padding: 6px;
+            }
+            
+            .settings-btn {
+                width: 32px;
+                height: 32px;
+            }
+        }
+
 
         .toggle-switch {
             display: flex;
@@ -664,29 +984,20 @@
     <!-- Background -->
     <div id="quantum-bg"></div>
 
-    <!-- Theme Toggle -->
-    <div class="theme-toggle">
-        <button class="theme-btn cyan active" data-theme="cyan" aria-label="Cyan theme"></button>
-        <button class="theme-btn purple" data-theme="purple" aria-label="Purple theme"></button>
-        <button class="theme-btn amber" data-theme="amber" aria-label="Amber theme"></button>
-    </div>
-
-    <!-- Performance Panel -->
-    <div class="performance-panel">
-        <h4 class="text-sm font-bold text-gray-300 mb-2">Performance</h4>
-        <div class="toggle-switch">
-            <span class="text-xs text-gray-400">Particles</span>
-            <div class="switch active" data-toggle="particles"></div>
+    <!-- Quick Access Bar -->
+        <div class="quick-access-bar">
+            <button class="theme-btn cyan active" data-theme="cyan" aria-label="Cyan theme"></button>
+            <button class="theme-btn purple" data-theme="purple" aria-label="Purple theme"></button>
+            <button class="theme-btn amber" data-theme="amber" aria-label="Amber theme"></button>
+            
+            <div class="divider"></div>
+            
+            <button onclick="openModal('settings-modal')" 
+                    class="settings-btn" 
+                    aria-label="Open Settings">
+                <i class="fas fa-cog"></i>
+            </button>
         </div>
-        <div class="toggle-switch">
-            <span class="text-xs text-gray-400">Cursor</span>
-            <div class="switch active" data-toggle="cursor"></div>
-        </div>
-        <div class="toggle-switch">
-            <span class="text-xs text-gray-400">Animations</span>
-            <div class="switch active" data-toggle="animations"></div>
-        </div>
-    </div>
 
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-40">
@@ -704,7 +1015,15 @@
                     <a href="#skills" class="nav-link text-gray-300 hover:text-cyan-400">Skills</a>
                     <a href="#journey" class="nav-link text-gray-300 hover:text-cyan-400">Journey</a>
                     <a href="#contact" class="nav-link text-gray-300 hover:text-cyan-400">Contact</a>
+                    
+                    <!-- Settings Button -->
+                    <button onclick="openModal('settings-modal')" 
+                            class="nav-link text-gray-300 hover:text-cyan-400 p-2 rounded-lg hover:bg-white/10 transition-all duration-300" 
+                            aria-label="Open Settings">
+                        <i class="fas fa-cog text-lg"></i>
+                    </button>
                 </div>
+
 
                 <button id="mobile-menu-toggle" class="md:hidden text-white nav-link">
                     <i class="fas fa-bars text-xl"></i>
@@ -1077,6 +1396,207 @@
             </form>
         </div>
     </div>
+        <!-- Settings & Personalization Modal -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content max-w-4xl">
+            <button onclick="closeModal('settings-modal')" 
+                    class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-white nav-link" 
+                    aria-label="Close settings">
+                <i class="fas fa-times"></i>
+            </button>
+    
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold gradient-text mb-2">Settings & Personalization</h2>
+                <p class="text-gray-400">Customize your quantum experience</p>
+            </div>
+    
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Appearance Settings -->
+                <div class="settings-section">
+                    <h3 class="text-xl font-bold text-cyan-400 mb-6 flex items-center">
+                        <i class="fas fa-palette mr-3"></i>Appearance
+                    </h3>
+    
+                    <!-- Dark/Light Mode -->
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <span class="font-semibold text-white">Theme Mode</span>
+                            <span class="text-sm text-gray-400">Switch between dark and light themes</span>
+                        </div>
+                        <div class="theme-mode-selector">
+                            <button class="mode-btn active" data-mode="dark">
+                                <i class="fas fa-moon"></i>
+                                <span>Dark</span>
+                            </button>
+                            <button class="mode-btn" data-mode="light">
+                                <i class="fas fa-sun"></i>
+                                <span>Light</span>
+                            </button>
+                            <button class="mode-btn" data-mode="auto">
+                                <i class="fas fa-magic"></i>
+                                <span>Auto</span>
+                            </button>
+                        </div>
+                    </div>
+    
+                    <!-- Color Themes -->
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <span class="font-semibold text-white">Color Theme</span>
+                            <span class="text-sm text-gray-400">Choose your preferred accent color</span>
+                        </div>
+                        <div class="color-theme-grid">
+                            <button class="color-theme-btn active" data-theme="cyan">
+                                <div class="color-preview" style="background: #00d4ff;"></div>
+                                <span>Quantum Blue</span>
+                            </button>
+                            <button class="color-theme-btn" data-theme="purple">
+                                <div class="color-preview" style="background: #7c3aed;"></div>
+                                <span>Cosmic Purple</span>
+                            </button>
+                            <button class="color-theme-btn" data-theme="amber">
+                                <div class="color-preview" style="background: #f59e0b;"></div>
+                                <span>Solar Amber</span>
+                            </button>
+                            <button class="color-theme-btn" data-theme="green">
+                                <div class="color-preview" style="background: #10b981;"></div>
+                                <span>Matrix Green</span>
+                            </button>
+                            <button class="color-theme-btn" data-theme="rose">
+                                <div class="color-preview" style="background: #f43f5e;"></div>
+                                <span>Plasma Rose</span>
+                            </button>
+                            <button class="color-theme-btn" data-theme="teal">
+                                <div class="color-preview" style="background: #14b8a6;"></div>
+                                <span>Electron Teal</span>
+                            </button>
+                        </div>
+                    </div>
+    
+                    <!-- Background Effects -->
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <span class="font-semibold text-white">Background Effects</span>
+                            <span class="text-sm text-gray-400">Customize visual effects intensity</span>
+                        </div>
+                        <div class="effect-intensity">
+                            <label class="intensity-label">Particle Density</label>
+                            <input type="range" id="particle-density" min="0" max="50" value="25" 
+                                   class="intensity-slider">
+                            <span class="intensity-value" id="particle-value">25</span>
+                        </div>
+                        <div class="effect-intensity">
+                            <label class="intensity-label">Glow Intensity</label>
+                            <input type="range" id="glow-intensity" min="0" max="100" value="50" 
+                                   class="intensity-slider">
+                            <span class="intensity-value" id="glow-value">50%</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Performance & Accessibility -->
+                <div class="settings-section">
+                    <h3 class="text-xl font-bold text-purple-400 mb-6 flex items-center">
+                        <i class="fas fa-tachometer-alt mr-3"></i>Performance & Accessibility
+                    </h3>
+    
+                    <!-- Performance Settings -->
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <span class="font-semibold text-white">Visual Effects</span>
+                            <span class="text-sm text-gray-400">Control animations and effects</span>
+                        </div>
+                        <div class="performance-toggles">
+                            <div class="toggle-row">
+                                <span class="toggle-label">Particle System</span>
+                                <div class="modern-switch active" data-setting="particles">
+                                    <div class="switch-handle"></div>
+                                </div>
+                            </div>
+                            <div class="toggle-row">
+                                <span class="toggle-label">Custom Cursor</span>
+                                <div class="modern-switch active" data-setting="cursor">
+                                    <div class="switch-handle"></div>
+                                </div>
+                            </div>
+                            <div class="toggle-row">
+                                <span class="toggle-label">Smooth Animations</span>
+                                <div class="modern-switch active" data-setting="animations">
+                                    <div class="switch-handle"></div>
+                                </div>
+                            </div>
+                            <div class="toggle-row">
+                                <span class="toggle-label">Auto-play Media</span>
+                                <div class="modern-switch active" data-setting="autoplay">
+                                    <div class="switch-handle"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Accessibility -->
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <span class="font-semibold text-white">Accessibility</span>
+                            <span class="text-sm text-gray-400">Improve usability and accessibility</span>
+                        </div>
+                        <div class="performance-toggles">
+                            <div class="toggle-row">
+                                <span class="toggle-label">Reduced Motion</span>
+                                <div class="modern-switch" data-setting="reduced-motion">
+                                    <div class="switch-handle"></div>
+                                </div>
+                            </div>
+                            <div class="toggle-row">
+                                <span class="toggle-label">High Contrast</span>
+                                <div class="modern-switch" data-setting="high-contrast">
+                                    <div class="switch-handle"></div>
+                                </div>
+                            </div>
+                            <div class="toggle-row">
+                                <span class="toggle-label">Large Text</span>
+                                <div class="modern-switch" data-setting="large-text">
+                                    <div class="switch-handle"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Reset & Export -->
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <span class="font-semibold text-white">Preferences</span>
+                            <span class="text-sm text-gray-400">Manage your settings</span>
+                        </div>
+                        <div class="preference-buttons">
+                            <button class="pref-btn secondary" onclick="resetSettings()">
+                                <i class="fas fa-undo mr-2"></i>Reset to Default
+                            </button>
+                            <button class="pref-btn primary" onclick="exportSettings()">
+                                <i class="fas fa-download mr-2"></i>Export Settings
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Quick Actions -->
+            <div class="settings-footer">
+                <div class="quick-actions">
+                    <span class="text-sm text-gray-400">Quick Actions:</span>
+                    <button class="quick-action-btn" onclick="toggleFullscreen()">
+                        <i class="fas fa-expand"></i> Fullscreen
+                    </button>
+                    <button class="quick-action-btn" onclick="takeScreenshot()">
+                        <i class="fas fa-camera"></i> Screenshot
+                    </button>
+                    <button class="quick-action-btn" onclick="shareSettings()">
+                        <i class="fas fa-share"></i> Share
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="physics-lab-modal" class="modal">
         <div class="modal-content max-w-4xl">
@@ -1238,6 +1758,64 @@
                 this.isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                 this.lastMouseMove = 0;
                 this.init();
+                // Settings utility functions
+                resetSettings() {
+                    localStorage.removeItem('quantum-settings');
+                    localStorage.removeItem('preferred-theme');
+                    localStorage.removeItem('theme-mode');
+                    location.reload();
+                }
+                
+                exportSettings() {
+                    const settings = {
+                        theme: this.currentTheme,
+                        mode: this.currentMode,
+                        particles: CONFIG.particles.enabled,
+                        cursor: CONFIG.cursor.enabled,
+                        animations: CONFIG.animations.enabled,
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    const dataStr = JSON.stringify(settings, null, 2);
+                    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+                    
+                    const exportFileDefaultName = 'quantum-settings.json';
+                    
+                    const linkElement = document.createElement('a');
+                    linkElement.setAttribute('href', dataUri);
+                    linkElement.setAttribute('download', exportFileDefaultName);
+                    linkElement.click();
+                }
+                
+                shareSettings() {
+                    if (navigator.share) {
+                        navigator.share({
+                            title: 'My Quantum Portfolio Settings',
+                            text: 'Check out my personalized quantum portfolio settings!',
+                            url: window.location.href + '?theme=' + this.currentTheme + '&mode=' + this.currentMode
+                        });
+                    } else {
+                        // Fallback: copy to clipboard
+                        const settingsUrl = window.location.href + '?theme=' + this.currentTheme + '&mode=' + this.currentMode;
+                        navigator.clipboard.writeText(settingsUrl).then(() => {
+                            alert('Settings URL copied to clipboard!');
+                        });
+                    }
+                }
+                
+                toggleFullscreen() {
+                    if (!document.fullscreenElement) {
+                        document.documentElement.requestFullscreen();
+                    } else {
+                        document.exitFullscreen();
+                    }
+                }
+                
+                takeScreenshot() {
+                    // This would require a library like html2canvas
+                    alert('Screenshot feature coming soon!');
+                }
+
             }
 
             init() {
@@ -1250,6 +1828,7 @@
                 this.initSkills();
                 this.initPhysicsLab();
                 this.initModals();
+                this.initSettings();
                 this.initThemeToggle();
                 this.initPerformanceToggles();
                 this.initRevealAnimations();
@@ -2033,45 +2612,183 @@
                 document.documentElement.style.setProperty('--accent-tertiary', colors.tertiary);
             }
 
-            initPerformanceToggles() {
-                const toggles = document.querySelectorAll('.switch');
-
-                toggles.forEach(toggle => {
-                    toggle.addEventListener('click', () => {
-                        toggle.classList.toggle('active');
-                        const setting = toggle.dataset.toggle;
-
-                        switch (setting) {
-                            case 'particles':
-                                CONFIG.particles.enabled = toggle.classList.contains('active');
-                                if (!CONFIG.particles.enabled) {
-                                    this.particles.forEach(p => {
-                                        if (p.parentNode) p.parentNode.removeChild(p);
-                                    });
-                                    this.particles = [];
-                                } else {
-                                    this.initParticles();
-                                }
-                                break;
-                            case 'cursor':
-                                CONFIG.cursor.enabled = toggle.classList.contains('active');
-                                document.getElementById('cursor').style.display = 
-                                    CONFIG.cursor.enabled ? 'block' : 'none';
-                                // Clear existing trails
-                                this.cursorTrails.forEach(trail => {
-                                    if (trail.element && trail.element.parentNode) {
-                                        trail.element.parentNode.removeChild(trail.element);
-                                    }
-                                });
-                                this.cursorTrails = [];
-                                break;
-                            case 'animations':
-                                CONFIG.animations.enabled = toggle.classList.contains('active');
-                                break;
-                        }
+            initThemeToggle() {
+                // Initialize theme system
+                const themes = {
+                    cyan: { primary: '#00d4ff', secondary: '#7c3aed', tertiary: '#f59e0b' },
+                    purple: { primary: '#8b5cf6', secondary: '#f59e0b', tertiary: '#00d4ff' },
+                    amber: { primary: '#f59e0b', secondary: '#00d4ff', tertiary: '#8b5cf6' },
+                    green: { primary: '#10b981', secondary: '#7c3aed', tertiary: '#f59e0b' },
+                    rose: { primary: '#f43f5e', secondary: '#8b5cf6', tertiary: '#00d4ff' },
+                    teal: { primary: '#14b8a6', secondary: '#f59e0b', tertiary: '#7c3aed' }
+                };
+            
+                CONFIG.themes = themes;
+            
+                // Quick access theme buttons
+                document.querySelectorAll('.theme-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.setTheme(btn.dataset.theme);
+                        this.updateThemeButtons();
                     });
                 });
+            
+                // Settings modal theme buttons
+                document.querySelectorAll('.color-theme-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.setTheme(btn.dataset.theme);
+                        this.updateSettingsTheme();
+                    });
+                });
+            
+                // Mode buttons (dark/light/auto)
+                document.querySelectorAll('.mode-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.setMode(btn.dataset.mode);
+                        this.updateModeButtons();
+                    });
+                });
+            
+                // Load saved preferences
+                this.loadSettings();
             }
+            
+            initSettings() {
+                // Performance toggles
+                document.querySelectorAll('.modern-switch').forEach(toggle => {
+                    toggle.addEventListener('click', () => {
+                        toggle.classList.toggle('active');
+                        const setting = toggle.dataset.setting;
+                        this.handleSettingChange(setting, toggle.classList.contains('active'));
+                    });
+                });
+            
+                // Intensity sliders
+                const particleDensity = document.getElementById('particle-density');
+                const glowIntensity = document.getElementById('glow-intensity');
+            
+                if (particleDensity) {
+                    particleDensity.addEventListener('input', (e) => {
+                        const value = e.target.value;
+                        document.getElementById('particle-value').textContent = value;
+                        CONFIG.particles.count = parseInt(value);
+                        this.updateParticles();
+                    });
+                }
+            
+                if (glowIntensity) {
+                    glowIntensity.addEventListener('input', (e) => {
+                        const value = e.target.value;
+                        document.getElementById('glow-value').textContent = value + '%';
+                        this.updateGlowIntensity(value / 100);
+                    });
+                }
+            }
+            
+            setTheme(theme) {
+                const colors = CONFIG.themes[theme];
+                if (!colors) return;
+            
+                document.documentElement.style.setProperty('--accent-primary', colors.primary);
+                document.documentElement.style.setProperty('--accent-secondary', colors.secondary);
+                document.documentElement.style.setProperty('--accent-tertiary', colors.tertiary);
+                
+                localStorage.setItem('preferred-theme', theme);
+                this.currentTheme = theme;
+            }
+            
+            setMode(mode) {
+                document.documentElement.setAttribute('data-theme-mode', mode);
+                localStorage.setItem('theme-mode', mode);
+                this.currentMode = mode;
+            
+                if (mode === 'light') {
+                    document.documentElement.style.setProperty('--bg-primary', '#f8fafc');
+                    document.documentElement.style.setProperty('--bg-secondary', '#e2e8f0');
+                    document.documentElement.style.setProperty('--text-primary', '#1e293b');
+                    document.documentElement.style.setProperty('--text-secondary', '#475569');
+                    document.documentElement.style.setProperty('--glass-bg', 'rgba(255, 255, 255, 0.7)');
+                } else if (mode === 'dark') {
+                    document.documentElement.style.setProperty('--bg-primary', '#0a0a0f');
+                    document.documentElement.style.setProperty('--bg-secondary', '#1a1a2e');
+                    document.documentElement.style.setProperty('--text-primary', '#ffffff');
+                    document.documentElement.style.setProperty('--text-secondary', '#e2e8f0');
+                    document.documentElement.style.setProperty('--glass-bg', 'rgba(26, 26, 46, 0.7)');
+                } else { // auto mode
+                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    this.setMode(prefersDark ? 'dark' : 'light');
+                }
+            }
+            
+            handleSettingChange(setting, enabled) {
+                switch(setting) {
+                    case 'particles':
+                        CONFIG.particles.enabled = enabled;
+                        if (!enabled) {
+                            this.clearParticles();
+                        } else {
+                            this.initParticles();
+                        }
+                        break;
+                    case 'cursor':
+                        CONFIG.cursor.enabled = enabled;
+                        document.getElementById('cursor').style.display = enabled ? 'block' : 'none';
+                        break;
+                    case 'animations':
+                        CONFIG.animations.enabled = enabled;
+                        break;
+                    case 'reduced-motion':
+                        document.documentElement.classList.toggle('reduced-motion', enabled);
+                        break;
+                    case 'high-contrast':
+                        document.documentElement.classList.toggle('high-contrast', enabled);
+                        break;
+                    case 'large-text':
+                        document.documentElement.classList.toggle('large-text', enabled);
+                        break;
+                }
+                
+                this.saveSettings();
+            }
+            
+            loadSettings() {
+                const savedTheme = localStorage.getItem('preferred-theme') || 'cyan';
+                const savedMode = localStorage.getItem('theme-mode') || 'dark';
+                
+                this.setTheme(savedTheme);
+                this.setMode(savedMode);
+                this.updateThemeButtons();
+                this.updateModeButtons();
+            }
+            
+            saveSettings() {
+                const settings = {
+                    theme: this.currentTheme,
+                    mode: this.currentMode,
+                    particles: CONFIG.particles.enabled,
+                    cursor: CONFIG.cursor.enabled,
+                    animations: CONFIG.animations.enabled
+                };
+                
+                localStorage.setItem('quantum-settings', JSON.stringify(settings));
+            }
+            
+            updateThemeButtons() {
+                document.querySelectorAll('.theme-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.theme === this.currentTheme);
+                });
+                
+                document.querySelectorAll('.color-theme-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.theme === this.currentTheme);
+                });
+            }
+            
+            updateModeButtons() {
+                document.querySelectorAll('.mode-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.mode === this.currentMode);
+                });
+            }
+
 
             initRevealAnimations() {
                 const observer = new IntersectionObserver((entries) => {
@@ -2226,6 +2943,7 @@
     </script>
 </body>
 </html>
+
 
 
 
