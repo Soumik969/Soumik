@@ -54,7 +54,7 @@
             cursor: none;
         }
 
-        /* ENHANCED CURSOR WITH SMOOTH TRAIL */
+       /* ENHANCED CURSOR WITH SMOOTH TRAIL */
         .cursor {
             width: 20px;
             height: 20px;
@@ -62,12 +62,14 @@
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            z-index: 9999;
+            z-index: 10001;
             transform: translate(-50%, -50%);
             transition: none;
             will-change: transform;
-            mix-blend-mode: difference;
+            mix-blend-mode: normal; /* Changed from difference to normal for better modal visibility */
+            background: rgba(0, 212, 255, 0.1);
         }
+
 
         .cursor.active {
             transform: translate(-50%, -50%) scale(1.5);
@@ -428,6 +430,17 @@
             justify-content: center;
             opacity: 0;
             transition: opacity 0.3s ease;
+        }
+        /* Modal cursor visibility fix */
+        .modal .close-modal-btn {
+            cursor: pointer !important;
+            z-index: 10002;
+        }
+
+        .modal .close-modal-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            padding: 8px;
         }
 
         .modal.show {
@@ -1651,6 +1664,26 @@
                 this.initTunnelingSimulation();
                 this.initBohrModel();
             }
+            
+            initModalCursorInteractions(modal) {
+                if (!CONFIG.cursor.enabled) return;
+                
+                const cursor = document.getElementById('cursor');
+                
+                // Add cursor interactions for all interactive elements in the modal
+                const interactiveElements = modal.querySelectorAll('.nav-link, .close-modal-btn, button, a');
+                
+                interactiveElements.forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        cursor.classList.add('active');
+                        cursor.style.zIndex = '10001'; // Higher than modal z-index
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        cursor.classList.remove('active');
+                        cursor.style.zIndex = '9999'; // Back to normal
+                    });
+                });
+            }
 
            initWaveFunction() {
                 const canvas = document.getElementById('wave-canvas');
@@ -2193,6 +2226,7 @@
     </script>
 </body>
 </html>
+
 
 
 
