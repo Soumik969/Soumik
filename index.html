@@ -526,7 +526,7 @@
             height: 24px;
             background: #333;
             border-radius: 12px;
-            cursor: none;
+            cursor: pointer !important;
             transition: background 0.3s;
         }
 
@@ -587,7 +587,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: none;
+            cursor: pointer !important;
             z-index: 9999;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
@@ -628,7 +628,7 @@
             right: 1rem;
             font-size: 1.5rem;
             color: var(--text-muted);
-            cursor: none;
+            cursor: pointer !important;
             transition: color 0.3s ease;
         }
 
@@ -2185,39 +2185,59 @@
                 const waveTypeSelect = document.getElementById('wave-type');
                 const enhancedWaveToggle = document.querySelector('.switch[data-toggle="enhanced-wave"]');
                 
+                // Ensure elements exist
+                if (!settingsToggle || !settingsPanel || !settingsClose) {
+                    console.warn('Settings panel elements not found');
+                    return;
+                }
+                
                 // Open settings panel
-                settingsToggle.addEventListener('click', () => {
+                settingsToggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
                     settingsPanel.classList.add('open');
                 });
                 
                 // Close settings panel
-                settingsClose.addEventListener('click', () => {
+                settingsClose.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
                     settingsPanel.classList.remove('open');
                 });
                 
                 // Dark/Light mode toggle
-                modeSwitch.addEventListener('click', () => {
-                    this.toggleDarkMode();
-                });
+                if (modeSwitch) {
+                    modeSwitch.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.toggleDarkMode();
+                    });
+                }
                 
                 // Enhanced wave toggle - Fix the event listener to ensure it's clickable
                 if (enhancedWaveToggle) {
-                    enhancedWaveToggle.addEventListener('click', () => {
+                    enhancedWaveToggle.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
                         enhancedWaveToggle.classList.toggle('active');
                         CONFIG.wave.enhanced = enhancedWaveToggle.classList.contains('active');
                         localStorage.setItem('enhanced-wave', CONFIG.wave.enhanced);
                         
-                        if (CONFIG.wave.enhanced) {
-                            waveTypeSelect.parentElement.style.display = 'block';
-                        } else {
-                            waveTypeSelect.parentElement.style.display = 'none';
+                        if (waveTypeSelect) {
+                            if (CONFIG.wave.enhanced) {
+                                waveTypeSelect.parentElement.style.display = 'block';
+                            } else {
+                                waveTypeSelect.parentElement.style.display = 'none';
+                            }
                         }
                     });
                 }
                 
                 // Theme selection
                 document.querySelectorAll('.theme-option').forEach(option => {
-                    option.addEventListener('click', () => {
+                    option.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
                         const theme = option.getAttribute('data-theme');
                         this.setTheme(theme);
                         
@@ -2230,9 +2250,17 @@
                     });
                 });
                 
-                // Hide wave type selector initially if enhanced wave is off
-                if (!CONFIG.wave.enhanced) {
-                    waveTypeSelect.parentElement.style.display = 'none';
+                // Wave type selection
+                if (waveTypeSelect) {
+                    waveTypeSelect.addEventListener('change', (e) => {
+                        CONFIG.wave.type = e.target.value;
+                        localStorage.setItem('wave-type', CONFIG.wave.type);
+                    });
+                    
+                    // Hide wave type selector initially if enhanced wave is off
+                    if (!CONFIG.wave.enhanced) {
+                        waveTypeSelect.parentElement.style.display = 'none';
+                    }
                 }
             }
             
@@ -2316,7 +2344,9 @@
                 const toggles = document.querySelectorAll('.switch[data-toggle]');
 
                 toggles.forEach(toggle => {
-                    toggle.addEventListener('click', () => {
+                    toggle.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
                         toggle.classList.toggle('active');
                         const setting = toggle.dataset.toggle;
 
@@ -2338,8 +2368,10 @@
                                 CONFIG.cursor.enabled = toggle.classList.contains('active');
                                 localStorage.setItem('cursor-enabled', CONFIG.cursor.enabled);
                                 
-                                document.getElementById('cursor').style.display = 
-                                    CONFIG.cursor.enabled ? 'block' : 'none';
+                                const cursor = document.getElementById('cursor');
+                                if (cursor) {
+                                    cursor.style.display = CONFIG.cursor.enabled ? 'block' : 'none';
+                                }
                                 // Clear existing trails
                                 this.cursorTrails.forEach(trail => {
                                     if (trail.element && trail.element.parentNode) {
@@ -2535,17 +2567,18 @@
             
             bindEvents() {
                 // Fix cursor interaction with clickable elements
-                const interactiveElements = document.querySelectorAll('a, button, .nav-link, .project-card, input, textarea, select');
+                const interactiveElements = document.querySelectorAll('a, button, .nav-link, .project-card, input, textarea, select, .settings-toggle, .settings-close, .switch, .theme-option');
                 
                 interactiveElements.forEach(el => {
                     el.style.cursor = 'pointer';
                     
-                    el.addEventListener('click', (e) => {
-                        // Ensure the click event propagates normally
-                        if (el.tagName === 'A' && el.getAttribute('href') === '#') {
-                            e.preventDefault();
-                        }
-                    });
+                    // Remove custom cursor style for settings elements
+                    if (el.classList.contains('settings-toggle') || 
+                        el.classList.contains('settings-close') || 
+                        el.classList.contains('switch') || 
+                        el.classList.contains('theme-option')) {
+                        el.style.cursor = 'pointer !important';
+                    }
                 });
                 
                 // Close settings panel when clicking outside
@@ -2559,6 +2592,14 @@
                         settingsPanel.classList.remove('open');
                     }
                 });
+                
+                // Prevent settings panel from closing when clicking inside it
+                const settingsPanel = document.getElementById('settings-panel');
+                if (settingsPanel) {
+                    settingsPanel.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                }
             }
 
             // ...existing code...
