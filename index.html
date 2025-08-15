@@ -1511,7 +1511,7 @@
                 modal.className = 'modal show';
                 modal.innerHTML = `
                     <div class="modal-content max-w-4xl">
-                        <button onclick="this.closest('.modal').remove()" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-white nav-link">
+                        <button onclick="closeProjectModal(this)" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-white nav-link">
                             <i class="fas fa-times"></i>
                         </button>
 
@@ -1553,14 +1553,16 @@
                 `;
 
                 document.body.appendChild(modal);
+                const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+                document.body.style.paddingRight = scrollbarWidth + 'px';
                 document.body.style.overflow = 'hidden';
 
                 // Close modal when clicking outside
                 modal.addEventListener('click', (e) => {
                     if (e.target === modal) {
-                        modal.remove();
                         document.body.style.overflow = '';
                         document.body.style.paddingRight = '';
+                        modal.remove();
                     }
                 });
             }
@@ -2143,6 +2145,16 @@
                 this.initRevealAnimations();
             }
         }
+        // CLOSE PROJECT MODAL FUNCTION
+        function closeProjectModal(button) {
+            const modal = button.closest('.modal');
+            if (modal) {
+                // Proper cleanup
+                document.body.style.overflow = '';
+                document.body.style.paddingRight = '';
+                modal.remove();
+            }
+        }
 
         // GLOBAL FUNCTIONS FOR BUTTON HANDLERS
         function openModal(modalId) {
@@ -2181,6 +2193,7 @@
     </script>
 </body>
 </html>
+
 
 
 
