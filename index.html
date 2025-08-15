@@ -751,12 +751,8 @@
     <!-- Background -->
     <div id="quantum-bg"></div>
 
-    <!-- Theme Toggle -->
-    <div class="theme-toggle">
-        <button class="theme-btn cyan active" data-theme="cyan" aria-label="Cyan theme"></button>
-        <button class="theme-btn purple" data-theme="purple" aria-label="Purple theme"></button>
-        <button class="theme-btn amber" data-theme="amber" aria-label="Amber theme"></button>
-    </div>
+    <!-- Remove the redundant theme toggle from main screen -->
+    <!-- Theme Toggle section removed as it's already in settings panel -->
 
     <!-- Settings Toggle Button -->
     <button class="settings-toggle nav-link" id="settings-toggle" aria-label="Open settings">
@@ -1444,6 +1440,8 @@
                 const loadingBar = document.getElementById('loading-bar');
                 const preloader = document.getElementById('preloader');
 
+                if (!loadingBar || !preloader) return; // Add safety check
+
                 const updateProgress = () => {
                     progress += Math.random() * 15;
                     if (progress < 100) {
@@ -1455,6 +1453,7 @@
                             preloader.style.opacity = '0';
                             setTimeout(() => {
                                 preloader.style.display = 'none';
+                                document.body.style.overflow = 'auto'; // Ensure body is scrollable
                                 this.startAnimations();
                             }, 500);
                         }, 500);
@@ -1778,7 +1777,9 @@
                     'Data Analysis', 'PHOEBE', 'Arduino', '3D Printing', 'LaTeX'
                 ];
 
-                const container = document.getElementByd('skills-container');
+                const container = document.getElementById('skills-container'); // Fix the typo here
+
+                if (!container) return; // Add safety check for container
 
                 skills.forEach((skill, index) => {
                     const node = this.createSkillNode(skill, index, skills.length);
