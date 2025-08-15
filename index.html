@@ -528,6 +528,7 @@
             border-radius: 12px;
             cursor: pointer !important;
             transition: background 0.3s;
+            pointer-events: auto;
         }
 
         .switch.active {
@@ -592,6 +593,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            pointer-events: auto;
         }
 
         .settings-toggle:hover {
@@ -615,6 +617,7 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+            pointer-events: auto;
         }
 
         .settings-panel.open {
@@ -630,29 +633,250 @@
             color: var(--text-muted);
             cursor: pointer !important;
             transition: color 0.3s ease;
+            pointer-events: auto;
         }
 
         .settings-close:hover {
             color: var(--accent-primary);
         }
 
-        .settings-section {
-            margin-bottom: 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 1rem;
+        /* GLOBAL STYLES */
+        html {
+            scroll-behavior: smooth;
         }
 
-        .settings-section h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
+        body {
+            overflow-x: hidden;
+        }
+
+        /* SCROLLBAR STYLES */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-secondary);
+        }
+
+        /* HIDE DEFAULT CURSOR */
+        body {
+            cursor: none;
+        }
+
+        /* CUSTOM CURSOR STYLES */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.3s ease;
+        }
+
+        .cursor.active {
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+
+        /* BUTTON STYLES */
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* SECTION STYLES */
+        section {
+            display: none;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        section.reveal {
+            display: block;
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* HEADER STYLES */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+        }
+
+        /* FOOTER STYLES */
+        footer {
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* MODAL STYLES */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* SCROLL REVEAL ANIMATION */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ACHIEVEMENT CARD ANIMATION */
+        .achievement-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+
+        /* SETTINGS PANEL STYLES */
+        .settings-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--glass-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer !important;
+            z-index: 9999;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            pointer-events: auto;
+        }
+
+        .settings-toggle:hover {
+            transform: rotate(30deg);
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .settings-panel {
+            position: fixed;
+            right: -320px;
+            top: 0;
+            width: 320px;
+            height: 100vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 9998;
+            transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 2rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            pointer-events: auto;
+        }
+
+        .settings-panel.open {
+            right: 0;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .settings-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            cursor: pointer !important;
+            transition: color 0.3s ease;
+            pointer-events: auto;
+        }
+
+        .settings-close:hover {
             color: var(--accent-primary);
-        }
-
-        .theme-options {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem;
-            margin-top: 1rem;
         }
 
         .theme-option {
@@ -660,30 +884,13 @@
             border-radius: 0.5rem;
             border: 2px solid transparent;
             transition: all 0.3s ease;
-            cursor: none;
+            cursor: pointer !important;
+            pointer-events: auto;
         }
 
         .theme-option.active {
             transform: scale(1.1);
             border-color: var(--text-primary);
-        }
-
-        .color-preview {
-            height: 100%;
-            width: 100%;
-            border-radius: 0.25rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.5rem;
-        }
-
-        .mode-switch-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 1rem;
         }
 
         .mode-switch {
@@ -693,10 +900,11 @@
             background: var(--bg-primary);
             border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            cursor: none;
+            cursor: pointer !important;
             display: flex;
             align-items: center;
             padding: 0 5px;
+            pointer-events: auto;
         }
 
         .mode-switch::after {
@@ -2198,40 +2406,52 @@
                     return;
                 }
                 
-                // Force remove any existing event listeners by cloning the element
-                const newSettingsToggle = settingsToggle.cloneNode(true);
-                settingsToggle.parentNode.replaceChild(newSettingsToggle, settingsToggle);
+                // Force proper styling for settings toggle
+                settingsToggle.style.cursor = 'pointer';
+                settingsToggle.style.pointerEvents = 'auto';
+                settingsToggle.style.zIndex = '9999';
                 
-                // Open settings panel with improved event handling
-                newSettingsToggle.addEventListener('click', (e) => {
-                    console.log('Settings toggle clicked');
+                // Remove custom cursor for settings panel interactions
+                [settingsToggle, settingsClose, modeSwitch].forEach(el => {
+                    if (el) {
+                        el.style.cursor = 'pointer';
+                        el.style.pointerEvents = 'auto';
+                    }
+                });
+                
+                // Open settings panel with multiple event types for better compatibility
+                const openSettings = (e) => {
+                    console.log('Settings toggle activated');
                     e.preventDefault();
                     e.stopPropagation();
                     e.stopImmediatePropagation();
                     
-                    settingsPanel.classList.toggle('open');
-                    console.log('Settings panel open state:', settingsPanel.classList.contains('open'));
-                });
+                    settingsPanel.classList.add('open');
+                    console.log('Settings panel opened');
+                };
                 
-                // Also try with mousedown for better responsiveness
-                newSettingsToggle.addEventListener('mousedown', (e) => {
-                    e.preventDefault();
-                });
+                // Add multiple event listeners for better compatibility
+                settingsToggle.addEventListener('click', openSettings);
+                settingsToggle.addEventListener('touchstart', openSettings);
+                settingsToggle.addEventListener('pointerdown', openSettings);
                 
                 // Close settings panel
                 if (settingsClose) {
-                    settingsClose.addEventListener('click', (e) => {
-                        console.log('Settings close clicked');
+                    const closeSettings = (e) => {
+                        console.log('Settings close activated');
                         e.preventDefault();
                         e.stopPropagation();
                         settingsPanel.classList.remove('open');
-                    });
+                    };
+                    
+                    settingsClose.addEventListener('click', closeSettings);
+                    settingsClose.addEventListener('touchstart', closeSettings);
                 }
                 
-                // Close when clicking outside - improved logic
+                // Close when clicking outside - but not when clicking the toggle
                 document.addEventListener('click', (e) => {
                     if (!settingsPanel.contains(e.target) && 
-                        !newSettingsToggle.contains(e.target) &&
+                        !settingsToggle.contains(e.target) &&
                         settingsPanel.classList.contains('open')) {
                         settingsPanel.classList.remove('open');
                     }
@@ -2239,16 +2459,25 @@
                 
                 // Dark/Light mode toggle
                 if (modeSwitch) {
-                    modeSwitch.addEventListener('click', (e) => {
+                    modeSwitch.style.cursor = 'pointer';
+                    modeSwitch.style.pointerEvents = 'auto';
+                    
+                    const toggleMode = (e) => {
                         e.preventDefault();
                         e.stopPropagation();
                         this.toggleDarkMode();
-                    });
+                    };
+                    
+                    modeSwitch.addEventListener('click', toggleMode);
+                    modeSwitch.addEventListener('touchstart', toggleMode);
                 }
                 
-                // Enhanced wave toggle - Fix the event listener to ensure it's clickable
+                // Enhanced wave toggle
                 if (enhancedWaveToggle) {
-                    enhancedWaveToggle.addEventListener('click', (e) => {
+                    enhancedWaveToggle.style.cursor = 'pointer';
+                    enhancedWaveToggle.style.pointerEvents = 'auto';
+                    
+                    const toggleEnhancedWave = (e) => {
                         e.preventDefault();
                         e.stopPropagation();
                         enhancedWaveToggle.classList.toggle('active');
@@ -2262,12 +2491,18 @@
                                 waveTypeSelect.parentElement.style.display = 'none';
                             }
                         }
-                    });
+                    };
+                    
+                    enhancedWaveToggle.addEventListener('click', toggleEnhancedWave);
+                    enhancedWaveToggle.addEventListener('touchstart', toggleEnhancedWave);
                 }
                 
                 // Theme selection with improved event handling
                 document.querySelectorAll('.theme-option').forEach(option => {
-                    option.addEventListener('click', (e) => {
+                    option.style.cursor = 'pointer';
+                    option.style.pointerEvents = 'auto';
+                    
+                    const selectTheme = (e) => {
                         e.preventDefault();
                         e.stopPropagation();
                         const theme = option.getAttribute('data-theme');
@@ -2279,7 +2514,10 @@
                         option.classList.add('active');
                         
                         localStorage.setItem('preferred-theme', theme);
-                    });
+                    };
+                    
+                    option.addEventListener('click', selectTheme);
+                    option.addEventListener('touchstart', selectTheme);
                 });
                 
                 // Wave type selection
@@ -2300,7 +2538,7 @@
                     e.stopPropagation();
                 });
             }
-            
+
             toggleDarkMode() {
                 const modeSwitch = document.getElementById('mode-switch');
                 const htmlElement = document.documentElement;
@@ -2381,7 +2619,11 @@
                 const toggles = document.querySelectorAll('.switch[data-toggle]');
 
                 toggles.forEach(toggle => {
-                    toggle.addEventListener('click', (e) => {
+                    // Force proper cursor styling
+                    toggle.style.cursor = 'pointer';
+                    toggle.style.pointerEvents = 'auto';
+                    
+                    const handleToggle = (e) => {
                         e.preventDefault();
                         e.stopPropagation();
                         toggle.classList.toggle('active');
@@ -2432,7 +2674,10 @@
                                 }
                                 break;
                         }
-                    });
+                    };
+                    
+                    toggle.addEventListener('click', handleToggle);
+                    toggle.addEventListener('touchstart', handleToggle);
                 });
             }
 
@@ -2608,35 +2853,29 @@
                 
                 interactiveElements.forEach(el => {
                     el.style.cursor = 'pointer';
+                    el.style.pointerEvents = 'auto';
                     
-                    // Remove custom cursor style for settings elements
+                    // Special handling for settings elements
                     if (el.classList.contains('settings-toggle') || 
                         el.classList.contains('settings-close') || 
                         el.classList.contains('switch') || 
                         el.classList.contains('theme-option')) {
                         el.style.cursor = 'pointer !important';
+                        el.style.pointerEvents = 'auto !important';
+                        el.style.zIndex = '10000';
                     }
                 });
                 
-                // Close settings panel when clicking outside
-                document.addEventListener('click', (e) => {
-                    const settingsPanel = document.getElementById('settings-panel');
-                    const settingsToggle = document.getElementById('settings-toggle');
-                    
-                    if (settingsPanel && settingsPanel.classList.contains('open') && 
-                        !settingsPanel.contains(e.target) && 
-                        !settingsToggle.contains(e.target)) {
-                        settingsPanel.classList.remove('open');
-                    }
-                });
-                
-                // Prevent settings panel from closing when clicking inside it
-                const settingsPanel = document.getElementById('settings-panel');
-                if (settingsPanel) {
-                    settingsPanel.addEventListener('click', (e) => {
-                        e.stopPropagation();
+                // Prevent any cursor override on settings elements
+                const settingsElements = document.querySelectorAll('.settings-toggle, .settings-panel *, .switch, .theme-option');
+                settingsElements.forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        document.body.style.cursor = 'pointer';
                     });
-                }
+                    el.addEventListener('mouseleave', () => {
+                        document.body.style.cursor = CONFIG.cursor.enabled ? 'none' : 'auto';
+                    });
+                });
             }
 
             // ...existing code...
