@@ -1750,15 +1750,18 @@
 
         // MAIN APPLICATION CLASS
         class QuantumWebsite {
-            constructor() {
+               constructor() {
                 this.particles = [];
                 this.cursor = { x: 0, y: 0 };
                 this.cursorTrails = [];
                 this.skillNodes = [];
                 this.isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                 this.lastMouseMove = 0;
+                this.currentTheme = 'cyan';
+                this.currentMode = 'dark';
                 this.init();
             }
+
                 // Settings utility functions
                 resetSettings() {
                     localStorage.removeItem('quantum-settings');
@@ -2585,27 +2588,6 @@
                 });
             }
 
-            initThemeToggle() {
-                const themeButtons = document.querySelectorAll('.theme-btn');
-
-                themeButtons.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const theme = btn.dataset.theme;
-                        this.setTheme(theme);
-
-                        themeButtons.forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-
-                        localStorage.setItem('preferred-theme', theme);
-                    });
-                });
-
-                // Load saved theme
-                const savedTheme = localStorage.getItem('preferred-theme') || 'cyan';
-                this.setTheme(savedTheme);
-                document.querySelector(`.theme-btn[data-theme="${savedTheme}"]`).classList.add('active');
-            }
-
             setTheme(theme) {
                 const colors = CONFIG.themes[theme];
                 document.documentElement.style.setProperty('--accent-primary', colors.primary);
@@ -2944,6 +2926,7 @@
     </script>
 </body>
 </html>
+
 
 
 
