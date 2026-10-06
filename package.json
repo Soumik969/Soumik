@@ -1,0 +1,33 @@
+{
+  "name": "soumik969",
+  "version": "0.9.69",
+  "private": true,
+  "description": "SOUMIK969 — research website of Soumik Sahoo, Engineering Physics, IIT Bombay.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "npx --yes serve@14 out",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run lint && npm run typecheck && npm run build",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "lucide-react": "^1.52.0",
+    "motion": "^14.0.0",
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.0",
+    "prettier": "^3.9.9",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
