@@ -46,7 +46,7 @@ function PhotoRows({ photos, onOpen }: { photos: Photo[]; onOpen: (index: number
               height={ph.thumbHeight}
               loading="lazy"
               decoding="async"
-              className="absolute inset-0 h-full w-full object-cover transition-[transform,opacity] duration-300 group-hover:scale-[1.03] group-hover:opacity-90"
+              className="absolute inset-0 h-full w-full object-cover transition-[transform,opacity,filter] duration-300 group-hover:scale-[1.03] group-hover:opacity-90 dark:brightness-90 dark:group-hover:opacity-100 dark:group-hover:brightness-105"
             />
           </a>
           {mobile.has(i) && <span aria-hidden className="basis-full sm:hidden" />}
