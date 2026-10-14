@@ -22,7 +22,7 @@ All text comes from the CV and lives in `src/content/`:
   About page shows your initials.
 - **CV:** replace `public/cv/Soumik_Sahoo_CV.pdf`.
 - **News:** add a line to the `news` list in `src/content/profile.ts`.
-- **Photos:** export a JPEG about 1800 px on the long edge plus an 800 px-wide `-sm` thumbnail, strip the camera metadata (it can
+- **Photos:** export a JPEG about 1600 px on the long edge plus a 480 px-tall `-sm` thumbnail, strip the camera metadata (it can
   include GPS), put both in `public/photos/<place>/`, and add an entry to `src/content/photos.ts`.
 
 ## Develop

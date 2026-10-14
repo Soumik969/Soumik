@@ -1,8 +1,9 @@
 "use client";
 
 /* eslint-disable @next/next/no-img-element -- static export: plain <img> keeps the base path handling simple */
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type TouchEvent } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type TouchEvent } from "react";
 import type { Photo, PhotoPlace } from "@/content/photos";
+import { rowBreaks } from "@/lib/justify";
 import { asset } from "@/lib/site";
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from "./Icons";
 
@@ -10,8 +11,54 @@ type Open = { place: number; index: number };
 
 const sameShape = (p: Photo) => Math.abs(p.thumbWidth / p.thumbHeight - p.width / p.height) < 0.02;
 
+/* Row layouts for phones and for wider screens (content width at 390 px and 1000 px, row height, gap — in px).
+   Rows scale with the actual width, so between these sizes they just get a little shorter. */
+const MOBILE = { width: 358, height: 125, gap: 6 };
+const DESKTOP = { width: 968, height: 215, gap: 8 };
+
 /**
- * One section per place with a masonry grid of thumbnails. Each thumbnail links to the full-size image,
+ * Full-width rows of thumbnails. Each photo's flex-grow is its aspect ratio, so the photos in a row share one
+ * height and together fill the row exactly; zero-height spacers force the row breaks (one set per layout).
+ */
+function PhotoRows({ photos, onOpen }: { photos: Photo[]; onOpen: (index: number) => void }) {
+  const ratios = photos.map((ph) => ph.thumbWidth / ph.thumbHeight);
+  const mobile = rowBreaks(ratios, MOBILE.width, MOBILE.height, MOBILE.gap);
+  const desktop = rowBreaks(ratios, DESKTOP.width, DESKTOP.height, DESKTOP.gap);
+
+  return (
+    <div className="flex flex-wrap gap-x-1.5 sm:gap-x-2">
+      {photos.map((ph, i) => (
+        <Fragment key={ph.src}>
+          <a
+            href={asset(ph.src)}
+            onClick={(e) => {
+              if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+              e.preventDefault();
+              onOpen(i);
+            }}
+            className="group relative mb-1.5 block min-w-0 basis-0 overflow-hidden rounded-md bg-surface sm:mb-2"
+            style={{ flexGrow: ratios[i], aspectRatio: `${ph.thumbWidth} / ${ph.thumbHeight}` }}
+          >
+            <img
+              src={asset(ph.thumb)}
+              alt={ph.alt}
+              width={ph.thumbWidth}
+              height={ph.thumbHeight}
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-cover transition-[transform,opacity] duration-300 group-hover:scale-[1.03] group-hover:opacity-90"
+            />
+          </a>
+          {mobile.has(i) && <span aria-hidden className="basis-full sm:hidden" />}
+          {desktop.has(i) && <span aria-hidden className="hidden basis-full sm:block" />}
+        </Fragment>
+      ))}
+    </div>
+  );
+}
+
+/**
+ * One section per place with full-width rows of thumbnails. Each thumbnail links to the full-size image,
  * so it still works without JavaScript; with it, a native <dialog> shows the photo with prev/next,
  * arrow keys, swipe, and Esc to close.
  */
@@ -72,33 +119,9 @@ export function PhotoGallery({ places }: { places: PhotoPlace[] }) {
             {pl.name}
           </h2>
           <p className="mb-4 text-sm text-muted">
-            {pl.country} · {pl.date}
+            {pl.country} · {pl.date} · {pl.photos.length} photos
           </p>
-          <ul className="columns-2 gap-3 sm:columns-3">
-            {pl.photos.map((ph, i) => (
-              <li key={ph.src} className="mb-3 break-inside-avoid">
-                <a
-                  href={asset(ph.src)}
-                  onClick={(e) => {
-                    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-                    e.preventDefault();
-                    setOpen({ place: p, index: i });
-                  }}
-                  className="group block overflow-hidden rounded-md bg-surface"
-                >
-                  <img
-                    src={asset(ph.thumb)}
-                    alt={ph.alt}
-                    width={ph.thumbWidth}
-                    height={ph.thumbHeight}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-auto w-full transition-[transform,opacity] duration-300 group-hover:scale-[1.02] group-hover:opacity-90"
-                  />
-                </a>
-              </li>
-            ))}
-          </ul>
+          <PhotoRows photos={pl.photos} onOpen={(i) => setOpen({ place: p, index: i })} />
         </section>
       ))}
 
