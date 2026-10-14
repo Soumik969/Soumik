@@ -1,0 +1,20 @@
+import Link from "next/link";
+import type { Project } from "@/content/projects";
+
+/** al-folio-style project card: title, meta line, one-line summary. */
+export function ProjectCard({ project: p }: { project: Project }) {
+  return (
+    <Link
+      href={`/projects/${p.slug}/`}
+      className="group flex h-full flex-col rounded border border-divider bg-card p-5 shadow-[0_1px_2px_0_rgb(0_0_0/0.04)] transition-[box-shadow,border-color] duration-200 hover:border-accent/40 hover:shadow-[0_4px_14px_0_rgb(0_0_0/0.08)]"
+    >
+      <h3 className="text-[1.1rem] leading-snug font-medium text-fg group-hover:text-accent">{p.title}</h3>
+      <p className="mt-1 text-sm text-muted">
+        {p.kind ? `${p.kind} · ` : ""}
+        {p.dates}
+      </p>
+      <p className="mt-3 text-[0.95rem] leading-relaxed text-fg/85">{p.summary}</p>
+      {p.people.length > 0 && <p className="mt-auto pt-4 text-sm text-muted">{p.people.join(", ")}</p>}
+    </Link>
+  );
+}
