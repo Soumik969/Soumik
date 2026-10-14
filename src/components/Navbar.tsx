@@ -15,6 +15,7 @@ export const navItems = [
   { label: "Projects", href: "/projects/" },
   { label: "CV", href: "/cv/" },
   { label: "Teaching", href: "/teaching/" },
+  { label: "Photos", href: "/photos/" },
   { label: "Contact", href: "/contact/" },
 ];
 
@@ -55,7 +56,7 @@ export function Navbar() {
                     <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
-                      className={cn("px-3 py-2 transition-colors hover:text-accent", active ? "font-medium text-accent" : "text-fg")}
+                      className={cn("px-2 py-2 transition-colors hover:text-accent md:px-3", active ? "font-medium text-accent" : "text-fg")}
                     >
                       {item.label}
                     </Link>

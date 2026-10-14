@@ -171,3 +171,58 @@ body {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Photo lightbox (PhotoGallery): a full-screen native <dialog> on a dark backdrop, the same in both themes.
+   In the components layer so utilities on the same elements still win. */
+@layer components {
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    &[open] {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    &::backdrop {
+      background: rgb(0 0 0 / 0.94);
+    }
+  }
+  /* Fit the photo to the screen, leaving room for the caption and, from sm up, the side arrows. --ratio is width / height. */
+  .lightbox-img {
+    width: min(calc(100vw - 1.5rem), calc(78svh * var(--ratio)));
+    @media (width >= 40rem) {
+      width: min(calc(100vw - 9rem), calc(82svh * var(--ratio)));
+    }
+  }
+  .lightbox-btn {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    background: rgb(0 0 0 / 0.35);
+    color: rgb(255 255 255 / 0.85);
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+    &:hover {
+      background: rgb(0 0 0 / 0.6);
+      color: #fff;
+    }
+  }
+}
+
+html:has(.lightbox[open]) {
+  overflow: hidden;
+}
