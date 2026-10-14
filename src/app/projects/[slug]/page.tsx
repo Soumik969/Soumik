@@ -35,14 +35,14 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
   ];
 
   return (
-    <article>
-      <PageHeader title={p.title} description={p.summary} />
+    <article className="max-w-3xl">
+      <PageHeader compact title={p.title} description={p.summary} />
 
-      <dl className="mb-8 grid grid-cols-1 gap-x-6 gap-y-1 rounded border border-divider bg-card p-4 text-[0.95rem] sm:grid-cols-[8rem_1fr]">
+      <dl className="mb-8 grid grid-cols-[6.5rem_1fr] gap-x-4 gap-y-1.5 rounded-lg bg-surface px-5 py-4 text-[0.95rem] sm:grid-cols-[8rem_1fr] sm:gap-x-6">
         {meta.map(([k, v]) => (
           <div key={k} className="contents">
             <dt className="text-muted">{k}</dt>
-            <dd className="mb-2 sm:mb-0">{v}</dd>
+            <dd>{v}</dd>
           </div>
         ))}
       </dl>
@@ -62,13 +62,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       {p.links && p.links.length > 0 && (
         <div className="mt-6 flex flex-wrap gap-3">
           {p.links.map((l) => (
-            <a
-              key={l.href}
-              href={isExternal(l.href) ? l.href : asset(l.href)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded border border-accent px-4 py-2 text-sm text-accent transition-colors hover:bg-accent hover:text-white dark:hover:text-bg"
-            >
+            <a key={l.href} href={isExternal(l.href) ? l.href : asset(l.href)} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
               {l.label} <ExternalIcon size={14} />
             </a>
           ))}

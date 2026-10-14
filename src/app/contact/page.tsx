@@ -27,8 +27,8 @@ export default function Contact() {
       </p>
       <ul className="space-y-4">
         {rows.map((r) => (
-          <li key={r.label} className="flex items-start gap-4">
-            <span className="mt-0.5 text-accent">{r.icon}</span>
+          <li key={r.label} className="flex items-center gap-4">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-tint text-accent">{r.icon}</span>
             <span>
               <span className="block text-sm text-muted">{r.label}</span>
               <a href={r.href} {...(r.external ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="link text-[1.05rem] break-all">

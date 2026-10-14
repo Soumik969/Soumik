@@ -34,13 +34,12 @@ export default function About() {
         </p>
         <p>{profile.researchInterests}</p>
         <p>Currently, I am working on:</p>
-        <ul className="mb-4 list-disc space-y-1.5 pl-6">
+        <ul className="mb-4 list-disc space-y-2.5 pl-6 marker:text-muted">
           {current.map((p) => (
             <li key={p.slug}>
               <Link href={`/projects/${p.slug}/`}>{p.title}</Link>
-              <span className="text-muted">
-                {" "}
-                — with {p.people.join(" & ")}, {p.institution.split(", ").pop()}
+              <span className="block text-[0.9rem] leading-snug text-muted">
+                with {p.people.join(" & ")} · {p.institution.split(", ").pop()}
               </span>
             </li>
           ))}
@@ -51,26 +50,25 @@ export default function About() {
         <h2 id="news" className="section-title">
           News
         </h2>
-        <table className="w-full text-left">
-          <tbody>
-            {news.map((n) => (
-              <tr key={n.date} className="align-top">
-                <th scope="row" className="w-28 py-2 pr-4 text-sm font-normal whitespace-nowrap text-muted sm:w-32">
-                  {n.date}
-                </th>
-                <td className="py-2">
-                  {n.href ? (
-                    <Link href={n.href} className="text-fg hover:text-accent">
-                      {n.text}
-                    </Link>
-                  ) : (
-                    n.text
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <ul className="space-y-4 sm:space-y-0">
+          {news.map((n) => (
+            <li key={n.date} className="grid gap-0.5 sm:grid-cols-[8rem_1fr] sm:items-baseline sm:gap-4 sm:py-2">
+              <span className="text-sm whitespace-nowrap text-muted">{n.date}</span>
+              <p>
+                {n.href ? (
+                  <Link
+                    href={n.href}
+                    className="underline decoration-fg/20 decoration-1 underline-offset-[3px] transition-colors hover:text-accent hover:decoration-current"
+                  >
+                    {n.text}
+                  </Link>
+                ) : (
+                  n.text
+                )}
+              </p>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="mt-12 text-center" aria-label="Elsewhere">

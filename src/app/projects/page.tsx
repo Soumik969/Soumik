@@ -15,7 +15,10 @@ export default function Projects() {
       <PageHeader title="Projects" description="Research projects and course projects. Select a card for details." />
       {projectCategories.map((cat) => (
         <section key={cat} aria-labelledby={`cat-${cat.toLowerCase().replace(/\s+/g, "-")}`} className="mb-12">
-          <h2 id={`cat-${cat.toLowerCase().replace(/\s+/g, "-")}`} className="mb-5 border-b border-divider pb-2 text-right text-[1.6rem] font-light text-muted">
+          <h2
+            id={`cat-${cat.toLowerCase().replace(/\s+/g, "-")}`}
+            className="mb-6 border-b border-divider pb-2 text-right text-[1.5rem] leading-tight font-light text-muted"
+          >
             {cat}
           </h2>
           <ul className="grid grid-cols-1 gap-5 md:grid-cols-2">
