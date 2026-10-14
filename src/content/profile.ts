@@ -4,46 +4,48 @@
  */
 
 export const profile = {
+  firstName: "Soumik",
+  lastName: "Sahoo",
   name: "Soumik Sahoo",
-  handle: "SOUMIK969",
-  degree: "B.Tech in Engineering Physics",
+  tagline: "B.Tech in Engineering Physics · IIT Bombay",
   institute: "Indian Institute of Technology Bombay",
-  instituteShort: "IIT Bombay",
-  location: "Mumbai / India",
-  coordinates: "19.13°N 72.91°E",
-  cpi: "9.28",
-  cpiScale: "10",
+  instituteUrl: "https://www.iitb.ac.in/",
+  /** Drop a square photo at public/profile.jpg and set this to "/profile.jpg". */
+  photo: null as string | null,
   emails: {
     personal: "soumiksahoo000@gmail.com",
     academic: "soumik.sahoo@iitb.ac.in",
   },
   github: "https://github.com/Soumik969",
-  githubLabel: "github.com/Soumik969",
+  githubHandle: "Soumik969",
   cvPath: "/cv/Soumik_Sahoo_CV.pdf",
   researchInterests:
     "My research interests lie in experimental quantum devices and quantum transport, particularly semiconductor spin qubits, charge sensing, cryogenic RF reflectometry, and coherent control. I am also interested in non-Hermitian and topological quantum systems, and in combining low-temperature measurements with analytical and numerical modeling for scalable quantum technologies.",
-} as const;
+};
 
-export const currentFocus = [
+/** Dated highlights for the About page, taken from CV entries. */
+export const news: { date: string; text: string; href?: string }[] = [
   {
-    channel: "CH1",
-    label: "Qubit characterization of semiconductor quantum dots",
-    where: "IIT Bombay",
-    anchor: "r-quantum-dots",
+    date: "Aug 2026",
+    text: "Started a course project on the spectra of Kitaev chains (PH 554) with Prof. Soumya Bera.",
+    href: "/projects/kitaev-chains/",
   },
   {
-    channel: "CH2",
-    label: "Non-Hermitian topological systems",
-    where: "NUS",
-    anchor: "r-non-hermitian",
+    date: "Summer 2026",
+    text: "Began a research internship with Prof. Thomas Schmidt at the University of Luxembourg on induced superconductivity in magnetic topological-insulator thin films. Manuscript in preparation.",
+    href: "/projects/mti-superconductivity/",
   },
   {
-    channel: "CH3",
-    label: "Induced superconductivity in MTI thin films",
-    where: "Uni. Luxembourg",
-    anchor: "r-mti",
+    date: "Jan 2026",
+    text: "Started working on non-Hermitian topological systems with Prof. Lee Ching Hua (National University of Singapore), and became a Teaching Assistant for Introduction to Quantum Mechanics.",
+    href: "/projects/non-hermitian-topology/",
   },
-] as const;
+  {
+    date: "Aug 2025",
+    text: "Started low-temperature qubit characterization of semiconductor quantum dots with Prof. Suddhasatta Mahapatra and Prof. Uditendu Mukhopadhyay at IIT Bombay.",
+    href: "/projects/quantum-dots/",
+  },
+];
 
 export type EducationRow = {
   degree: string;
@@ -59,7 +61,7 @@ export const education: EducationRow[] = [
     board: "IIT Bombay",
     institute: "IIT Bombay",
     year: "2023 – 2027",
-    score: "9.28 / 10 CPI",
+    score: "9.28 / 10",
   },
   {
     degree: "Higher Secondary (+2)",
@@ -78,53 +80,36 @@ export const education: EducationRow[] = [
 ];
 
 export const programmes = [
-  { label: "Honors", detail: "Department of Physics, IIT Bombay" },
-  {
-    label: "Minor",
-    detail: "Centre for Machine Intelligence and Data Science, IIT Bombay",
-  },
-] as const;
+  "Pursuing an Honors degree in the Department of Physics, IIT Bombay",
+  "Pursuing a Minor degree in the Centre for Machine Intelligence and Data Science, IIT Bombay",
+];
 
 export const achievements = [
-  {
-    value: "98.2",
-    unit: "percentile",
-    label: "JEE Advanced",
-    detail: "out of 0.2 million candidates",
-    year: "2023",
-  },
-  {
-    value: "99.87",
-    unit: "percentile",
-    label: "JEE Main",
-    detail: "out of 1.2 million candidates",
-    year: "2023",
-  },
-] as const;
+  { text: "Secured 98.2 percentile out of 0.2 million candidates in the Joint Entrance Examination Advanced.", year: "2023" },
+  { text: "Achieved 99.87 percentile out of 1.2 million candidates in the Joint Entrance Examination Main.", year: "2023" },
+];
 
 export const extracurricular = [
-  {
-    domain: "Science exhibition",
-    text: "Secured top honors in district-level Vedic mathematics competitions, twice.",
-    year: "2020 – 21",
-  },
-  {
-    domain: "Social",
-    text: "Devoted 80+ hours to NSS Green Campus through planting activities on campus.",
-    year: "2023 – 24",
-  },
-] as const;
+  { text: "Secured top honors in district-level Vedic mathematics competitions twice.", year: "2020 – 21" },
+  { text: "Devoted 80+ hours to NSS Green Campus through planting activities on campus.", year: "2023 – 24" },
+];
 
-export const coursework = {
-  Physics: [
-    "Analog and Digital Electronics",
-    "Quantum Mechanics I & II",
-    "Statistical Mechanics",
-    "Electromagnetic Theory",
-    "Quantum Information and Computing",
-    "Condensed Matter Physics",
-    "Magnetism and Superconductivity",
-    "Computational Many-Body Physics",
-  ],
-  Mathematics: ["Calculus", "Linear Algebra", "Differential Equations", "Complex Analysis", "Integral Transforms"],
-} as const;
+export const coursework: { area: string; courses: string[] }[] = [
+  {
+    area: "Physics",
+    courses: [
+      "Analog and Digital Electronics",
+      "Quantum Mechanics I & II",
+      "Statistical Mechanics",
+      "Electromagnetic Theory",
+      "Quantum Information and Computing",
+      "Condensed Matter Physics",
+      "Magnetism and Superconductivity",
+      "Computational Many-Body Physics",
+    ],
+  },
+  {
+    area: "Mathematics",
+    courses: ["Calculus", "Linear Algebra", "Differential Equations", "Complex Analysis", "Integral Transforms"],
+  },
+];
