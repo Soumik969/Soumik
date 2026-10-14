@@ -2,7 +2,7 @@
 import { profile } from "@/content/profile";
 import { asset } from "@/lib/site";
 
-/** Circular photo (or initials until a photo is added) with contact lines below it. */
+/** Portrait photo (or initials until a photo is added) with contact lines below it. */
 export function Profile() {
   return (
     <aside aria-label="Profile" className="mx-auto mb-6 w-full max-w-[260px] sm:float-right sm:mb-4 sm:ml-8 sm:w-[30%] sm:max-w-none">
@@ -10,9 +10,9 @@ export function Profile() {
         <img
           src={asset(profile.photo)}
           alt={profile.name}
-          width={400}
-          height={400}
-          className="aspect-square w-full rounded-full object-cover shadow-[0_2px_5px_0_rgb(0_0_0/0.16),0_2px_10px_0_rgb(0_0_0/0.12)]"
+          width={591}
+          height={788}
+          className="aspect-[3/4] w-full rounded-lg object-cover shadow-[0_2px_5px_0_rgb(0_0_0/0.16),0_2px_10px_0_rgb(0_0_0/0.12)]"
         />
       ) : (
         <div
