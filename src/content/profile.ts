@@ -11,7 +11,7 @@ export const profile = {
   institute: "Indian Institute of Technology Bombay",
   instituteUrl: "https://www.iitb.ac.in/",
   /** Drop a square photo at public/profile.jpg and set this to "/profile.jpg". */
-  photo: null as string | null,
+  photo: "/profile.jpg" as string | null,
   emails: {
     personal: "soumiksahoo000@gmail.com",
     academic: "soumik.sahoo@iitb.ac.in",
