@@ -12,7 +12,7 @@ export function Profile() {
           alt={profile.name}
           width={591}
           height={788}
-          className="aspect-[3/4] w-full rounded-lg object-cover shadow-[0_2px_5px_0_rgb(0_0_0/0.16),0_2px_10px_0_rgb(0_0_0/0.12)]"
+          className="aspect-[3/4] w-full rounded-lg object-cover shadow-[0_2px_5px_0_rgb(0_0_0/0.16),0_2px_10px_0_rgb(0_0_0/0.12)] dark:ring-1 dark:ring-white/10"
         />
       ) : (
         <div

@@ -19,17 +19,18 @@
   --tint: rgb(181 9 172 / 0.06);
 }
 
+/* Dark: a near-black, slightly cool background with lifted cards, softened text and a brighter cyan accent. */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #1c1c1d;
-  --fg: #e6e6e6;
-  --muted: #a3a3a3;
-  --accent: #2ea5c9;
-  --accent-hover: #47b0cf;
-  --divider: #3a3a3e;
-  --card: #232427;
-  --surface: #232427;
-  --tint: rgb(46 165 201 / 0.1);
+  --bg: #0d0e10;
+  --fg: #e3e4e8;
+  --muted: #9a9ea7;
+  --accent: #3fb5dc;
+  --accent-hover: #67c6e6;
+  --divider: #25282d;
+  --card: #15171a;
+  --surface: #15171a;
+  --tint: rgb(63 181 220 / 0.12);
 }
 
 @theme inline {
@@ -62,6 +63,13 @@ body {
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
+}
+
+/* In dark mode a faint accent glow sits behind the top of the page; it scrolls away with the content. */
+:root[data-theme="dark"] body {
+  background:
+    radial-gradient(70rem 28rem at 50% -12rem, rgb(63 181 220 / 0.09), transparent 70%) no-repeat,
+    var(--bg);
 }
 
 /* Typeset defaults: headings set tighter than body text and wrap in balanced lines;
