@@ -5,7 +5,7 @@ import { photoPlaces } from "@/content/photos";
 
 export const metadata: Metadata = {
   title: "Photos",
-  description: "Photos by Soumik Sahoo from a summer in Europe: Luxembourg, Belgium, France, Germany and Switzerland.",
+  description: "Photos by Soumik Sahoo from a summer in Europe (Luxembourg, Belgium, France, Germany and Switzerland) and a day in Istanbul.",
   alternates: { canonical: "photos/" },
 };
 
@@ -14,7 +14,7 @@ export default function Photos() {
     <>
       <PageHeader
         title="Photos"
-        description="Summer 2026 in Europe: places I saw during my research internship at the University of Luxembourg and on weekend trips."
+        description="Summer 2026 in Europe: places I saw during my research internship at the University of Luxembourg and on weekend trips, and a day in Istanbul on the way home."
       />
       <nav aria-label="Places" className="-mt-2 mb-2">
         <ul className="flex flex-wrap gap-2 text-sm">
