@@ -26,11 +26,6 @@ export const profile = {
 /** Dated highlights for the About page, taken from CV entries. */
 export const news: { date: string; text: string; href?: string }[] = [
   {
-    date: "Aug 2026",
-    text: "Started a course project on the spectra of Kitaev chains (PH 554) with Prof. Soumya Bera.",
-    href: "/projects/kitaev-chains/",
-  },
-  {
     date: "Summer 2026",
     text: "Began a research internship with Prof. Thomas Schmidt at the University of Luxembourg on induced superconductivity in magnetic topological-insulator thin films. Manuscript in preparation.",
     href: "/projects/mti-superconductivity/",
@@ -79,10 +74,7 @@ export const education: EducationRow[] = [
   },
 ];
 
-export const programmes = [
-  "Pursuing an Honors degree in the Department of Physics, IIT Bombay",
-  "Pursuing a Minor degree in the Centre for Machine Intelligence and Data Science, IIT Bombay",
-];
+export const programmes = ["Pursuing an Honors degree in the Department of Physics, IIT Bombay"];
 
 export const achievements = [
   { text: "Secured 98.2 percentile out of 0.2 million candidates in the Joint Entrance Examination Advanced.", year: "2023" },

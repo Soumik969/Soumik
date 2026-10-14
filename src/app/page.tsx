@@ -30,7 +30,7 @@ export default function About() {
           <a href={profile.instituteUrl} target="_blank" rel="noopener noreferrer">
             IIT Bombay
           </a>{" "}
-          (2023 – 2027), pursuing an Honors degree in Physics and a Minor in Machine Intelligence and Data Science.
+          (2023 – 2027), pursuing an Honors degree in Physics.
         </p>
         <p>{profile.researchInterests}</p>
         <p>Currently, I am working on:</p>
