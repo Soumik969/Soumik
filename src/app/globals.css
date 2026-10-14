@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* The old static site in legacy/ is not part of this build. */
+@source not "../../legacy";
+
 /* Colours switch on <html data-theme>; the inline script in layout.tsx sets it before first paint. */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
@@ -66,13 +69,15 @@ body {
   border-radius: 2px;
 }
 
-/* Links inside running text. */
+/* Links inside running text: a light underline at rest so they are not told apart by colour alone. */
 @utility link {
   color: var(--accent);
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+  text-underline-offset: 3px;
   &:hover {
-    text-decoration: underline;
-    text-underline-offset: 3px;
+    text-decoration-color: currentColor;
   }
 }
 
@@ -83,9 +88,12 @@ body {
   }
   & a {
     color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+    text-underline-offset: 3px;
     &:hover {
-      text-decoration: underline;
-      text-underline-offset: 3px;
+      text-decoration-color: currentColor;
     }
   }
   & strong {

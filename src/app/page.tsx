@@ -1,9 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/PageHeader";
 import { Profile } from "@/components/Profile";
 import { SocialLinks } from "@/components/SocialLinks";
 import { news, profile } from "@/content/profile";
 import { projects } from "@/content/projects";
+
+export const metadata: Metadata = { alternates: { canonical: "./" } };
 
 export default function About() {
   const current = projects.filter((p) => p.category === "Research" && p.ongoing);

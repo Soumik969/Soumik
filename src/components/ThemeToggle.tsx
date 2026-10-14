@@ -51,4 +51,4 @@ export function ThemeToggle() {
 }
 
 /** Inline script for <head>: sets data-theme before first paint to avoid a flash. */
-export const themeScript = `(function(){try{var t=localStorage.getItem("${KEY}");var d=t?t==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.dataset.theme=d?"dark":"light"}catch(e){}})();`;
+export const themeScript = `(function(){var t=null;try{t=localStorage.getItem("${KEY}")}catch(e){}var d=t?t==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.dataset.theme=d?"dark":"light"})();`;

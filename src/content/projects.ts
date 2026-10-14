@@ -67,7 +67,7 @@ export const projects: Project[] = [
     slug: "non-hermitian-topology",
     category: "Research",
     title: "Non-Hermitian Topological Systems",
-    summary: "Bosonic caging under the non-Hermitian skin effect, extended to 2D lattices and the algebraic skin effect.",
+    summary: "Bosonic caging under the 1D non-Hermitian skin effect, now being extended to 2D lattices using the algebraic skin effect.",
     dates: "Jan 2026 – Present",
     ongoing: true,
     people: ["Prof. Lee Ching Hua"],

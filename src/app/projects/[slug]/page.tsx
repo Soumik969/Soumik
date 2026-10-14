@@ -25,11 +25,10 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
   const p = getProject((await params).slug);
   if (!p) notFound();
 
+  const role = p.category === "Research" ? "Supervisor" : "Instructor";
   const meta: [string, string][] = [
     ["Dates", p.dates],
-    ...(p.people.length
-      ? [[p.people.length > 1 ? "Supervisors" : p.category === "Research" ? "Supervisor" : "Instructor", p.people.join(", ")] as [string, string]]
-      : []),
+    ...(p.people.length ? [[p.people.length > 1 ? `${role}s` : role, p.people.join(", ")] as [string, string]] : []),
     ...(p.kind ? [[p.category === "Course Projects" ? "Course" : "Type", p.kind] as [string, string]] : []),
     ["Institution", p.institution],
     ...(p.note ? [["Status", p.note] as [string, string]] : []),
