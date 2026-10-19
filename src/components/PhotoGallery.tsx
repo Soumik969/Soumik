@@ -2,12 +2,15 @@
 
 /* eslint-disable @next/next/no-img-element -- static export: plain <img> keeps the base path handling simple */
 import { Fragment, useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type TouchEvent } from "react";
-import type { Photo, PhotoPlace } from "@/content/photos";
+import type { Photo } from "@/content/photos";
 import { rowBreaks } from "@/lib/justify";
 import { asset } from "@/lib/site";
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from "./Icons";
 
 type Open = { place: number; index: number };
+
+/** A titled set of photos. `place` on a photo names where it was taken when the group mixes places. */
+export type PhotoGroup = { slug: string; name: string; meta?: string; photos: (Photo & { place?: string })[] };
 
 const sameShape = (p: Photo) => Math.abs(p.thumbWidth / p.thumbHeight - p.width / p.height) < 0.02;
 
@@ -58,11 +61,11 @@ function PhotoRows({ photos, onOpen }: { photos: Photo[]; onOpen: (index: number
 }
 
 /**
- * One section per place with full-width rows of thumbnails. Each thumbnail links to the full-size image,
- * so it still works without JavaScript; with it, a native <dialog> shows the photo with prev/next,
- * arrow keys, swipe, and Esc to close.
+ * One section per group with full-width rows of thumbnails (`headings={false}` drops the section titles,
+ * for a single group). Each thumbnail links to the full-size image, so it still works without JavaScript;
+ * with it, a native <dialog> shows the photo with prev/next, arrow keys, swipe, and Esc to close.
  */
-export function PhotoGallery({ places }: { places: PhotoPlace[] }) {
+export function PhotoGallery({ groups: places, headings = true }: { groups: PhotoGroup[]; headings?: boolean }) {
   const [open, setOpen] = useState<Open | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const touchX = useRef<number | null>(null);
@@ -114,13 +117,15 @@ export function PhotoGallery({ places }: { places: PhotoPlace[] }) {
   return (
     <>
       {places.map((pl, p) => (
-        <section key={pl.slug} id={pl.slug} aria-labelledby={`${pl.slug}-title`}>
-          <h2 id={`${pl.slug}-title`} className="section-title mb-1">
-            {pl.name}
-          </h2>
-          <p className="mb-4 text-sm text-muted">
-            {pl.country} · {pl.date} · {pl.photos.length} photos
-          </p>
+        <section key={pl.slug} id={pl.slug} aria-labelledby={headings ? `${pl.slug}-title` : undefined} aria-label={headings ? undefined : pl.name}>
+          {headings && (
+            <>
+              <h2 id={`${pl.slug}-title`} className="section-title mb-1">
+                {pl.name}
+              </h2>
+              {pl.meta && <p className="mb-4 text-sm text-muted">{pl.meta}</p>}
+            </>
+          )}
           <PhotoRows photos={pl.photos} onOpen={(i) => setOpen({ place: p, index: i })} />
         </section>
       ))}
@@ -157,7 +162,7 @@ export function PhotoGallery({ places }: { places: PhotoPlace[] }) {
               <figcaption className="max-w-[min(94vw,48rem)] px-2 text-center text-sm text-white/85">
                 {photo.alt}
                 <span className="ml-2 whitespace-nowrap text-white/55">
-                  {place.name} · {index + 1} / {place.photos.length}
+                  {photo.place ?? place.name} · {index + 1} / {place.photos.length}
                 </span>
               </figcaption>
             </figure>

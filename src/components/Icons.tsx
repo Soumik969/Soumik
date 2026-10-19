@@ -58,6 +58,12 @@ export const ArrowLeftIcon = (p: IconProps) => (
   </Stroke>
 );
 
+export const ArrowRightIcon = (p: IconProps) => (
+  <Stroke {...p}>
+    <path d="M5 12h14M12 5l7 7-7 7" />
+  </Stroke>
+);
+
 export const ChevronLeftIcon = (p: IconProps) => (
   <Stroke {...p}>
     <path d="m15 18-6-6 6-6" />
