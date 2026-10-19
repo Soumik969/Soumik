@@ -2,7 +2,7 @@
 
 Academic website of **Soumik Sahoo**, B.Tech in Engineering Physics at IIT Bombay.
 A simple, minimalist design in the style of the [al-folio](https://github.com/alshedivat/al-folio) academic theme: light and dark mode,
-About · Projects · CV · Teaching · Photos · Contact pages, and one page per project.
+About · Projects · CV · Teaching · Photos · Contact pages, one page per project, and a Travels page with every photo.
 
 Live at **https://soumik969.github.io/Soumik/** (deployed automatically from `main`).
 
@@ -10,20 +10,22 @@ Live at **https://soumik969.github.io/Soumik/** (deployed automatically from `ma
 
 All text comes from the CV and lives in `src/content/`:
 
-| File          | Contents                                                                        |
-| ------------- | ------------------------------------------------------------------------------- |
-| `profile.ts`  | name, contact, research interests, news, education, achievements, coursework    |
-| `projects.ts` | research and course projects (each one gets its own page under `/projects/...`) |
-| `teaching.ts` | teaching and mentorship                                                         |
-| `skills.ts`   | technical skills                                                                |
-| `photos.ts`   | the Photos page: one section per place, with a caption for every photo          |
+| File            | Contents                                                                        |
+| --------------- | ------------------------------------------------------------------------------- |
+| `profile.ts`    | name, contact, research interests, news, education, achievements, coursework    |
+| `projects.ts`   | research and course projects (each one gets its own page under `/projects/...`) |
+| `teaching.ts`   | teaching and mentorship                                                         |
+| `skills.ts`     | technical skills                                                                |
+| `photos.ts`     | the Travels page: one section per place, with a caption for every photo         |
+| `highlights.ts` | the few favourites shown on the Photos page (picked from `photos.ts`)           |
 
 - **Profile photo:** put a square photo at `public/profile.jpg` and set `photo: "/profile.jpg"` in `src/content/profile.ts`. Until then the
   About page shows your initials.
 - **CV:** replace `public/cv/Soumik_Sahoo_CV.pdf`.
 - **News:** add a line to the `news` list in `src/content/profile.ts`.
 - **Photos:** export a JPEG about 1600 px on the long edge plus a 480 px-tall `-sm` thumbnail, strip the camera metadata (it can
-  include GPS), put both in `public/photos/<place>/`, and add an entry to `src/content/photos.ts`.
+  include GPS), put both in `public/photos/<place>/`, and add an entry to `src/content/photos.ts`. To show one on the Photos page as
+  well, add it to `src/content/highlights.ts`.
 
 ## Develop
 
@@ -48,7 +50,7 @@ base path automatically.
 ## Layout
 
 ```
-src/app/          pages: about (/), projects, projects/[slug], cv, teaching, photos, contact, 404
+src/app/          pages: about (/), projects, projects/[slug], cv, teaching, photos, travels, contact, 404
 src/components/   navbar, theme toggle, footer, profile, project card, photo gallery, icons
 src/content/      all site text (from the CV)
 public/           CV, project reports, photos, social-share image

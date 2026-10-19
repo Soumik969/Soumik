@@ -10,18 +10,19 @@ import { ScrollProgress } from "./ScrollProgress";
 import { SocialLinks } from "./SocialLinks";
 import { ThemeToggle } from "./ThemeToggle";
 
-export const navItems = [
+/** `also`: other sections that count as this item for the active highlight. */
+export const navItems: { label: string; href: string; also?: string[] }[] = [
   { label: "About", href: "/" },
   { label: "Projects", href: "/projects/" },
   { label: "CV", href: "/cv/" },
   { label: "Teaching", href: "/teaching/" },
-  { label: "Photos", href: "/photos/" },
+  { label: "Photos", href: "/photos/", also: ["/travels/"] },
   { label: "Contact", href: "/contact/" },
 ];
 
-function isActive(pathname: string, href: string) {
+function isActive(pathname: string, href: string, also: string[] = []) {
   const path = pathname.replace(/index\.html$/, "").replace(/\/?$/, "/");
-  return href === "/" ? path === "/" : path.startsWith(href);
+  return href === "/" ? path === "/" : [href, ...also].some((h) => path.startsWith(h));
 }
 
 export function Navbar() {
@@ -50,7 +51,7 @@ export function Navbar() {
           <div className="flex items-center gap-1">
             <ul className="hidden items-center sm:flex">
               {navItems.map((item) => {
-                const active = isActive(pathname, item.href);
+                const active = isActive(pathname, item.href, item.also);
                 return (
                   <li key={item.href}>
                     <Link
@@ -81,7 +82,7 @@ export function Navbar() {
         {open && (
           <ul id="mobile-menu" className="border-t border-divider px-4 py-2 sm:hidden">
             {navItems.map((item) => {
-              const active = isActive(pathname, item.href);
+              const active = isActive(pathname, item.href, item.also);
               return (
                 <li key={item.href}>
                   <Link
