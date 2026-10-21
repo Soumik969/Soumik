@@ -9,9 +9,10 @@ export function Profile() {
       {profile.photo ? (
         <img
           src={asset(profile.photo)}
-          alt={profile.name}
-          width={591}
-          height={788}
+          alt={`${profile.name} working on a dilution refrigerator in the lab`}
+          width={960}
+          height={1280}
+          fetchPriority="high"
           className="aspect-[3/4] w-full rounded-lg object-cover shadow-[0_2px_5px_0_rgb(0_0_0/0.16),0_2px_10px_0_rgb(0_0_0/0.12)] dark:ring-1 dark:ring-white/10"
         />
       ) : (
