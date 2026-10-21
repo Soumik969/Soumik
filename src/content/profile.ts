@@ -56,7 +56,7 @@ export const education: EducationRow[] = [
     board: "IIT Bombay",
     institute: "IIT Bombay",
     year: "2023 – 2027",
-    score: "9.28 / 10",
+    score: "9.17 / 10",
   },
   {
     degree: "Higher Secondary (+2)",
