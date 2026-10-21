@@ -10,7 +10,7 @@ export const profile = {
   tagline: "B.Tech in Engineering Physics · IIT Bombay",
   institute: "Indian Institute of Technology Bombay",
   instituteUrl: "https://www.iitb.ac.in/",
-  /** Drop a square photo at public/profile.jpg and set this to "/profile.jpg". */
+  /** Portrait photo (3:4) at public/profile.jpg; set to null to show initials instead. */
   photo: "/profile.jpg" as string | null,
   emails: {
     personal: "soumiksahoo000@gmail.com",

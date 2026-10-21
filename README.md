@@ -19,8 +19,8 @@ All text comes from the CV and lives in `src/content/`:
 | `photos.ts`     | the Travels page: one section per place, with a caption for every photo         |
 | `highlights.ts` | the few favourites shown on the Photos page (picked from `photos.ts`)           |
 
-- **Profile photo:** put a square photo at `public/profile.jpg` and set `photo: "/profile.jpg"` in `src/content/profile.ts`. Until then the
-  About page shows your initials.
+- **Profile photo:** replace `public/profile.jpg` with a 3:4 portrait (960 × 1280 or larger). Set `photo: null` in
+  `src/content/profile.ts` to show your initials instead.
 - **CV:** replace `public/cv/Soumik_Sahoo_CV.pdf`.
 - **News:** add a line to the `news` list in `src/content/profile.ts`.
 - **Photos:** export a JPEG about 1600 px on the long edge plus a 480 px-tall `-sm` thumbnail, strip the camera metadata (it can

@@ -62,8 +62,11 @@ const jsonLd = {
   "@type": "Person",
   name: profile.name,
   url: `${SITE_URL}/`,
+  ...(profile.photo && { image: `${SITE_URL}${profile.photo}` }),
   email: `mailto:${profile.emails.academic}`,
-  affiliation: { "@type": "CollegeOrUniversity", name: profile.institute },
+  jobTitle: "Undergraduate researcher",
+  affiliation: { "@type": "CollegeOrUniversity", name: profile.institute, url: profile.instituteUrl },
+  alumniOf: { "@type": "CollegeOrUniversity", name: profile.institute },
   sameAs: [profile.github],
   knowsAbout: ["Quantum devices", "Quantum transport", "Superconductivity", "Topological insulators", "Non-Hermitian physics", "Computational physics"],
 };
