@@ -19,8 +19,10 @@ export const profile = {
   github: "https://github.com/Soumik969",
   githubHandle: "Soumik969",
   cvPath: "/cv/Soumik_Sahoo_CV.pdf",
+  /** The same CV on Google Drive, for viewing in the browser. */
+  cvDriveUrl: "https://drive.google.com/file/d/1iMWVqrYUzmOUs_OIUSnv7LM1h9tCCaYs/view?usp=sharing",
   researchInterests:
-    "My research interests lie in experimental quantum devices and quantum transport, particularly semiconductor spin qubits, charge sensing, cryogenic RF reflectometry, and coherent control. I am also interested in non-Hermitian and topological quantum systems, and in combining low-temperature measurements with analytical and numerical modeling for scalable quantum technologies.",
+    "My research interests center on semiconductor spin qubits and superconducting qubits, particularly their design, control, readout, and coherence. I am interested in experimental quantum-device physics and in understanding how device materials and architecture shape qubit performance and scalability. I am particularly interested in how experimental characterization can inform improvements in qubit fidelity and reliable operation.",
 };
 
 /** Dated highlights for the About page, taken from CV entries. */
