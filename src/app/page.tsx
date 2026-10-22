@@ -46,6 +46,15 @@ export default function About() {
         </ul>
       </div>
 
+      <div className="mt-6 flex flex-wrap gap-3">
+        <Link href="/projects/" className="btn btn-primary">
+          View projects
+        </Link>
+        <Link href="/cv/" className="btn btn-outline">
+          See my CV
+        </Link>
+      </div>
+
       <section className="clear-both" aria-labelledby="news">
         <h2 id="news" className="section-title">
           News
@@ -56,10 +65,7 @@ export default function About() {
               <span className="text-sm whitespace-nowrap text-muted">{n.date}</span>
               <p>
                 {n.href ? (
-                  <Link
-                    href={n.href}
-                    className="underline decoration-fg/20 decoration-1 underline-offset-[3px] transition-colors hover:text-accent hover:decoration-current"
-                  >
+                  <Link href={n.href} className="transition-colors hover:text-accent">
                     {n.text}
                   </Link>
                 ) : (

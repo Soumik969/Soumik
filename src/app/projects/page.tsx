@@ -21,7 +21,7 @@ export default function Projects() {
           >
             {cat}
           </h2>
-          <ul className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {projects
               .filter((p) => p.category === cat)
               .map((p) => (

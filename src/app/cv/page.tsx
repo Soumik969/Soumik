@@ -30,8 +30,8 @@ export default function CV() {
         <a href={pdf} download className="btn btn-primary">
           <DownloadIcon size={16} /> Download PDF
         </a>
-        <a href={pdf} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
-          Open in a new tab <ExternalIcon size={14} />
+        <a href={profile.cvDriveUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+          View on Google Drive <ExternalIcon size={14} />
         </a>
       </div>
 
