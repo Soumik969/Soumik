@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import type { NextConfig } from "next";
 
 /**
@@ -7,7 +9,11 @@ import type { NextConfig } from "next";
  */
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
+/** Fingerprint of the CV PDF, so browsers and CDNs fetch the new file when it changes (same file name). */
+const cvVersion = createHash("sha1").update(readFileSync("public/cv/Soumik_Sahoo_CV.pdf")).digest("hex").slice(0, 8);
+
 const nextConfig: NextConfig = {
+  env: { NEXT_PUBLIC_CV_VERSION: cvVersion },
   output: "export",
   basePath,
   trailingSlash: true,
