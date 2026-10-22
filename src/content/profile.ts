@@ -18,7 +18,7 @@ export const profile = {
   },
   github: "https://github.com/Soumik969",
   githubHandle: "Soumik969",
-  cvPath: "/cv/Soumik_Sahoo_CV.pdf",
+  cvPath: `/cv/Soumik_Sahoo_CV.pdf?v=${process.env.NEXT_PUBLIC_CV_VERSION ?? "1"}`,
   /** The same CV on Google Drive, for viewing in the browser. */
   cvDriveUrl: "https://drive.google.com/file/d/1LyYZcXINcXbTO0qs_Vzu4Grk-0KLugvQ/view?usp=sharing",
   researchInterests:
