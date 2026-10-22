@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PageHeader } from "@/components/PageHeader";
 import { Profile } from "@/components/Profile";
 import { SocialLinks } from "@/components/SocialLinks";
-import { news, profile } from "@/content/profile";
+import { profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 
 export const metadata: Metadata = { alternates: { canonical: "./" } };
@@ -55,29 +55,7 @@ export default function About() {
         </Link>
       </div>
 
-      <section className="clear-both" aria-labelledby="news">
-        <h2 id="news" className="section-title">
-          News
-        </h2>
-        <ul className="space-y-4 sm:space-y-0">
-          {news.map((n) => (
-            <li key={n.date} className="grid gap-0.5 sm:grid-cols-[8rem_1fr] sm:items-baseline sm:gap-4 sm:py-2">
-              <span className="text-sm whitespace-nowrap text-muted">{n.date}</span>
-              <p>
-                {n.href ? (
-                  <Link href={n.href} className="transition-colors hover:text-accent">
-                    {n.text}
-                  </Link>
-                ) : (
-                  n.text
-                )}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="mt-12 text-center" aria-label="Elsewhere">
+      <section className="clear-both mt-12 text-center" aria-label="Elsewhere">
         <SocialLinks size={26} className="justify-center gap-6" />
         <p className="mt-4 text-sm text-muted">
           The best way to reach me is by email at{" "}

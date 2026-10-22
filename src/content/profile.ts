@@ -25,25 +25,6 @@ export const profile = {
     "My research interests center on semiconductor spin qubits and superconducting qubits, particularly their design, control, readout, and coherence. I am interested in experimental quantum-device physics and in understanding how device materials and architecture shape qubit performance and scalability. I am particularly interested in how experimental characterization can inform improvements in qubit fidelity and reliable operation.",
 };
 
-/** Dated highlights for the About page, taken from CV entries. */
-export const news: { date: string; text: string; href?: string }[] = [
-  {
-    date: "Summer 2026",
-    text: "Began a research internship with Prof. Thomas Schmidt at the University of Luxembourg on induced superconductivity in magnetic topological-insulator thin films. Manuscript in preparation.",
-    href: "/projects/mti-superconductivity/",
-  },
-  {
-    date: "Jan 2026",
-    text: "Started working on non-Hermitian topological systems with Prof. Lee Ching Hua (National University of Singapore), and became a Teaching Assistant for Introduction to Quantum Mechanics.",
-    href: "/projects/non-hermitian-topology/",
-  },
-  {
-    date: "Aug 2025",
-    text: "Started low-temperature qubit characterization of semiconductor quantum dots with Prof. Suddhasatta Mahapatra and Prof. Uditendu Mukhopadhyay at IIT Bombay.",
-    href: "/projects/quantum-dots/",
-  },
-];
-
 export type EducationRow = {
   degree: string;
   board: string;

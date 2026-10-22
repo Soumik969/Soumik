@@ -12,7 +12,7 @@ All text comes from the CV and lives in `src/content/`:
 
 | File            | Contents                                                                        |
 | --------------- | ------------------------------------------------------------------------------- |
-| `profile.ts`    | name, contact, research interests, news, education, achievements, coursework    |
+| `profile.ts`    | name, contact, research interests, education, achievements, coursework          |
 | `projects.ts`   | research and course projects (each one gets its own page under `/projects/...`) |
 | `teaching.ts`   | teaching and mentorship                                                         |
 | `skills.ts`     | technical skills                                                                |
@@ -22,7 +22,6 @@ All text comes from the CV and lives in `src/content/`:
 - **Profile photo:** replace `public/profile.jpg` with a 3:4 portrait (960 × 1280 or larger). Set `photo: null` in
   `src/content/profile.ts` to show your initials instead.
 - **CV:** replace `public/cv/Soumik_Sahoo_CV.pdf`.
-- **News:** add a line to the `news` list in `src/content/profile.ts`.
 - **Photos:** export a JPEG about 1600 px on the long edge plus a 480 px-tall `-sm` thumbnail, strip the camera metadata (it can
   include GPS), put both in `public/photos/<place>/`, and add an entry to `src/content/photos.ts`. To show one on the Photos page as
   well, add it to `src/content/highlights.ts`.
