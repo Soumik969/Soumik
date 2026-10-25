@@ -11,8 +11,8 @@ export const teaching: TeachingRole[] = [
   {
     role: "Teaching Assistant",
     course: "Introduction to Quantum Mechanics",
-    dates: "Jan 2026 – Present",
-    text: "Teaching and solving tutorials for 30 undergraduates.",
+    dates: "Jan 2026 – Apr 2026",
+    text: "Taught and solved tutorials for 30 undergraduates.",
   },
   {
     role: "Teaching Assistant",
@@ -22,8 +22,8 @@ export const teaching: TeachingRole[] = [
   },
   {
     role: "Mentor",
-    course: "Introduction to Quantum Computing",
+    course: "Seasons of Code (Quantum Computing)",
     dates: "May 2025 – Jul 2025",
-    text: "Mentored 13 students for 6 weeks during SOC on quantum information and computing.",
+    text: "Mentored 13 students in a six-week quantum computing program.",
   },
 ];

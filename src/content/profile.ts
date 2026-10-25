@@ -42,26 +42,26 @@ export const education: EducationRow[] = [
     score: "9.17 / 10",
   },
   {
-    degree: "Higher Secondary (+2)",
+    degree: "Higher Secondary (XII)",
     board: "CHSE, Odisha",
     institute: "Saraswati Vidya Mandir, Neelakanthanagar",
     year: "2022",
     score: "89.66%",
   },
   {
-    degree: "Secondary (10th)",
+    degree: "Secondary (X)",
     board: "BSE, Odisha",
     institute: "Saraswati Vidya Mandir, Singhpur",
     year: "2020",
-    score: "93.5%",
+    score: "93.50%",
   },
 ];
 
-export const programmes = ["Pursuing an Honors degree in the Department of Physics, IIT Bombay"];
+export const programmes = ["Pursuing an Honors in Physics (Department of Physics, IIT Bombay)"];
 
 export const achievements = [
-  { text: "Secured 98.2 percentile out of 0.2 million candidates in the Joint Entrance Examination Advanced.", year: "2023" },
-  { text: "Achieved 99.87 percentile out of 1.2 million candidates in the Joint Entrance Examination Main.", year: "2023" },
+  { text: "Secured 98.2 percentile among 0.2 million candidates in JEE Advanced.", year: "2023" },
+  { text: "Achieved 99.87 percentile among 1.2 million candidates in JEE Main.", year: "2023" },
 ];
 
 export const extracurricular = [
@@ -73,7 +73,6 @@ export const coursework: { area: string; courses: string[] }[] = [
   {
     area: "Physics",
     courses: [
-      "Analog and Digital Electronics",
       "Quantum Mechanics I & II",
       "Statistical Mechanics",
       "Electromagnetic Theory",
@@ -86,5 +85,9 @@ export const coursework: { area: string; courses: string[] }[] = [
   {
     area: "Mathematics",
     courses: ["Calculus", "Linear Algebra", "Differential Equations", "Complex Analysis", "Integral Transforms"],
+  },
+  {
+    area: "Other",
+    courses: ["AI and Data Science", "Computer Programming", "Analog and Digital Electronics", "Economics", "Psychology"],
   },
 ];
