@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { DownloadIcon, ExternalIcon } from "@/components/Icons";
 import { PageHeader } from "@/components/PageHeader";
-import { achievements, coursework, education, extracurricular, profile, programmes } from "@/content/profile";
+import { achievements, coursework, education, profile, programmes } from "@/content/profile";
 import { projects } from "@/content/projects";
 import { skills } from "@/content/skills";
 import { teaching } from "@/content/teaching";
@@ -187,20 +187,6 @@ export default function CV() {
           </Link>{" "}
           page.
         </p>
-      </section>
-
-      <section aria-labelledby="extracurricular">
-        <h2 id="extracurricular" className="section-title">
-          Extracurricular activities
-        </h2>
-        <ul className="space-y-3 sm:space-y-2">
-          {extracurricular.map((x) => (
-            <li key={x.text} className={row}>
-              <span>{x.text}</span>
-              <span className={date}>{x.year}</span>
-            </li>
-          ))}
-        </ul>
       </section>
     </>
   );

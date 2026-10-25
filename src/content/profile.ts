@@ -20,7 +20,7 @@ export const profile = {
   githubHandle: "Soumik969",
   cvPath: `/cv/Soumik_Sahoo_CV.pdf?v=${process.env.NEXT_PUBLIC_CV_VERSION ?? "1"}`,
   /** The same CV on Google Drive, for viewing in the browser. */
-  cvDriveUrl: "https://drive.google.com/file/d/1LyYZcXINcXbTO0qs_Vzu4Grk-0KLugvQ/view?usp=sharing",
+  cvDriveUrl: "https://drive.google.com/file/d/1kDL3IHEUvSndy0vfisbh6qRqPWgJq6C0/view?usp=sharing",
   researchInterests:
     "My research interests center on semiconductor spin qubits and superconducting qubits, particularly their design, control, readout, and coherence. I am interested in experimental quantum-device physics and in understanding how device materials and architecture shape qubit performance and scalability. I am particularly interested in how experimental characterization can inform improvements in qubit fidelity and reliable operation.",
 };
@@ -62,11 +62,6 @@ export const programmes = ["Pursuing an Honors in Physics (Department of Physics
 export const achievements = [
   { text: "Secured 98.2 percentile among 0.2 million candidates in JEE Advanced.", year: "2023" },
   { text: "Achieved 99.87 percentile among 1.2 million candidates in JEE Main.", year: "2023" },
-];
-
-export const extracurricular = [
-  { text: "Secured top honors in district-level Vedic mathematics competitions twice.", year: "2020 – 21" },
-  { text: "Devoted 80+ hours to NSS Green Campus through planting activities on campus.", year: "2023 – 24" },
 ];
 
 export const coursework: { area: string; courses: string[] }[] = [
