@@ -15,7 +15,6 @@ export const navItems: { label: string; href: string; also?: string[] }[] = [
   { label: "About", href: "/" },
   { label: "Projects", href: "/projects/" },
   { label: "CV", href: "/cv/" },
-  { label: "Teaching", href: "/teaching/" },
   { label: "Photos", href: "/photos/", also: ["/travels/"] },
   { label: "Blog", href: "/blog/" },
   { label: "Contact", href: "/contact/" },
