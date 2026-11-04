@@ -2,7 +2,7 @@
 
 Academic website of **Soumik Sahoo**, B.Tech in Engineering Physics at IIT Bombay.
 A simple, minimalist design in the style of the [al-folio](https://github.com/alshedivat/al-folio) academic theme: light and dark mode,
-About · Projects · CV · Teaching · Photos · Blog · Contact pages, one page per project, and a Travels page with every photo.
+About · Projects · CV · Photos · Blog · Contact pages, one page per project, and a Travels page with every photo.
 
 Live at **https://soumik969.github.io/Soumik/** (deployed automatically from `main`).
 
@@ -14,7 +14,7 @@ All text comes from the CV and lives in `src/content/`:
 | --------------- | ------------------------------------------------------------------------------- |
 | `profile.ts`    | name, contact, research interests, education, achievements, coursework          |
 | `projects.ts`   | research and course projects (each one gets its own page under `/projects/...`) |
-| `teaching.ts`   | teaching and mentorship                                                         |
+| `teaching.ts`   | mentorship and teaching roles (shown on the CV page)                            |
 | `skills.ts`     | technical skills                                                                |
 | `photos.ts`     | the Travels page: one section per place, with a caption for every photo         |
 | `highlights.ts` | the few favourites shown on the Photos page (picked from `photos.ts`)           |
@@ -61,7 +61,7 @@ base path automatically.
 ## Layout
 
 ```
-src/app/          pages: about (/), projects, projects/[slug], cv, teaching, photos, travels, contact, 404
+src/app/          pages: about (/), projects, projects/[slug], cv, photos, travels, contact, 404
 src/components/   navbar, theme toggle, footer, profile, project card, photo gallery, icons
 src/content/      all site text (from the CV)
 public/           CV, project reports, photos, social-share image

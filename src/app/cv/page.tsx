@@ -180,13 +180,6 @@ export default function CV() {
             </li>
           ))}
         </ul>
-        <p className="mt-3 text-sm text-muted">
-          Details are on the{" "}
-          <Link href="/teaching/" className="link">
-            Teaching
-          </Link>{" "}
-          page.
-        </p>
       </section>
     </>
   );
