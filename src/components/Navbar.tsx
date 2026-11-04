@@ -17,6 +17,7 @@ export const navItems: { label: string; href: string; also?: string[] }[] = [
   { label: "CV", href: "/cv/" },
   { label: "Teaching", href: "/teaching/" },
   { label: "Photos", href: "/photos/", also: ["/travels/"] },
+  { label: "Blog", href: "/blog/" },
   { label: "Contact", href: "/contact/" },
 ];
 
@@ -49,7 +50,7 @@ export function Navbar() {
           )}
 
           <div className="flex items-center gap-1">
-            <ul className="hidden items-center sm:flex">
+            <ul className="hidden items-center md:flex">
               {navItems.map((item) => {
                 const active = isActive(pathname, item.href, item.also);
                 return (
@@ -57,7 +58,7 @@ export function Navbar() {
                     <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
-                      className={cn("px-2 py-2 transition-colors hover:text-accent md:px-3", active ? "font-medium text-accent" : "text-fg")}
+                      className={cn("px-2 py-2 transition-colors hover:text-accent lg:px-3", active ? "font-medium text-accent" : "text-fg")}
                     >
                       {item.label}
                     </Link>
@@ -68,7 +69,7 @@ export function Navbar() {
             <ThemeToggle />
             <button
               type="button"
-              className="flex h-9 w-9 items-center justify-center rounded text-fg sm:hidden"
+              className="flex h-9 w-9 items-center justify-center rounded text-fg md:hidden"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
               aria-controls="mobile-menu"
@@ -80,7 +81,7 @@ export function Navbar() {
         </div>
 
         {open && (
-          <ul id="mobile-menu" className="border-t border-divider px-4 py-2 sm:hidden">
+          <ul id="mobile-menu" className="border-t border-divider px-4 py-2 md:hidden">
             {navItems.map((item) => {
               const active = isActive(pathname, item.href, item.also);
               return (

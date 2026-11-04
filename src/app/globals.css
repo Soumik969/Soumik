@@ -2,6 +2,7 @@
 
 /* The old static site in legacy/ is not part of this build. */
 @source not "../../legacy";
+@source not "../../content";
 
 /* Colours switch on <html data-theme>; the inline script in layout.tsx sets it before first paint. */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
@@ -233,4 +234,89 @@ body {
 
 html:has(.lightbox[open]) {
   overflow: hidden;
+}
+
+/* Blog post body (rendered Markdown): plain running text with a few quiet element styles. */
+@utility post-body {
+  max-width: 44rem;
+  & > * + * {
+    margin-top: 1rem;
+  }
+  & h2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-top: 2.25rem;
+  }
+  & h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-top: 1.75rem;
+  }
+  & a {
+    @apply link;
+  }
+  & strong {
+    font-weight: 500;
+  }
+  & ul,
+  & ol {
+    padding-left: 1.5rem;
+  }
+  & ul {
+    list-style: disc;
+  }
+  & ol {
+    list-style: decimal;
+  }
+  & li + li {
+    margin-top: 0.35rem;
+  }
+  & li::marker {
+    color: var(--muted);
+  }
+  & blockquote {
+    border-left: 2px solid var(--divider);
+    padding-left: 1rem;
+    color: var(--muted);
+  }
+  & hr {
+    border: 0;
+    border-top: 1px solid var(--divider);
+    margin-block: 2rem;
+  }
+  & img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+  }
+  & code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--surface);
+    border-radius: 0.25rem;
+    padding: 0.1em 0.35em;
+  }
+  & pre {
+    background: var(--surface);
+    border-radius: 0.5rem;
+    padding: 0.875rem 1rem;
+    overflow-x: auto;
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+  & pre code {
+    background: none;
+    padding: 0;
+  }
+  & table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+  & th,
+  & td {
+    border-bottom: 1px solid var(--divider);
+    padding: 0.4rem 0.75rem 0.4rem 0;
+    text-align: left;
+  }
 }

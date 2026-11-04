@@ -13,6 +13,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "marked": "18.1.3",
     "next": "16.4.0",
     "react": "19.3.0",
     "react-dom": "19.3.0"

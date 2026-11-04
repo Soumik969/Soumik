@@ -41,6 +41,7 @@ jobs:
         env:
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
           NEXT_PUBLIC_SITE_URL: ${{ steps.pages.outputs.base_url }}
+          NEXT_PUBLIC_GITHUB_REPO: ${{ github.repository }}
           NEXT_TELEMETRY_DISABLED: 1
 
       - uses: actions/upload-pages-artifact@v3

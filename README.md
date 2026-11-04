@@ -2,7 +2,7 @@
 
 Academic website of **Soumik Sahoo**, B.Tech in Engineering Physics at IIT Bombay.
 A simple, minimalist design in the style of the [al-folio](https://github.com/alshedivat/al-folio) academic theme: light and dark mode,
-About · Projects · CV · Teaching · Photos · Contact pages, one page per project, and a Travels page with every photo.
+About · Projects · CV · Teaching · Photos · Blog · Contact pages, one page per project, and a Travels page with every photo.
 
 Live at **https://soumik969.github.io/Soumik/** (deployed automatically from `main`).
 
@@ -25,6 +25,18 @@ All text comes from the CV and lives in `src/content/`:
 - **Photos:** export a JPEG about 1600 px on the long edge plus a 480 px-tall `-sm` thumbnail, strip the camera metadata (it can
   include GPS), put both in `public/photos/<place>/`, and add an entry to `src/content/photos.ts`. To show one on the Photos page as
   well, add it to `src/content/highlights.ts`.
+
+## Blog
+
+Posts are Markdown files in `content/posts/` (photos go in `public/blog/<post>/`); the Blog page lists them and each gets its own page.
+You can write them without touching the code at **`/admin/`** on the live site (it is not linked anywhere and is hidden from search engines):
+
+1. Create a fine-grained GitHub token for this repository only, with **Contents: Read and write**
+   ([create one](https://github.com/settings/personal-access-tokens/new)).
+2. Open `/admin/`, paste the token once (it is kept in that browser only and sent only to GitHub), then write, preview, add photos and publish.
+3. Each save is a commit to `main`; the Pages workflow rebuilds the site in about 2 minutes.
+
+Drafts stay hidden until you untick "Draft". To revoke access, delete the token on GitHub.
 
 ## Develop
 
