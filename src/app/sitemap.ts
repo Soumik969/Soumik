@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "cv/",
     "photos/",
     "travels/",
+    "food/",
     "blog/",
     "contact/",
     ...projects.map((p) => `projects/${p.slug}/`),
