@@ -159,11 +159,8 @@ export function PhotoGallery({ groups: places, headings = true }: { groups: Phot
                   } as CSSProperties
                 }
               />
-              <figcaption className="max-w-[min(94vw,48rem)] px-2 text-center text-sm text-white/85">
-                {photo.alt}
-                <span className="ml-2 whitespace-nowrap text-white/55">
-                  {photo.place ?? place.name} · {index + 1} / {place.photos.length}
-                </span>
+              <figcaption className="px-2 text-center text-sm whitespace-nowrap text-white/60">
+                {photo.place ?? place.name} · {index + 1} / {place.photos.length}
               </figcaption>
             </figure>
 

@@ -14,7 +14,7 @@ All text comes from the CV and lives in `src/content/`:
 | --------------- | ------------------------------------------------------------------------------- |
 | `profile.ts`    | name, contact, research interests                                               |
 | `projects.ts`   | research and course projects (each one gets its own page under `/projects/...`) |
-| `photos.ts`     | the Travels page: one section per place, with a caption for every photo         |
+| `photos.ts`     | the Travels page: one section per place                                         |
 | `highlights.ts` | the few favourites shown on the Photos page (picked from `photos.ts`)           |
 
 - **Profile photo:** replace `public/profile.jpg` with a 3:4 portrait (960 × 1280 or larger). Set `photo: null` in

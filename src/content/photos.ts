@@ -10,7 +10,7 @@ export type Photo = {
   height: number;
   thumbWidth: number;
   thumbHeight: number;
-  /** Also shown as the caption in the lightbox. */
+  /** Description for screen readers; it is not shown on the page. */
   alt: string;
 };
 

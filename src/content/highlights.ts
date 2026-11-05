@@ -38,9 +38,3 @@ export const highlights: (Photo & { place: string })[] = picks.map((pick) => {
   if (!place || !photo) throw new Error(`highlights.ts: no photo "${pick}"`);
   return { ...photo, place: place.name };
 });
-
-/** Totals for the link to the Travels page; Food is not a place. */
-export const travelStats = {
-  photos: photoPlaces.reduce((n, p) => n + p.photos.length, 0),
-  places: photoPlaces.filter((p) => p.slug !== "food").length,
-};
