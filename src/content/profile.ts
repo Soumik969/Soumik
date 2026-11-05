@@ -7,7 +7,6 @@ export const profile = {
   firstName: "Soumik",
   lastName: "Sahoo",
   name: "Soumik Sahoo",
-  tagline: "B.Tech in Engineering Physics · IIT Bombay",
   institute: "Indian Institute of Technology Bombay",
   instituteUrl: "https://www.iitb.ac.in/",
   /** Portrait photo (3:4) at public/profile.jpg; set to null to show initials instead. */
