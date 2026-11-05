@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeftIcon } from "@/components/Icons";
+import { ArrowLeftIcon, ArrowRightIcon } from "@/components/Icons";
 import { PageHeader } from "@/components/PageHeader";
 import { PhotoGallery } from "@/components/PhotoGallery";
 import { photoPlaces } from "@/content/photos";
@@ -11,7 +11,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "travels/" },
 };
 
-const groups = photoPlaces.map((p) => ({ ...p, meta: `${p.country} · ${p.date} · ${p.photos.length} photos` }));
+const places = photoPlaces.filter((p) => p.slug !== "food");
+const groups = places.map((p) => ({ ...p, meta: `${p.country} · ${p.date} · ${p.photos.length} photos` }));
 
 export default function Travels() {
   return (
@@ -19,7 +20,7 @@ export default function Travels() {
       <PageHeader title="Travels" />
       <nav aria-label="Places" className="-mt-2 mb-2">
         <ul className="flex flex-wrap gap-2 text-sm">
-          {photoPlaces.map((p) => (
+          {places.map((p) => (
             <li key={p.slug}>
               <a
                 href={`#${p.slug}`}
@@ -32,6 +33,13 @@ export default function Travels() {
         </ul>
       </nav>
       <PhotoGallery groups={groups} />
+
+      <p className="mt-14 text-center text-muted">
+        Want to see my cooking skills?{" "}
+        <Link href="/food/" className="link inline-flex items-center gap-1.5">
+          Let’s have a look <ArrowRightIcon size={14} />
+        </Link>
+      </p>
 
       <p className="mt-12">
         <Link href="/photos/" className="link inline-flex items-center gap-2">
