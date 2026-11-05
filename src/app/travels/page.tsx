@@ -16,10 +16,7 @@ const groups = photoPlaces.map((p) => ({ ...p, meta: `${p.country} · ${p.date} 
 export default function Travels() {
   return (
     <>
-      <PageHeader
-        title="Travels"
-        description="Summer 2026 in Europe: places I saw during my research internship at the University of Luxembourg and on weekend trips, and a day in Istanbul on the way home."
-      />
+      <PageHeader title="Travels" />
       <nav aria-label="Places" className="-mt-2 mb-2">
         <ul className="flex flex-wrap gap-2 text-sm">
           {photoPlaces.map((p) => (
