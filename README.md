@@ -12,10 +12,8 @@ All text comes from the CV and lives in `src/content/`:
 
 | File            | Contents                                                                        |
 | --------------- | ------------------------------------------------------------------------------- |
-| `profile.ts`    | name, contact, research interests, education, achievements, coursework          |
+| `profile.ts`    | name, contact, research interests                                               |
 | `projects.ts`   | research and course projects (each one gets its own page under `/projects/...`) |
-| `teaching.ts`   | mentorship and teaching roles (shown on the CV page)                            |
-| `skills.ts`     | technical skills                                                                |
 | `photos.ts`     | the Travels page: one section per place, with a caption for every photo         |
 | `highlights.ts` | the few favourites shown on the Photos page (picked from `photos.ts`)           |
 
