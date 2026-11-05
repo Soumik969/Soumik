@@ -19,7 +19,6 @@ export default function About() {
             <span className="font-bold">{profile.firstName}</span> {profile.lastName}
           </>
         }
-        description={profile.tagline}
       />
 
       <Profile />

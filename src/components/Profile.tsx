@@ -25,8 +25,6 @@ export function Profile() {
         </div>
       )}
       <div className="mt-4 space-y-1 text-center font-mono text-[0.8rem] leading-relaxed text-muted">
-        <p>Engineering Physics</p>
-        <p>IIT Bombay, Mumbai</p>
         <p>
           <a href={`mailto:${profile.emails.academic}`} className="link break-all">
             {profile.emails.academic}
